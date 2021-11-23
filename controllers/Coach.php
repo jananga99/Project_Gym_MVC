@@ -1,16 +1,15 @@
 <?php
-class Index extends Controller{
+
+class Coach extends Controller{
 
     function __construct(){
         parent::__construct();
     }
 
     function index(){
-        $this->view->render('Home');
+        $this->view->render('Coach/Dash');
     }
 
 }
-
-
 
 ?>

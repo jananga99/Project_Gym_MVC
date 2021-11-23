@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /myphp/sem2project/mvc_tute/mvc_tute/
+RewriteBase /myphp/sem2project/Project_Gym_MVC/
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

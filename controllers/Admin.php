@@ -1,16 +1,15 @@
 <?php
-class Index extends Controller{
+
+class Admin extends Controller{
 
     function __construct(){
         parent::__construct();
     }
 
     function index(){
-        $this->view->render('Home');
+        $this->view->render('Admin/Dash');
     }
 
 }
-
-
 
 ?>

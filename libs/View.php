@@ -6,7 +6,7 @@ class View{
         
     }
 
-    public function render($viewName){
+    public function render($viewName,$data=0){
         require 'views/'.$viewName.'.php';
     }
 

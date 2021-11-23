@@ -1,14 +1,27 @@
 <?php
+require 'ObjectPool.php';
 
 class Database{
 
 function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD){
     if($DB_TYPE==='mysql'){
-        $this->db = new mysqli($DB_HOST,$DB_USER, $DB_PASSWORD,$DB_NAME);        
+        $this->_create($DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD);        
     }
 }
 
-private function execute($commd,$bind_string=0,$bind_arr=0){
+private function _create($DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD){
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    try {
+        $this->db = new mysqli($DB_HOST,$DB_USER,$DB_PASSWORD,$DB_NAME);
+        $this->db->set_charset("utf8mb4");
+        return $this->db;
+    } catch(Exception $e) {
+        error_log($e->getMessage());
+        exit('Error connecting to database'); //Should be a message a typical user could understand
+    }        
+}
+
+private function _execute($commd,$bind_string=0,$bind_arr=0){
     $stmt = $this->db->prepare($commd);
     if($bind_string){
         $c = sizeof($bind_arr);
@@ -50,8 +63,8 @@ public function select($table,$fields=0,$sort_arr=0,$one=0,$orderField=0,$revers
         foreach($sort_arr as $val)    $bind_arr[] = $val;
     }
     
-    if($one)    $arr=$this->result_to_one($this->execute($commd,$bind_string,$bind_arr));
-    else $arr=$this->result_to_array($this->execute($commd,$bind_string,$bind_arr));
+    if($one)    $arr=$this->result_to_one($this->_execute($commd,$bind_string,$bind_arr));
+    else $arr=$this->result_to_array($this->_execute($commd,$bind_string,$bind_arr));
     return $arr;        
 }
 
@@ -61,7 +74,7 @@ public function select($table,$fields=0,$sort_arr=0,$one=0,$orderField=0,$revers
 // $bind_string="sds"
 // $commd =  "INSERT INTO table (Name, Age, Gender) VALUES (?,?,?)  //before bind
 // "INSERT INTO table (Name, Age, Gender) VALUES ('JNR','21','F')  //after bind
-public function insert($fields,$bind_string,$sort_arr=0){
+public function insert($table,$fields,$bind_string,$sort_arr=0){
     $commd = "INSERT INTO ".$table."(".$this->create_field_stmt($fields).") VALUES (";
     for ($i=0; $i < sizeof($fields); $i++) {
         if($i==0)   $commd.="?";
@@ -69,7 +82,7 @@ public function insert($fields,$bind_string,$sort_arr=0){
     }
     $commd.=")";
     if($sort_arr)   $commd.=" WHERE ".$this->create_where_stmt($sort_arr,$bind_string);
-    $this->execute($commd,$bind_string,$this->get_array_values($fields));     
+    $this->_execute($commd,$bind_string,$this->get_array_values($fields));     
     return;   
 }    
 
@@ -79,10 +92,10 @@ public function insert($fields,$bind_string,$sort_arr=0){
 // $bind_string="sds"
 // $commd =  "INSERT INTO table (Name, Age, Gender) VALUES (?,?,?)  //before bind
 // "INSERT INTO table (Name, Age, Gender) VALUES ('JNR','21','F')  //after bind
-function update($fields,$values,$sort_arr,$bind_string){
+function update($table,$fields,$values,$sort_arr,$bind_string){
     $commd = "UPDATE ".$table." SET ".$this->create_field_stmt_bind($fields);
     if($sort_arr)   $commd.=" WHERE ".$this->create_where_stmt($sort_arr,$bind_string);
-    $this->execute($commd,$bind_string,$values);     
+    $this->_execute($commd,$bind_string,$values);     
     return;   
 } 
 

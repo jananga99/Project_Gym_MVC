@@ -11,7 +11,7 @@ class App{
         //If url is empty load default construtcor
         if(empty($this->_url[0])){
             $this->_loadDefaultController();
-            return FALSE;
+            return;
         }
 
         if($this->_loadController()){
@@ -24,21 +24,14 @@ class App{
     //returns an array of parameters giving to index?url=
     private function _getURL(){
         $url = isset($_GET['url']) ? $_GET['url'] : null;  
-
         $url = rtrim($url, '/'); 
-
         $url = filter_var($url, FILTER_SANITIZE_URL);
-
         $this->_url = explode('/',$url);
-        
-        //print_r($this->_url);
     }
 
     private function _loadDefaultController(){
         require 'controllers/Index.php';
-
         $this->_controller = new Index();
-
         $this->_controller->index();
     }
 
@@ -56,8 +49,7 @@ class App{
     }
 
     private function _loadControllerMethod(){
-        $urlLength = count($this->_url);
-        
+        $urlLength = count($this->_url);     
         if($urlLength > 1){
             if(!method_exists($this->_controller, $this->_url[1])){
                 echo "Requested method not found."; 
