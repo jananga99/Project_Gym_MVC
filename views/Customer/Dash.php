@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
                 <a href="#" class="nav-item nav-link ">Dashboard</a>
-                <a href="#" class="nav-item nav-link">Profile</a>
+                <a href=<?php echo BASE_DIR."Customer/profile"?> class="nav-item nav-link">Profile</a>
                 <a href="#" class="nav-item nav-link">Messages</a>
                 <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
            
@@ -35,12 +35,11 @@
 
 <h1>Welcome</h1>
 
-<a href="../customer/coach/search.php">add coach</a>
-<a href="../customer/my_profile/update.php">edit profile</a>
-<a href="../customer/coach/my_coaches.php">Registered Coaches</a>
-<a href="../customer/session/search.php">Add Sessions</a>
-<a href="../customer/session/my_sessions.php">My Sessions</a>
-<a href="../customer/fitness_tips/search.php">Get Finess Tips</a>
+<a href=<?=BASE_DIR."Customer/coach/search"?>>add coach</a>
+<a href=<?=BASE_DIR."Customer/coach/registered"?>>Registered Coaches</a>
+<a href=<?=BASE_DIR."Session/search"?>>Add Sessions</a>
+<a href=<?=BASE_DIR."Session/registered"?>>My Sessions</a>
+<a href=<?=BASE_DIR."FitnessTip/search"?>>Get Finess Tips</a>
 
 
 </body>

@@ -1,0 +1,11 @@
+CREATE TABLE Fitness_tips (
+    Tip_id INT(10) AUTO_INCREMENT,
+    Tip varchar(255) NOT NULL,
+    for_which_gender varchar(15) NOT NULL,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Tip_id)
+);
+
+INSERT INTO `fitness_tips`(`Tip`, `for_which_gender`, `Details`) VALUES ('Do plank 30 minutes','Male','');
+INSERT INTO `fitness_tips`(`Tip`, `for_which_gender`, `Details`) VALUES ('Do squat 45 minutes','FeMale','');
+INSERT INTO `fitness_tips`(`Tip`, `for_which_gender`, `Details`) VALUES ('Do 25 push ups','Both','');

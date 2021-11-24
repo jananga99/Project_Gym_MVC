@@ -7,7 +7,7 @@ class Auth extends Controller{
     }
 
     function index(){
-        $this->view->render('Customer/Dash');
+        $this->view->render('customer/Dash');
     }
 
     function login($type="Customer"){
@@ -48,7 +48,6 @@ class Auth extends Controller{
         }
        
     }
-
 
 }
 

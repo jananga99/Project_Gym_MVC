@@ -1,0 +1,70 @@
+CREATE DATABASE gms; 
+
+CREATE TABLE Customer (
+    Email varchar(255) NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int(4),
+    Gender varchar(10),
+    Telephone varchar(100),
+    password varchar(255) NOT NULL,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Email)
+);
+
+CREATE TABLE Coach (
+    Email varchar(255) NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    City varchar(255) NOT NULL,
+    Age int(4) NOT NULL,
+    Gender varchar(10) NOT NULL,
+    Telephone varchar(100) NOT NULL,
+    password varchar(255) NOT NULL,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Email)
+);
+
+CREATE TABLE Admin (
+    Email varchar(255) NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    City varchar(255) NOT NULL,
+    Age int(4) NOT NULL,
+    Gender varchar(10) NOT NULL,
+    Telephone varchar(100) NOT NULL,
+    password varchar(255) NOT NULL,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Email)
+);
+
+CREATE TABLE Registration (
+    Customer varchar(255) NOT NULL,
+    Coach varchar(255) NOT NULL,
+    Details MEDIUMTEXT
+);
+
+CREATE TABLE Session_Registration (
+    Customer varchar(255) NOT NULL,
+    Session_id varchar(255) NOT NULL,
+    Details MEDIUMTEXT
+);
+
+CREATE TABLE Session (
+    Session_id INT(10) AUTO_INCREMENT,
+    Coach_Email varchar(255) NOT NULL,
+    Session_Name varchar(255) NOT NULL,
+    Date_and_Time DATETIME NULL,
+    Duration TIME NOT NULL,
+    Num_Participants INT(5) NOT NULL,
+    PRIMARY KEY (Session_id)
+);
+
+CREATE TABLE Report (
+    Report_id INT(10) AUTO_INCREMENT,
+    Reason varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL,
+    PRIMARY KEY (Report_id)
+);
+
+
