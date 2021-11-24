@@ -32,6 +32,24 @@ class Auth extends Controller{
         die();
     }
 
+    function signup($type="Customer"){
+        $this->view->render($type.'/signup',array("type"=>$type));
+    }
+
+    function addsignup($type){
+        if($this->model->validateSignup($_POST['email'])){
+            $this->model->signup($type,$_POST);
+            header("Location:".BASE_DIR.'Auth/login/'.$type);
+            die(); 
+        }else{
+            $_SESSION['msg'] = "This email is already registered.";
+            header("Location:".BASE_DIR.'Auth/signup/'.$type);
+            die();                 
+        }
+       
+    }
+
+
 }
 
 

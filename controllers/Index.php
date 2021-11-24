@@ -6,7 +6,7 @@ class Index extends Controller{
     }
 
     function index(){
-        $this->view->render('Home');
+        $this->view->render('access');
     }
 
 }

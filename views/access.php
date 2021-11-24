@@ -57,9 +57,9 @@
                
             <div id="demo2" class="panel-collapse collapse">
                         <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a class="li" href="login_signup/customer_signup.php">Customer</a></li>
-                        <li class="list-group-item"><a class="li" href="login_signup/coach_signup.php">Coach</a></li>
-                        <li class="list-group-item"><a class="li" href="login_signup/admin_signup.php">Admin</a></li>
+<li class="list-group-item"><a class="li" href="Auth/signup/Customer">Customer</a></li>
+<li class="list-group-item"><a class="li" href="Auth/signup/Coach">Coach</a></li>
+<li class="list-group-item"><a class="li" href="Auth/signup/Admin">Admin</a></li>
                         </ul>   
             </div>
     </div>

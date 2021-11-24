@@ -75,13 +75,14 @@ public function select($table,$fields=0,$sort_arr=0,$one=0,$orderField=0,$revers
 // $commd =  "INSERT INTO table (Name, Age, Gender) VALUES (?,?,?)  //before bind
 // "INSERT INTO table (Name, Age, Gender) VALUES ('JNR','21','F')  //after bind
 public function insert($table,$fields,$bind_string,$sort_arr=0){
-    $commd = "INSERT INTO ".$table."(".$this->create_field_stmt($fields).") VALUES (";
+    $commd = "INSERT INTO ".$table."(".$this->create_insert_field_stmt($fields).") VALUES (";
     for ($i=0; $i < sizeof($fields); $i++) {
         if($i==0)   $commd.="?";
         else        $commd.=",?";
     }
     $commd.=")";
     if($sort_arr)   $commd.=" WHERE ".$this->create_where_stmt($sort_arr,$bind_string);
+    echo $commd;
     $this->_execute($commd,$bind_string,$this->get_array_values($fields));     
     return;   
 }    
@@ -124,6 +125,7 @@ function result_to_array($result){
 function result_to_one($result){
     return $result->fetch_assoc();
 } 
+
 //converts $fields array to field1, field2 ...... format
 //an example
 //  $fields = ["Name","Age","Gender"]      <--- an array
@@ -136,6 +138,22 @@ function create_field_stmt($fields){
     }
     return $commd;         
 }
+
+//converts $fields array to field1, field2 ...... format
+//an example
+//  $fields = ["Name","Age","Gender"]      <--- an array
+// $commd="Name, Age, Gender"
+function create_insert_field_stmt($fields){
+    $commd="";
+    $c=0;
+    foreach($fields as $ind=>$field){
+        if($c==0){     $commd.=$ind;$c=1;}
+        else        $commd.=", ".$ind;
+    }
+    return $commd;         
+}
+
+
 //converts sort_arr array to ind=value AND ..... format
 //an example
 //  $sort_arr = ["Age"=>"'12'","Gender"=>"'M'"]
