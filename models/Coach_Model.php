@@ -10,6 +10,7 @@ function getData($email){
     return $this->db->select("Coach",0,array("Email"=>$email),1);
 }
 
+
 function update($email,$data){
     $this->db->update("Coach",
     array("LastName"=>$data['lname'],"FirstName"=>$data['fname'],"Age"=>$data['age'], "City"=>$data['city'],
@@ -23,11 +24,4 @@ function getAllData($sort_arr=0,$orderField=0,$reverse=0){
 
 
 
-
 }
-
-
-
-
-
-?>
