@@ -10,12 +10,4 @@ function getData(){
     print_r($this->db->select("Customer"));
 }
 
-
-
 }
-
-
-
-
-
-?>
