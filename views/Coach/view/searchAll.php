@@ -5,7 +5,7 @@ $_SESSION['flags'] = isset($_SESSION['flags']) ? $_SESSION['flags'] : array();
 if (isset($_POST["view_all"])) {
     $_SESSION['flags']['all'] = TRUE;
     unset($_POST);
-    header("Location:".BASE_DIR."Customer/coach/search");
+    header("Location:" . BASE_DIR . "Customer/coach/search");
     die();
 } elseif (isset($_POST["by"])) {
     $_SESSION['flags']['by'] = TRUE;
@@ -19,9 +19,9 @@ if (isset($_POST["view_all"])) {
         $_SESSION['flags']['sort_arr']['gender'] = $_POST["sort_radio_gender"];
     }
     unset($_POST);
-    header("Location:".BASE_DIR."Customer/coach/search");
+    header("Location:" . BASE_DIR . "Customer/coach/search");
     die();
-} 
+}
 $coach_arr = isset($_SESSION['data']) ? $_SESSION['data'] : array();
 $flag_all = isset($_SESSION['flags']['all']);
 $flag_by = isset($_SESSION['flags']['by']);
@@ -38,13 +38,13 @@ unset($_SESSION['flags']);
     <?php
     require("public/HTML/boostraplinks.html");
     ?>
-    <link rel="stylesheet" href="../../../build/CSS/search.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/search.css" ?>>
     <title>Search Coach</title>
 </head>
 
 <body>
 
-    <a href=<?=BASE_DIR."Customer"?>>Dashboard</a>
+    <a href=<?= BASE_DIR . "Customer" ?>>Dashboard</a>
 
     <div class="container">
 
@@ -86,15 +86,15 @@ unset($_SESSION['flags']);
                         <div id='sort_radio_gender'>
                             <input type="radio" name="sort_radio_gender" checked value="Male">
                             <labe>Male</label>
-                            <input type="radio" name="sort_radio_gender" value="Female">
-                            <labe>Female</label>
+                                <input type="radio" name="sort_radio_gender" value="Female">
+                                <labe>Female</label>
                         </div>
                     </div>
                     <!-- end of sort by options -->
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" name="by" id="by" >Search</button>
+            <button type="submit" class="btn btn-primary" name="by" id="by">Search</button>
 
             </form>
         </div>
@@ -114,7 +114,7 @@ unset($_SESSION['flags']);
                 echo "<tr>
                 <td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>
                 <td>" . $row['Gender'] . "</td>
-                <td><form action=".BASE_DIR."Customer/coach/select method='POST'>
+                <td><form action=" . BASE_DIR . "Customer/coach/select method='POST'>
                     <input type='text' name='select_email' value=" . $row['Email'] . " readonly style='display:none'>
                     <button name='select'>Select</button>
                     </form></td>

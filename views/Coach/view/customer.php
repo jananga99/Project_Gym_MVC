@@ -20,15 +20,15 @@ unset($_SESSION['msg']);
     <?php
     require("public/HTML/boostraplinks.html");
     ?>
-    <link rel="stylesheet" href="public/CSS/signup.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/signup.css" ?>>
 
     <title>coach details</title>
 </head>
 
 <body>
 
-    <a href=<?=BASE_DIR.'Customer/coach/search'?>>Back to search</a><br>
-    <a href=<?=BASE_DIR.'Customer/coach/registered'?>>My Coaches</a>
+    <a href=<?= BASE_DIR . 'Customer/coach/search' ?>>Back to search</a><br>
+    <a href=<?= BASE_DIR . 'Customer/coach/registered' ?>>My Coaches</a>
     <div class="simple-login-container">
         <h2>Coach Details</h2>
         <div>
@@ -72,20 +72,20 @@ unset($_SESSION['msg']);
                     <input type="text" class="form-control" name='tel' value=<?php echo $arr["Telephone"] ?> readonly>
                 </div>
             </div>
-            <form action=<?=BASE_DIR."Customer/coach/add"?> method="POST">
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <label>Email</label>
-                    <input type="text" class="form-control" name='select_email' value=<?php echo $arr["Email"] ?> readonly>
+            <form action=<?= BASE_DIR . "Customer/coach/add" ?> method="POST">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name='select_email' value=<?php echo $arr["Email"] ?> readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="row" style=<?php echo $styleAddCoach; ?>>
-                <div class="col-md-12 form-group">
-                    
+                <div class="row" style=<?php echo $styleAddCoach; ?>>
+                    <div class="col-md-12 form-group">
+
                         <input type="submit" class="btn btn-block btn-login" value='Add Coach' name='add_coach'>
-                    
+
+                    </div>
                 </div>
-            </div>
             </form>
             <div class="row" style=<?php echo $styleReg; ?>>
                 <button class="btn btn-block btn-login" value='Already registered.'>Already Registered</button>
