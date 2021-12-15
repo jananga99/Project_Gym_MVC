@@ -7,7 +7,34 @@ class Admin extends Controller{
     }
 
     function index(){
-        $this->view->render('Admin/Dash');
+        if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Admin")
+            $this->view->render('admin/Dash');
+        else{
+            header("Location:".BASE_DIR."Auth/login/Admin");
+            die();
+        } 
+    }
+
+    function profile($action="view"){
+        if($action==="view"){
+            if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Admin"){
+                $_SESSION['data'] = $this->model->getData($_SESSION['user']['email']);
+                $this->view->render('admin/view/my');
+            }else{
+                header("Location:".BASE_DIR."Auth/login/Admin");
+                die();
+            }  
+        }else if($action==="edit"){
+            if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Admin"){
+                $this->model->update($_SESSION['user']['email'],$_POST);
+                header("Location:".BASE_DIR."admin/profile");
+                die();
+            }else{
+                header("Location:".BASE_DIR."Auth/login/Admin");
+                die();
+            }             
+        }
+      
     }
 
 }

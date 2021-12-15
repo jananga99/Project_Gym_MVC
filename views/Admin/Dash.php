@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
         <div class="container-fluid">
             <a href="#" class="navbar-brand">VirtualGYM</a>
@@ -28,6 +29,22 @@
 
                     <a href="Auth/logout" class="nav-item nav-link">Log Out</a>
                 </div>
+
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">VirtualGYM</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+                <a href="#" class="nav-item nav-link ">Dashboard</a>
+                <a href=<?php echo BASE_DIR."Admin/profile"?> class="nav-item nav-link">Profile</a>
+                <a href="#" class="nav-item nav-link">Messages</a>
+                <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
+           
+                <a href="Auth/logout" class="nav-item nav-link">Log Out</a>
+
             </div>
         </div>
     </nav>

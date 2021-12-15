@@ -82,7 +82,6 @@ public function insert($table,$fields,$bind_string,$sort_arr=0){
     }
     $commd.=")";
     if($sort_arr)   $commd.=" WHERE ".$this->create_where_stmt($sort_arr,$bind_string);
-    echo $commd;
     $this->_execute($commd,$bind_string,$this->get_array_values($fields));     
     return;   
 }    
@@ -91,22 +90,14 @@ public function insert($table,$fields,$bind_string,$sort_arr=0){
 //an example
 //  $fields = ["Name"=>"JNR","Age"=>"21","Gender"="F"]      <--- an array
 // $bind_string="sds"
-// $commd =  "INSERT INTO table (Name, Age, Gender) VALUES (?,?,?)  //before bind
-// "INSERT INTO table (Name, Age, Gender) VALUES ('JNR','21','F')  //after bind
-function update($table,$fields,$values,$sort_arr,$bind_string){
+// $commd =  "UPDATE Customer SET Name = ?, Age = ?, Gender = ?   //before bind
+// "UPDATE Customer SET Name = 'JNR', Age = '21', Gender = 'F'  //after bind
+function update($table,$fields,$sort_arr,$bind_string){
     $commd = "UPDATE ".$table." SET ".$this->create_field_stmt_bind($fields);
-    if($sort_arr)   $commd.=" WHERE ".$this->create_where_stmt($sort_arr,$bind_string);
-    $this->_execute($commd,$bind_string,$values);     
+    if($sort_arr)   $commd.=" WHERE ".$this->create_where_stmt($sort_arr);
+    $this->_execute($commd,$bind_string,$this->get_array_values($fields));     
     return;   
 } 
-
-
-
-
-
-
-
-
 
 
 //get an array with array values of given array
@@ -135,6 +126,20 @@ function create_field_stmt($fields){
     foreach($fields as $ind=>$field){
         if($ind==0)     $commd.=$field;
         else        $commd.=", ".$field;
+    }
+    return $commd;         
+}
+
+//converts $fields array to field1, field2 ...... format
+//an example
+//  $fields = ["Name"=>"JNR","Age"="22","Gender"=>"Female"]      <--- an array
+// $commd="Name=?, Age=?, Gender=?"
+function create_field_stmt_bind($fields){
+    $commd="";
+    $i=0;
+    foreach($fields as $ind=>$field){
+        if($i==0)    {$commd.=$ind." = ?";$i=1;}
+        else        $commd.=", ".$ind." = ?";
     }
     return $commd;         
 }
