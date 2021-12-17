@@ -25,7 +25,7 @@
     <?php
     require 'public/html/boostraplinks.html';
     ?>
-    <link rel="stylesheet" href="public/css/welcome.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/welcome.css" ?>>
     <title>HOME</title>
 </head>
 

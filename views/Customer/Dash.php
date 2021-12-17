@@ -8,7 +8,7 @@
     <?php
     require 'public/html/boostraplinks.html';
     ?>
-    <link rel="stylesheet" href="public/css/dash.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/dash.css" ?>>
     <title>Dashboard</title>
 </head>
 
@@ -31,7 +31,7 @@
                     <a href="#" class="nav-item nav-link">Messages</a>
                     <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
 
-                    <a href="Auth/logout" class="nav-item nav-link">Log Out</a>
+                    <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
 
                 </div>
             </div>
@@ -43,7 +43,7 @@
         <h1 class="mb-4">Welcome</h1>
 
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/coach/search" ?>>add coach</a>
-        <a class="btn btn-outline-light btn-lg mb-3" href=#>edit profile</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/profile/edit" ?>>edit profile</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/coach/registered" ?>>Registered Coaches</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/search" ?>>Add Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/registered" ?>>My Sessions</a>
