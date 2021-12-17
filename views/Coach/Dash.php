@@ -8,7 +8,7 @@
     <?php
     require 'public/html/boostraplinks.html';
     ?>
-    <link rel="stylesheet" href="public/css/dash.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/dash.css" ?>>
     <title>Dashboard</title>
 </head>
 
@@ -29,7 +29,7 @@
                     <a href="#" class="nav-item nav-link">Messages</a>
                     <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
 
-                    <a href="Auth/logout" class="nav-item nav-link">Log Out</a>
+                    <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
 
                 </div>
             </div>

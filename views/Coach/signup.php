@@ -13,106 +13,106 @@ unset($_SESSION['msg']);
     <?php
     require 'public/html/boostraplinks.html';
     ?>
-    <link rel="stylesheet" href="public/css/login.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
     <title>Sign Up</title>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-    <div class="container-fluid">
-        <a href="#" class="navbar-brand">VirtualGYM</a>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto">
-                <a href="#" class="nav-item nav-link ">Dashboard</a>
-                <a href="#" class="nav-item nav-link">Profile</a>
-                <a href="#" class="nav-item nav-link">Messages</a>
-                <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
-           
-             
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">VirtualGYM</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a href="#" class="nav-item nav-link ">Dashboard</a>
+                    <a href="#" class="nav-item nav-link">Profile</a>
+                    <a href="#" class="nav-item nav-link">Messages</a>
+                    <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
+
+
+                </div>
             </div>
         </div>
+    </nav>
+
+
+
+    <div class="simple-login-container">
+        <h2>SIGNUP COACH</h2>
+        <div>
+            <form action=<?php echo BASE_DIR . "Auth/addsignup/Coach" ?> method="POST">
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='fname' placeholder="First Name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='lname' placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='age' placeholder="Age(years)">
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='city' placeholder="City">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='gender' placeholder="Gender">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='tel' placeholder="Tel No">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='email' placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="password" class="form-control" name='password' placeholder="Password">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="password" class="form-control" name='cpassword' placeholder="Confirm Password">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="d-grid gap-2">
+                        <input type="submit" class="btn btn-block btn-login" name='submit' placeholder="Enter your Password">
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
-</nav>
-
-
-
-<div class="simple-login-container">
-    <h2>SIGNUP COACH</h2>
-    <div>
-        <form action=<?php echo BASE_DIR."Auth/addsignup/Coach"?> method="POST">
-
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control"  name='fname' placeholder="First Name">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='lname' placeholder="Last Name">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control"  name='age' placeholder="Age(years)">
-                </div>
-            </div>
-
-
-            
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='city' placeholder="City">
-                </div>
-            </div>
-
-            
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='gender' placeholder="Gender">
-                </div>
-            </div>
-
-            
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='tel' placeholder="Tel No">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='email' placeholder="Email">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="password" class="form-control" name='password' placeholder="Password">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="password" class="form-control" name='cpassword' placeholder="Confirm Password">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="d-grid gap-2">
-                    <input type="submit" class="btn btn-block btn-login" name='submit' placeholder="Enter your Password" >
-                </div>
-            </div>
-
-                 </form>
-    </div>
-</div>
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>

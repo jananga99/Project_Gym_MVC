@@ -14,19 +14,19 @@ $arr = $_SESSION['data'];
     <?php
     require 'public/HTML/boostraplinks.html';
     ?>
-    <link rel="stylesheet" href="public/CSS/signup.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/signup.css" ?>>
 
     <title>Customer update profile</title>
 </head>
 
 <body>
 
-    <a href=<?=BASE_DIR.'Customer/'?>>Dashboard</a>
+    <a href=<?= BASE_DIR . 'Customer/' ?>>Dashboard</a>
 
     <div class="simple-login-container">
         <h2>My Details</h2>
         <div>
-            <form action=<?=BASE_DIR.'Customer/profile/edit'?> method="POST">
+            <form action=<?= BASE_DIR . 'Customer/profile/edit' ?> method="POST">
                 <div class="row">
                     <div class="mb-3 form-group">
                         <label>First Name</label>

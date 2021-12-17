@@ -14,19 +14,19 @@ $arr = $_SESSION['data'];
     <?php
     require 'public/HTML/boostraplinks.html';
     ?>
-    <link rel="stylesheet" href="public/CSS/signup.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/signup.css" ?>>
 
     <title>Admin update profile</title>
 </head>
 
 <body>
 
-    <a href=<?=BASE_DIR.'Admin/'?>>Dashboard</a>
+    <a href=<?= BASE_DIR . 'Admin/' ?>>Dashboard</a>
 
     <div class="simple-login-container">
         <h2>My Details</h2>
         <div>
-            <form action=<?=BASE_DIR.'Admin/profile/edit'?> method="POST">
+            <form action=<?= BASE_DIR . 'Admin/profile/edit' ?> method="POST">
                 <div class="row">
                     <div class="mb-3 form-group">
                         <label>First Name</label>
@@ -49,12 +49,12 @@ $arr = $_SESSION['data'];
                 </div>
 
 
-                            
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <input type="text" class="form-control" name='city' placeholder="City">
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control" name='city' placeholder="City">
+                    </div>
                 </div>
-            </div> 
 
 
                 <div class="row">
