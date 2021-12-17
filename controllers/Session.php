@@ -46,6 +46,10 @@ class Session extends Controller{
         $this->view->render('session/registered');
     }
     
+    function created(){
+        $_SESSION['data'] = $this->model->createdSessions($_SESSION['user']['email']);
+        $this->view->render('session/created');        
+    }
 
     function create(){
         $this->view->render('session/create');
@@ -57,7 +61,8 @@ class Session extends Controller{
         die(); 
     }
 
-    function coach($action){
+    function coach($action,$p1=0){
+        
         if($action==="search"){
                      
         }elseif($action==="select") {
@@ -68,6 +73,19 @@ class Session extends Controller{
             die();            
         }elseif($action=="registered"){
 
+        }elseif($action=="view" && $p1=="my"){
+            $temp = isset($_POST['select_session']) ? $_POST['select_session'] :  $_SESSION['data']['select_session'];
+            $_SESSION['data'] = $this->model->view($temp);
+            $_SESSION['data']['select_session'] = $temp;
+            $this->view->render("session/view/creator");     
+        }elseif($action=="delete"){
+            $this->model->remove($_POST['delete_session']);
+            header("Location:".BASE_DIR."Session/created");
+            die();
+        }elseif($action=="edit"){
+            $this->model->update($_POST['session_id'],$_POST);
+            header("Location:".BASE_DIR."Session/coach/view/my");
+            die();
         }
     }
 

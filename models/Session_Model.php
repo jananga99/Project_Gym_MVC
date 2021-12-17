@@ -10,9 +10,10 @@ function __construct(){
 
 
 function update($id,$data){
+    //TODO notify all customers
     $this->db->update("Session_details",
-    array("Coach_Email"=>$data['coach'],"Session_Name"=>$data['name'],"Date_and_Time"=>$data['dt'],
-    "Duration"=>$data['duration'],"Num_Participants"=>$data['num_participants']),array("Session_id"=>$id),'sssss');
+    array("Session_Name"=>$data['session_name'],"Date"=>$data['date'],"Start_Time"=>$data['startTime'],"End_Time"=>$data['endTime'],
+    "Num_Participants"=>$data['num_participants']),array("Session_id"=>$id),'sssss');
 }
 
 function search($sort_arr=0,$orderField=0,$reverse=0){
@@ -32,6 +33,12 @@ function unregister($customer,$session_id){
     $this->db->delete("Session_registration",array("Session_id"=>$session_id,"Customer"=>$customer),"ss");
 }
 
+function remove($session_id){
+    //TODO notify all customers and delete theirs too
+    $this->db->delete("Session_details",array("Session_id"=>$session_id),'s');
+}
+
+
 function isSessionRegistered($customer,$session_id){
     if($this->db->select("Session_registration",array("Session_id"),array("Customer"=>$customer,
     "Session_id"=>$session_id),1))
@@ -49,6 +56,9 @@ function registeredSessions($email){
     return $session_arr;
 }
 
+function createdSessions($email){
+    return $this->search(array("Coach_Email"=>$email));
+}
 
 function add($coach,$data){
     //TODO check whether date is in future
