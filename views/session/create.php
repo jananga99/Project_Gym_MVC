@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
     $_POST["startTime"].=":00";
     $_POST["endTime"].=":00";
     $_SESSION['data'] = $_POST;
-    header("Location:".BASE_DIR."Session/add");
+    header("Location:".BASE_DIR."Session/create/1");
     die();
 }
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';

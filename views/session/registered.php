@@ -45,7 +45,7 @@ else    $flag=1;
             <td>".$row['Start_Time']."</td>
             <td>".$row['End_Time']."</td>
             <td>".$row['Details']."</td>
-                <td><form action=".BASE_DIR."Session/select method='POST'>
+                <td><form action=".BASE_DIR."Session/view method='POST'>
                     <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>
                     <button name='view_session'>View</button>
                     </form></td>
@@ -56,7 +56,7 @@ else    $flag=1;
     </div>";
     }else{
         echo "<p>You have not registered to any sessions yet.</p>";
-        echo "<a href=".BASE_DIR . "Session/search".">REGISTER NOW</a>";
+        echo "<a href=".BASE_DIR . "Session/customer/search".">REGISTER NOW</a>";
     }
     ?>
 

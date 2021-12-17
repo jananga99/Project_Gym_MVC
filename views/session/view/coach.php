@@ -2,14 +2,6 @@
  
 $sessionId = $_SESSION['data']['select_session'];
 $arr = $_SESSION['data'];
-$styleReg = "display:none";
-$styleAddSession = "";
-if( $_SESSION['data']['isRegistered']){
-    $styleAddSession = "display:none";
-    $styleReg = "";
-}
-$msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
-unset($_SESSION['msg']);
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +31,7 @@ unset($_SESSION['msg']);
    // require_once("../../../build/HTML/navbar.php");
     ?>
     <a href=<?=BASE_DIR."Session/search"?>>Back to search</a><br>
-    <a href=<?=BASE_DIR."Session/registered"?>>Registered Sessions</a>
+   
 <div class="simple-login-container">
     <h2>Session Details</h2>
     <div>
@@ -99,31 +91,12 @@ unset($_SESSION['msg']);
                 <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?> readonly>
             </div>
         </div> 
-
-        <div class="row" style=<?php echo $styleAddSession; ?>>
-            <div class="col-md-12 form-group">
-            <form action=<?=BASE_DIR."Session/register"?> method="POST">
-                <input type="text" class="form-control"  name='select_session' value=<?php echo $arr["Session_id"] ?> readonly style="display:none">
-                <input type="submit" class="btn btn-block btn-login" value='Register' name='add_session' >
-            </form>
-            </div>
-        </div>
-        <div class="row" style=<?php echo $styleReg; ?>>
-            <form action=<?=BASE_DIR."Session/unregister"?> method="POST">
-                <input type="text"  name='unregister_session' value=<?php echo $arr["Session_id"] ?> style="display:none" readonly>
-                <button class="btn btn-block btn-login" name="unregister" value='Unregister'  >Unregister</button>
-            </form>
-                
-        </div>
         
     </div>
 </div>
 
-
-
-
     <div class="d-flex justify-content-center" style="color:crimson">
-        <p><?= $msg ?></p>
+
     </div>
 </body>
 

@@ -31,11 +31,11 @@ unset($_SESSION['msg']);
     <?php
    // require_once("../../../build/HTML/navbar.php");
     ?>
-    <a href=<?=BASE_DIR."Session/created"?>>My Sessions</a>
+    <a href=<?=BASE_DIR."Session/view/all"?>>My Sessions</a>
 <div class="simple-login-container">
     <h2>Session Details</h2>
     <div>
-        <form action=<?=BASE_DIR."Session/coach/edit"?> method="POST">
+        <form action=<?=BASE_DIR."Session/edit"?> method="POST">
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Session Id</label>
@@ -97,7 +97,7 @@ unset($_SESSION['msg']);
 
         <div class="row" >
             <div class="col-md-12 form-group">
-            <form action=<?=BASE_DIR."Session/coach/delete"?> method="POST">
+            <form action=<?=BASE_DIR."Session/delete"?> method="POST">
                 <input type="text" class="form-control"  name='delete_session' value=<?php echo $arr["Session_id"] ?> readonly style="display:none">
                 <input type="submit" class="btn btn-block btn-login" value='Delete Session' name='delete_session_btn' >
             </form>

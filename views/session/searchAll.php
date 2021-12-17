@@ -12,7 +12,7 @@ $session_arr = $_SESSION['data'];
 </head>
 <body>
 
-<a href=<?=BASE_DIR."Customer"?>>Dashboard</a>
+<a href=<?=BASE_DIR.$_SESSION['user']['type']?>>Dashboard</a>
 
     <h2>Search for a Session</h2>
 
@@ -43,7 +43,7 @@ $session_arr = $_SESSION['data'];
                 <td>".$row['End_Time']."</td>
                 <td>".$row['Details']."</td>
                 
-                <td><form action=".BASE_DIR."Session/select method='POST'>
+                <td><form action=".BASE_DIR."Session/view method='POST'>
                     <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>
                     <button name='select'>Select</button>
                     </form></td>

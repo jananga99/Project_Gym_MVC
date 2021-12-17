@@ -43,7 +43,7 @@ else    $flag=1;
             <td>".$row['Start_Time']."</td>
             <td>".$row['End_Time']."</td>
             <td>".$row['Details']."</td>
-                <td><form action=".BASE_DIR."Session/coach/view method='POST'>
+                <td><form action=".BASE_DIR."Session/view/my method='POST'>
                     <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>
                     <button name='view_session'>View</button>
                     </form></td>
