@@ -1,0 +1,27 @@
+CREATE TABLE Session_Registration (
+    Customer varchar(255) NOT NULL,
+    Session_id varchar(255) NOT NULL,
+    Details MEDIUMTEXT
+);
+
+CREATE TABLE Session (
+    Session_id INT(10) AUTO_INCREMENT,
+    Coach_Email varchar(255) NOT NULL,
+    Session_Name varchar(255) NOT NULL,
+    Date_and_Time DATETIME NULL,
+    Duration TIME NOT NULL,
+    Num_Participants INT(5) NOT NULL,
+    PRIMARY KEY (Session_id)
+);
+
+CREATE TABLE Session_Details (
+    Session_id INT(10) AUTO_INCREMENT,
+    Coach_Email varchar(255) NOT NULL,
+    Session_Name varchar(255) NOT NULL,
+    Date DATE NOT NULL,
+    Start_Time TIME NOT NULL,
+    End_Time TIME NOT NULL,
+    Num_Participants INT(5) NOT NULL,
+    Details MEDIUMTEXT NULL,
+    PRIMARY KEY (Session_id)
+);

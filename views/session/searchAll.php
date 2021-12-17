@@ -11,6 +11,9 @@ $session_arr = $_SESSION['data'];
     <title>Search Session</title>
 </head>
 <body>
+
+<a href=<?=BASE_DIR."Customer"?>>Dashboard</a>
+
     <h2>Search for a Session</h2>
 
     <?php 
@@ -22,8 +25,10 @@ $session_arr = $_SESSION['data'];
                     <th>Session Name</th>
                     <th>Coach</th>
                     <th>Number of pariticipants</th>
-                    <th>Date and Time</th>
-                    <th>Duration</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Details</th>
                 </tr>
             </thead>
             <tbody>";
@@ -33,8 +38,10 @@ $session_arr = $_SESSION['data'];
                 <td>".$row['Session_Name']."</td>
                 <td>".$row['Coach_Email']."</td>
                 <td>".$row['Num_Participants']."</td>
-                <td>".$row['Date_and_Time']."</td>
-                <td>".$row['Duration']."</td>
+                <td>".$row['Date']."</td>
+                <td>".$row['Start_Time']."</td>
+                <td>".$row['End_Time']."</td>
+                <td>".$row['Details']."</td>
                 
                 <td><form action=".BASE_DIR."Session/select method='POST'>
                     <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>

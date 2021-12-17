@@ -1,0 +1,5 @@
+CREATE TABLE Registration (
+    Customer varchar(255) NOT NULL,
+    Coach varchar(255) NOT NULL,
+    Details MEDIUMTEXT
+);

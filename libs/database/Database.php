@@ -99,6 +99,16 @@ function update($table,$fields,$sort_arr,$bind_string){
     return;   
 } 
 
+function delete($table,$sort_arr,$bind_string=0){
+    $bind_arr=0;
+    $commd = "DELETE FROM ".$table." WHERE ".$this->create_where_stmt($sort_arr,$bind_string);
+    if($bind_string){
+        $bind_arr = array();
+        foreach($sort_arr as $val)    $bind_arr[] = $val;
+    }
+    $this->_execute($commd,$bind_string,$bind_arr);
+}
+
 
 //get an array with array values of given array
 function get_array_values($arr){

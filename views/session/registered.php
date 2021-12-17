@@ -28,19 +28,23 @@ else    $flag=1;
                 <th>Session Name</th>
                 <th>Coach</th>
                 <th>Number of pariticipants</th>
-                <th>Date and Time</th>
-                <th>Duration</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Details</th>
                 </tr>
             </thead>
             <tbody>";
         foreach($session_arr as $row){
             echo "<tr>
-                <td>".$row['Session_id']."</td>
-                <td>".$row['Session_Name']."</td>
-                <td>".$row['Coach_Email']."</td>
-                <td>".$row['Num_Participants']."</td>
-                <td>".$row['Date_and_Time']."</td>
-                <td>".$row['Duration']."</td>
+            <td>".$row['Session_id']."</td>
+            <td>".$row['Session_Name']."</td>
+            <td>".$row['Coach_Email']."</td>
+            <td>".$row['Num_Participants']."</td>
+            <td>".$row['Date']."</td>
+            <td>".$row['Start_Time']."</td>
+            <td>".$row['End_Time']."</td>
+            <td>".$row['Details']."</td>
                 <td><form action=".BASE_DIR."Session/select method='POST'>
                     <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>
                     <button name='view_session'>View</button>
@@ -50,6 +54,9 @@ else    $flag=1;
         echo "</tbody>
         </table>
     </div>";
+    }else{
+        echo "<p>You have not registered to any sessions yet.</p>";
+        echo "<a href=".BASE_DIR . "Session/search".">REGISTER NOW</a>";
     }
     ?>
 

@@ -1,0 +1,6 @@
+CREATE TABLE Report (
+    Report_id INT(10) AUTO_INCREMENT,
+    Reason varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL,
+    PRIMARY KEY (Report_id)
+);

@@ -40,7 +40,8 @@
 
         <h1 class="mb-4">Welcome</h1>
 
-        <a class="btn btn-outline-light btn-lg mb-3" href=#>Create a session</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/create" ?>>Create a session</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "FitnessTip/create" ?>>Add Fitness Tips</a>
 
 
     </div>
@@ -48,8 +49,7 @@
 </body>
 
 </nav>
-<a href=<?= BASE_DIR . "Session/create" ?>>Create a session</a>
-<a href=<?= BASE_DIR . "FitnessTip/create" ?>>Create a Fitness Tip</a>
+
 </body>
 
 

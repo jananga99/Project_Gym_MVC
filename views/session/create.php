@@ -2,8 +2,10 @@
 //2018-12-05 12:39:16
 
 if (isset($_POST['submit'])) {
-    $_POST["dateTime"].=":00";
-    $_POST["duration"].=":00";
+    print_r($_POST);
+    
+    $_POST["startTime"].=":00";
+    $_POST["endTime"].=":00";
     $_SESSION['data'] = $_POST;
     header("Location:".BASE_DIR."Session/add");
     die();
@@ -37,26 +39,45 @@ unset($_SESSION['msg']);
         <form action="" method="POST">
 
             <div class="row">
+                <label for="sessionName">Session Name</label>
                 <div class="mb-3 form-group">
-                    <input type="text" class="form-control"  name='sessionName' placeholder="Session Name">
+                    <input type="text" class="form-control"  name='sessionName' placeholder="Session Name" required>
                 </div>
             </div>
 
             <div class="row">
+                <label for="date">Date (MM/DD/YYYY)</label> 
                 <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='dateTime' placeholder="Date & Time : 20YY-MM-DD HH:MM">
+                    <input type="date" class="form-control" name='date' required >
                 </div>
             </div>
 
             <div class="row">
+                <label for="startTime">Start Time (00:00 AM)</label>
                 <div class="mb-3 form-group">
-                    <input type="text" class="form-control"  name='duration' placeholder="Duration : HH:MM">
+                    <input type="time" class="form-control" name='startTime' required >
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label for="EndTime">End Time (00:00 AM)</label>
+                <div class="mb-3 form-group">
+                    <input type="time" class="form-control"  name='endTime' required>
                 </div>
             </div>
 
             <div class="row">
+                <label for="maxParticipants">Expected number of participants</label>
                 <div class="mb-3 form-group">
-                    <input type="text" class="form-control" name='maxParticipants' placeholder="Number of expected participants">
+                    <input type="number" class="form-control" name='maxParticipants' placeholder="Number of expected participants" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="details">Details</label>
+                <div class="mb-3 form-group">
+                    <input type="text" class="form-control" name='details' placeholder="Add a brief ">
                 </div>
             </div>
 

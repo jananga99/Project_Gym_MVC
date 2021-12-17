@@ -66,24 +66,39 @@ unset($_SESSION['msg']);
          
         <div class="row">
             <div class="col-md-12 form-group">
-                <label>Date and Time</label>
-                <input type="text" class="form-control" name='date_and_time' value=<?php echo $arr["Date_and_Time"] ?> readonly>
+                <label>Date</label>
+                <input type="text" class="form-control" name='date' value=<?php echo $arr["Date"] ?> readonly>
             </div>
         </div> 
         
         <div class="row">
-        <div class="col-md-12 form-group">
-            <label>Duration</label>
-                <input type="text" class="form-control" name='duration' value=<?php echo $arr["Duration"] ?> readonly>
+            <div class="col-md-12 form-group">
+                <label>Start Time</label>
+                <input type="text" class="form-control" name='startTime' value=<?php echo $arr["Start_Time"] ?> readonly>
             </div>
-        </div>
+        </div> 
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label>End Time</label>
+                <input type="text" class="form-control" name='endTime' value=<?php echo $arr["End_Time"] ?> readonly>
+            </div>
+        </div> 
         
+
         <div class="row">
             <div class="col-md-12 form-group">
                 <label>Number of participants</label>
                 <input type="text" class="form-control" name='num_participants' value=<?php echo $arr["Num_Participants"] ?> readonly>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label>Details</label>
+                <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?> readonly>
+            </div>
+        </div> 
 
         <div class="row" style=<?php echo $styleAddSession; ?>>
             <div class="col-md-12 form-group">
@@ -94,7 +109,11 @@ unset($_SESSION['msg']);
             </div>
         </div>
         <div class="row" style=<?php echo $styleReg; ?>>
-                <button class="btn btn-block btn-login" value='Already registered.'  >Already Registered</button>
+            <form action=<?=BASE_DIR."Session/unregister"?> method="POST">
+                <input type="text"  name='unregister_session' value=<?php echo $arr["Session_id"] ?> style="display:none" readonly>
+                <button class="btn btn-block btn-login" name="unregister" value='Unregister'  >Unregister</button>
+            </form>
+                
         </div>
         
     </div>

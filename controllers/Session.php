@@ -35,6 +35,12 @@ class Session extends Controller{
         die();        
     }
 
+    function unregister(){
+        $this->model->unregister($_SESSION['user']['email'],$_POST['unregister_session']);
+        header("Location:".BASE_DIR."Session/select");
+        die();
+    }
+
     function registered(){
         $_SESSION['data'] = $this->model->registeredSessions($_SESSION['user']['email']);
         $this->view->render('session/registered');
