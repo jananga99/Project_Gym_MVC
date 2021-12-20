@@ -4,6 +4,9 @@ $sessionId = $_SESSION['data']['select_session'];
 $arr = $_SESSION['data'];
 $styleReg = "display:none";
 $styleAddSession = "";
+
+$price = 1000;
+
 if( $_SESSION['data']['isRegistered']){
     $styleAddSession = "display:none";
     $styleReg = "";
@@ -95,6 +98,13 @@ unset($_SESSION['msg']);
 
         <div class="row">
             <div class="col-md-12 form-group">
+                <label>Price</label>
+                <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"] ?> readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
                 <label>Details</label>
                 <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?> readonly>
             </div>
@@ -102,8 +112,9 @@ unset($_SESSION['msg']);
 
         <div class="row" style=<?php echo $styleAddSession; ?>>
             <div class="col-md-12 form-group">
-            <form action=<?=BASE_DIR."Session/register"?> method="POST">
+            <form action=<?=BASE_DIR."Payment/session"?> method="POST">
                 <input type="text" class="form-control"  name='select_session' value=<?php echo $arr["Session_id"] ?> readonly style="display:none">
+                <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"] ?> readonly style="display:none">
                 <input type="submit" class="btn btn-block btn-login" value='Register' name='add_session' >
             </form>
             </div>

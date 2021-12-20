@@ -2,14 +2,15 @@
 //2018-12-05 12:39:16
 
 if (isset($_POST['submit'])) {
-    print_r($_POST);
-    
     $_POST["startTime"].=":00";
     $_POST["endTime"].=":00";
+    $_POST['price']=(float) $_POST['price'];
     $_SESSION['data'] = $_POST;
-    header("Location:".BASE_DIR."Session/create/1");
+ //   header("Location:".BASE_DIR."Session/create/1");
+    header("Location:".BASE_DIR."Payment/session");
     die();
 }
+$creating_price = 100;
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 ?>
@@ -75,6 +76,13 @@ unset($_SESSION['msg']);
             </div>
 
             <div class="row">
+                <label for="price">Price($)</label>
+                <div class="mb-3 form-group">
+                    <input type="text" class="form-control" name='price' placeholder="00.00" required>
+                </div>
+            </div>            
+
+            <div class="row">
                 <label for="details">Details</label>
                 <div class="mb-3 form-group">
                     <input type="text" class="form-control" name='details' placeholder="Add a brief ">
@@ -83,6 +91,7 @@ unset($_SESSION['msg']);
 
             <div class="row">
                 <div class="d-grid gap-2">
+                    <input type="text" class="btn btn-block btn-login" name='createPrice' value=<?=$creating_price;?> style="display:none">
                     <input type="submit" class="btn btn-block btn-login" name='submit' value='Create Session'>
                 </div>
             </div>

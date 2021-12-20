@@ -28,6 +28,7 @@ $session_arr = $_SESSION['data'];
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
+                    <th>Price</th>
                     <th>Details</th>
                 </tr>
             </thead>
@@ -41,6 +42,7 @@ $session_arr = $_SESSION['data'];
                 <td>".$row['Date']."</td>
                 <td>".$row['Start_Time']."</td>
                 <td>".$row['End_Time']."</td>
+                <td>".$row['Price']."</td>
                 <td>".$row['Details']."</td>
                 
                 <td><form action=".BASE_DIR."Session/view method='POST'>

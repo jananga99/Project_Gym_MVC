@@ -13,11 +13,11 @@ function update($id,$data){
     //TODO notify all customers
     $this->db->update("Session_details",
     array("Session_Name"=>$data['session_name'],"Date"=>$data['date'],"Start_Time"=>$data['startTime'],"End_Time"=>$data['endTime'],
-    "Num_Participants"=>$data['num_participants']),array("Session_id"=>$id),'sssss');
+    "Num_Participants"=>$data['num_participants'],"Price"=>$data['price']),array("Session_id"=>$id),'sssssd');
 }
 
 function search($sort_arr=0,$orderField=0,$reverse=0){
-    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time","Num_Participants","Details");
+    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time","Num_Participants","Price","Details");
     return $this->db->select("session_details",$fields,$sort_arr,0,$orderField,$reverse);
 }
 
@@ -65,7 +65,7 @@ function add($coach,$data){
     //TODO check start Time < End Time
     //TODO any other sessions in same time span as this coach
     $this->db->insert("session_details",
-    array("Coach_Email"=>$coach,"Session_Name"=>$data['sessionName'],"Date"=>$data["date"],"Start_Time"=>$data["startTime"],"End_Time"=>$data["endTime"],"Num_Participants"=>$data["maxParticipants"],"Details"=>$data["details"]),"sssssss");
+    array("Coach_Email"=>$coach,"Session_Name"=>$data['sessionName'],"Date"=>$data["date"],"Start_Time"=>$data["startTime"],"End_Time"=>$data["endTime"],"Num_Participants"=>$data["maxParticipants"],"Price"=>$data["price"],"Details"=>$data["details"]),"ssssssds");
 }
 
 

@@ -99,7 +99,7 @@ class Session extends Controller{
                 header("Location:".BASE_DIR."Session/create");
                 die();                          
             }else
-                $this->view->render('session/create');  //Creates a session and redirected to create interface
+                $this->view->render('session/create');  //Renders session interface
         }else{
             header("Location:".BASE_DIR."Auth/login/Coach");
             die();                

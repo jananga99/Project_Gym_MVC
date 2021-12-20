@@ -87,6 +87,13 @@ $arr = $_SESSION['data'];
 
         <div class="row">
             <div class="col-md-12 form-group">
+                <label>Price</label>
+                <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"] ?> readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
                 <label>Details</label>
                 <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?> readonly>
             </div>

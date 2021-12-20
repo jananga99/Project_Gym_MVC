@@ -30,6 +30,7 @@ else    $flag=1;
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Price</th>
                 <th>Details</th>
                 </tr>
             </thead>
@@ -42,6 +43,7 @@ else    $flag=1;
             <td>".$row['Date']."</td>
             <td>".$row['Start_Time']."</td>
             <td>".$row['End_Time']."</td>
+            <td>".$row['Price']."</td>
             <td>".$row['Details']."</td>
                 <td><form action=".BASE_DIR."Session/view/my method='POST'>
                     <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>
