@@ -40,7 +40,6 @@ class Payment extends Controller
             if ($_SESSION['user']['type'] === "Customer") {        //Customer registering for a session.
                 $_SESSION['data'] = array();
                 $_SESSION['data']['select_session'] = $_POST['select_session'];
-<<<<<<< HEAD
                 $_SESSION['data']['price'] = $_POST['price'];                
                 $this->view->render('payment/temp');   
             }elseif($_SESSION['user']['type']==="Coach"){   //Coach starting a session
@@ -53,16 +52,6 @@ class Payment extends Controller
                 header("Location:".BASE_DIR."Auth/login/Coach");
                 die();               
            } 
-=======
-                $_SESSION['data']['price'] = $_POST['price'];
-                $this->view->render('payment/temp');
-            } elseif ($_SESSION['user']['type'] === "Coach") {   //Coach starting a session
-                $this->view->render('payment/temp');
-            } else {
-                header("Location:" . BASE_DIR . "Auth/login/Coach");
-                die();
-            }
->>>>>>> 16a7ffb7049792299cee7b7af605196a25042de8
         }
     }
 }
