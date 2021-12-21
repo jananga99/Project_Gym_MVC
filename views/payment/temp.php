@@ -14,15 +14,18 @@ $arr =  $_SESSION['session_create_data'];
 <body>
     <h1>TEMP PAGE UNTIL</h1>
 
-    <a href=<?= BASE_DIR . "Payment/session/1" ?>>Confirm Payment for Creating Session</a>
-    <form action=<?= BASE_DIR . "Payment/session/1" ?> method="post">
-        <label for="select_session">Session number</label>
-        <input type="text" class="form-control" name='select_session' value=<?php echo $arr["select_session"] ?> readonly>
+    <!--<form action=<?= BASE_DIR . "Payment/session/1" ?> method="post">-->
+    <?php
+    
+    if($_SESSION['data']['flag']==="create_session")
+        echo "<form action= ".BASE_DIR."Payment/pay/createSession"."  method='post'>";
+    elseif($_SESSION['data']['flag']==="register_session")
+        echo "<form action=".BASE_DIR."Payment/pay/registerSession"."  method='post'>";
 
+    ?>
         <label for="price">Price</label>
         <input type="text" class="form-control" name='price' value=<?php echo $arr["price"] ?> readonly>
-        <input type="submit" class="btn btn-block btn-login" value='Pay to register session'>
-
+        <input type="submit" class="btn btn-block btn-login" value='Enter Payment Details'>
     </form>
 
 </body>

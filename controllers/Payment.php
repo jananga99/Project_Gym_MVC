@@ -20,13 +20,22 @@ class Payment extends Controller
         }
     }
 
+    function pay($flag){
+        $_SESSION['payment_flag'] = $flag;
+        $this->view->render('payment/dash');   
+    }
+
+    function success($flag){
+        $_SESSION['back_flag'] = $flag;
+        $this->view->render('payment/success');
+    }
+
     function session($paid = 0)
     {
         if ($paid) {
             if ($_SESSION['user']['type'] === "Customer") {        //Customer paying for a session
                 //Check for payments
-                // header("Location:".BASE_DIR."Session/register");
-                $this->view->render('payment/dash');
+                header("Location:".BASE_DIR."Session/register");
                 die();
             } elseif ($_SESSION['user']['type'] === "Coach") {   //User registering for a session
                 //Check payments
@@ -40,13 +49,15 @@ class Payment extends Controller
             if ($_SESSION['user']['type'] === "Customer") {        //Customer registering for a session.
                 $_SESSION['data'] = array();
                 $_SESSION['data']['select_session'] = $_POST['select_session'];
-                $_SESSION['data']['price'] = $_POST['price'];                
+                $_SESSION['data']['price'] = $_POST['price'];   
+                $_SESSION['data']['flag'] = "register_session";             
                 $this->view->render('payment/temp');   
             }elseif($_SESSION['user']['type']==="Coach"){   //Coach starting a session
                 $_POST["startTime"].=":00";
                 $_POST["endTime"].=":00";
                 $_POST['price']=(float) $_POST['price'];                
                 $_SESSION['session_create_data'] = $_POST;
+                $_SESSION['data']['flag'] = "create_session";  
                 $this->view->render('payment/temp');         
            }else{
                 header("Location:".BASE_DIR."Auth/login/Coach");

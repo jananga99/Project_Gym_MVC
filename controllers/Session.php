@@ -45,7 +45,7 @@ class Session extends Controller{
         if($_SESSION['user']['type']==="Customer"){   
             if(isset($_POST) && isset($_POST['select_session']))
                 $this->model->register($_SESSION['user']['email'],$_POST['select_session']);
-            header("Location:".BASE_DIR."Session/view");
+            header("Location:".BASE_DIR."Payment/success/registerSession");
             die();           
         }else{
             header("Location:".BASE_DIR."Auth/login/Customer");
@@ -93,10 +93,10 @@ class Session extends Controller{
     
     function create($p1=0){
         if($_SESSION['user']['type']==="Coach"){
-            if($p1){                //Creates a session and redirected to create interface
+            if($p1){                //Creates a session 
                 if(isset($_SESSION['session_create_data']))
                     $this->model->add($_SESSION['user']['email'],$_SESSION['session_create_data']);
-                header("Location:".BASE_DIR."Session/create");
+                header("Location:".BASE_DIR."Payment/success/createSession");
                 die();                          
             }else
                 $this->view->render('session/create');  //Renders session interface
