@@ -72,7 +72,7 @@ unset($_SESSION['msg']);
                     <input type="text" class="form-control" name='tel' value=<?php echo $arr["Telephone"] ?> readonly>
                 </div>
             </div>
-            <form action=<?= BASE_DIR . "Customer/coach/add" ?> method="POST">
+            <form action=<?= BASE_DIR . "Payment/coachRegister" ?> method="POST">
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Email</label>

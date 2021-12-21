@@ -59,9 +59,9 @@ class Customer extends Controller{
             $_SESSION['data']['select_email'] = $temp;
             $this->view->render('coach/view/customer');
         }elseif ($action==="add") {
-            $this->model->addCoach($_SESSION['user']['email'],$_SESSION['data']['select_email']);
-            header("Location:".BASE_DIR."Customer/coach/select");
-            die();            
+            $this->model->addCoach($_SESSION['user']['email'],$_SESSION['data']['register_coach']);
+            header("Location:".BASE_DIR."Payment/success/coachRegister");
+            die();              
         }elseif($action=="registered"){
             $_SESSION['data'] = $this->model->registeredCoaches($_SESSION['user']['email']);
             $this->view->render('customer/coach/registered');

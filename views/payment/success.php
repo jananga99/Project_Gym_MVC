@@ -4,7 +4,9 @@ if(isset($_SESSION['back_flag'])){
     if($_SESSION['back_flag']==="createSession")
         $backAddress=BASE_DIR . "Session/create";
     elseif($_SESSION['back_flag']==="registerSession")
-        $backAddress=BASE_DIR . "Session/register";
+        $backAddress=BASE_DIR . "Session/view";
+    elseif($_SESSION['back_flag']==="coachRegister")
+        $backAddress = BASE_DIR."Customer/coach/search";
 }
 echo $backAddress;
 ?>

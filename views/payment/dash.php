@@ -5,6 +5,11 @@ if(isset($_SESSION['payment_flag'])){
         $payAddress=BASE_DIR . "Payment/session/1";
     elseif($_SESSION['payment_flag']==="registerSession")
         $payAddress=BASE_DIR . "Payment/session/1";
+    elseif($_SESSION['payment_flag']==="coachRegister")
+        $payAddress=BASE_DIR . "Payment/coachRegister/1";
+echo $payAddress;
+print_r($_SESSION['payment_flag']);
+
 }
 //echo $payAddress;
 ?>

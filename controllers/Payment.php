@@ -30,6 +30,26 @@ class Payment extends Controller
         $this->view->render('payment/success');
     }
 
+    function coachRegister($paid=0){
+        $coach_register_price =100;
+        if ($_SESSION['user']['type'] === "Customer") {
+            if($paid){
+                //Check Payments
+                header("Location:".BASE_DIR."Customer/coach/add");
+                die();
+            }else{
+                $_SESSION['data'] = array();
+                $_SESSION['data']['register_coach'] = $_POST['select_email'];
+                $_SESSION['data']['price'] = $coach_register_price;   
+                $_SESSION['data']['flag'] = "register_coach";
+                $this->view->render('payment/temp');
+            }
+        }else{
+            header("Location:" . BASE_DIR . "Auth/login/Customer");
+            die();
+        } 
+    }
+
     function session($paid = 0)
     {
         if ($paid) {
