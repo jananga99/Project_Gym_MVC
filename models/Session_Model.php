@@ -7,7 +7,32 @@ function __construct(){
 }
 
 
+//TODO : CHANGE THIS
+function getRegisterCustomersForCoach($coach){
+    return $this->db->select("Registration",array("Customer"),array("Coach"=>$coach));
+}
 
+//TODO : CHANGE THIS
+function getRegisterCustomersForSession($session_id){
+    return $this->db->select("session_registration",array("Customer"),array("Session_id"=>$session_id));
+}
+
+//Get the latest created session by logged in coach
+//TODO
+function getLatestCreatedSession($coach){
+    return $this->db->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
+}
+
+
+//Notifies $rec_type $email user about $type notification.
+function notify($rec_email,$rec_type,$type,$details){   
+    $this->db->insert("notifications",array("Receiver_Email"=>$rec_email,"Receiver_Type"=>$rec_type,"Notification_Type"=>$type,"Details"=>$details),'ssss');
+}
+
+//Returns the coach who created the session for given session  id
+function getCreatedCoach($id){
+    return $this->db->select("session_details",array("Coach_Email"),array("Session_id"=>$id),1)['Coach_Email'];    
+}
 
 function update($id,$data){
     //TODO notify all customers

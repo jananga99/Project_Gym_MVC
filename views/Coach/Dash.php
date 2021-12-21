@@ -26,7 +26,7 @@
                 <div class="navbar-nav ms-auto">
                     <a href=<?php echo BASE_DIR . "Coach/profile" ?> class="nav-item nav-link ">Dashboard</a>
                     <a href="#" class="nav-item nav-link">Profile</a>
-                    <a href="#" class="nav-item nav-link">Messages</a>
+                    <a href=<?php echo BASE_DIR . "Notification" ?> class="nav-item nav-link">Notifications</a>
                     <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
 
                     <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>

@@ -3,6 +3,7 @@
 session_start();
 require 'config/DatabaseConf.php';
 require 'config/DirConf.php';
+require 'config/NotificationConf.php';
 require 'libs/App.php';
 require 'libs/Controller.php';
 require 'libs/Model.php';
