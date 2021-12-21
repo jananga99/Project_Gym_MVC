@@ -42,9 +42,27 @@ unset($_SESSION['flags']);
     <title>Search Coach</title>
 </head>
 
+
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">VirtualGYM</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+                <a href=<?= BASE_DIR . "Customer" ?> class="nav-item nav-link ">Dashboard</a>
+                <a href="#" class="nav-item nav-link">Messages</a>
+
+
+                <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
+
+            </div>
+        </div>
+</nav>
+
 <body>
 
-    <a href=<?= BASE_DIR . "Customer" ?>>Dashboard</a>
 
     <div class="container">
 
@@ -52,7 +70,7 @@ unset($_SESSION['flags']);
 
         <div class="d-flex flex-column bd-highlight mb-3">
             <form action="" method="POST">
-                <button name="view_all">View All</button>
+                <button class="btn btn-outline-light btn-md" name="view_all">View All</button>
             </form>
 
             <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
@@ -102,11 +120,13 @@ unset($_SESSION['flags']);
         <?php
         if ($flag_all || $flag_by) {
             echo "<div>
-        <table border='2'>
+        <table  class='table table-hover' style='color:white'>
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Gender</th>
+                    <th>Select</th>
+
                 </tr>
             </thead>
             <tbody>";
@@ -116,7 +136,7 @@ unset($_SESSION['flags']);
                 <td>" . $row['Gender'] . "</td>
                 <td><form action=" . BASE_DIR . "Customer/coach/select method='POST'>
                     <input type='text' name='select_email' value=" . $row['Email'] . " readonly style='display:none'>
-                    <button name='select'>Select</button>
+                    <button class='btn btn-outline-light btn-sm' name='select'>Select</button>
                     </form></td>
             </tr>";
             }
