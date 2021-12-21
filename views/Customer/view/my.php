@@ -19,9 +19,29 @@ $arr = $_SESSION['data'];
     <title>Customer update profile</title>
 </head>
 
+
+
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">VirtualGYM</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+                <a href=<?= BASE_DIR . "Customer" ?> class="nav-item nav-link ">Dashboard</a>
+                <a href="#" class="nav-item nav-link">Messages</a>
+
+
+                <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
+
+            </div>
+        </div>
+</nav>
+
+
 <body>
 
-    <a href=<?= BASE_DIR . 'Customer/' ?>>Dashboard</a>
 
     <div class="simple-login-container">
         <h2>My Details</h2>

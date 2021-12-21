@@ -1,13 +1,13 @@
 body {
   background-image: linear-gradient(185deg, rgb(0, 24, 90), rgb(3, 179, 182));
   background-attachment: fixed;
-  font-size: 14px;
+  font-size: 16px;
   color: #fff;
 }
 .simple-login-container {
-  width: 300px;
+  width: 400px;
   max-width: 100%;
-  margin: 50px auto;
+  margin: 40px auto;
 }
 .simple-login-container h2 {
   text-align: center;
@@ -18,6 +18,11 @@ body {
   background-color: #d31e3c;
   color: #fff;
 }
+
+h2 {
+  font-size: 30px;
+}
+
 a {
   color: #fff;
 }
