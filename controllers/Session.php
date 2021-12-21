@@ -94,8 +94,8 @@ class Session extends Controller{
     function create($p1=0){
         if($_SESSION['user']['type']==="Coach"){
             if($p1){                //Creates a session and redirected to create interface
-                if(isset($_SESSION['data']))
-                    $this->model->add($_SESSION['user']['email'],$_SESSION['data']);
+                if(isset($_SESSION['session_create_data']))
+                    $this->model->add($_SESSION['user']['email'],$_SESSION['session_create_data']);
                 header("Location:".BASE_DIR."Session/create");
                 die();                          
             }else

@@ -1,5 +1,5 @@
 <?php
-    $arr = $_SESSION['data'];
+    $arr = $_SESSION['session_create_data'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -40,6 +40,10 @@ class Payment extends Controller{
                 $_SESSION['data']['price'] = $_POST['price'];                
                 $this->view->render('payment/temp');   
             }elseif($_SESSION['user']['type']==="Coach"){   //Coach starting a session
+                $_POST["startTime"].=":00";
+                $_POST["endTime"].=":00";
+                $_POST['price']=(float) $_POST['price'];                
+                $_SESSION['session_create_data'] = $_POST;
                 $this->view->render('payment/temp');         
            }else{
                 header("Location:".BASE_DIR."Auth/login/Coach");

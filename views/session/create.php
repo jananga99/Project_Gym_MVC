@@ -1,15 +1,4 @@
 <?php
-//2018-12-05 12:39:16
-
-if (isset($_POST['submit'])) {
-    $_POST["startTime"].=":00";
-    $_POST["endTime"].=":00";
-    $_POST['price']=(float) $_POST['price'];
-    $_SESSION['data'] = $_POST;
- //   header("Location:".BASE_DIR."Session/create/1");
-    header("Location:".BASE_DIR."Payment/session");
-    die();
-}
 $creating_price = 100;
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
@@ -37,7 +26,7 @@ unset($_SESSION['msg']);
 <div class="simple-login-container">
     <h2>CREATE SESSION</h2>
     <div>
-        <form action="" method="POST">
+        <form action=<?=BASE_DIR."Payment/session";?> method="POST">
 
             <div class="row">
                 <label for="sessionName">Session Name</label>
