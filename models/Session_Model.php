@@ -1,6 +1,8 @@
 <?php
 
-class Session_Model extends Model{
+require BASE_DIR."models/interfaces/Observable.php";
+
+class Session_Model extends Model implements Observable{
 
 function __construct(){
     parent::__construct();
