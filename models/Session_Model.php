@@ -1,6 +1,8 @@
 <?php
 
-require BASE_DIR."models/interfaces/Observable.php";
+require "models/Coach_Model.php";
+require "models/Customer_Model.php";
+require "models/Admin_Model.php";
 
 class Session_Model extends Model implements Observable{
 
@@ -25,22 +27,16 @@ function getLatestCreatedSession($coach){
     return $this->db->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
 }
 
-
-//Notifies $rec_type $email user about $type notification.
-function notify($rec_email,$rec_type,$type,$details){   
-    $this->db->insert("notifications",array("Receiver_Email"=>$rec_email,"Receiver_Type"=>$rec_type,"Notification_Type"=>$type,"Details"=>$details),'ssss');
-}
-
 //Returns the coach who created the session for given session  id
 function getCreatedCoach($id){
     return $this->db->select("session_details",array("Coach_Email"),array("Session_id"=>$id),1)['Coach_Email'];    
 }
 
-function update($id,$data){
+function updateDetails($id,$data){
     //TODO notify all customers
     $this->db->update("Session_details",
     array("Session_Name"=>$data['session_name'],"Date"=>$data['date'],"Start_Time"=>$data['startTime'],"End_Time"=>$data['endTime'],
-    "Num_Participants"=>$data['num_participants'],"Price"=>$data['price']),array("Session_id"=>$id),'sssssd');
+    "Num_Participants"=>$data['num_participants'],"Price"=>$data['price'],"Details"=>$data['details']),array("Session_id"=>$id),'sssssds');
 }
 
 function search($sort_arr=0,$orderField=0,$reverse=0){
@@ -97,6 +93,62 @@ function add($coach,$data){
 
 
 
+//Observable
+function notifyObservers($data){
+    $type = $data['notification_type'];  
+    if($type===NOTIFICATION_SESSION_REGISTER || $type===NOTIFICATION_SESSION_UNREGISTER){
+        $coach = $this->getCreatedCoach($data['session_id']);
+        $details = $data['customer_email']." Customer ";
+        if($type===NOTIFICATION_SESSION_UNREGISTER)   $details.= "unregistered from";
+        else   $details.= "registered for";
+        $details.=" the Session (Session id = ".$data['session_id']." )";
+        $data = array();
+        $data['rec_email'] = $coach;
+        $data['details'] = $details;
+        $data['type'] = $type;
+        $observer = new Coach_Model();
+        $observer->update($data);    
+    }elseif($type===NOTIFICATION_SESSION_CREATE){
+        $registered_customers =  $this->getRegisterCustomersForCoach($data['coach_email']);
+        $session_id = $this->getLatestCreatedSession($data['coach_email']);
+        foreach($registered_customers as $reg_customer){
+            $details = $data['coach_email']." Coach created a Session (id = ".$session_id." )";  
+            $data = array();
+            $data['rec_email'] = $reg_customer['Customer'];
+            $data['details'] = $details;
+            $data['type'] = $type;
+            $observer = new Customer_Model();
+            $observer->update($data);                      
+        }
+    }elseif($type===NOTIFICATION_SESSION_DELETE){
+        
+        $registered_customers =  $this->getRegisterCustomersForSession($data['session_id']);
+        //TODO
+        foreach($registered_customers as $reg_customer){
+            $details = $data['coach_email']." Coach delected the Session (id = ".$data['session_id']." ). You will be refunded.";  
+            $data1 = array();
+            $data1['rec_email'] = $reg_customer['Customer'];
+            $data1['details'] = $details;
+            $data1['type'] = $type;
+            $observer = new Customer_Model();
+            $observer->update($data1);
+        }      
+    }elseif($type===NOTIFICATION_SESSION_EDIT){
+        
+        $registered_customers =  $this->getRegisterCustomersForSession($data['session_id']);
+        //TODO
+        foreach($registered_customers as $reg_customer){
+            $details = $data['coach_email']." Coach edited the Session (id = ".$data['session_id']." )";  
+            $data1 = array();
+            $data1['rec_email'] = $reg_customer['Customer'];
+            $data1['details'] = $details;
+            $data1['type'] = $type;
+            $observer = new Customer_Model();
+            $observer->update($data1);
+        }      
+    }
+
+}
 
 
 

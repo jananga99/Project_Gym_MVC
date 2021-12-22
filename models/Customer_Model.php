@@ -11,7 +11,7 @@ function getData($email){
     return $this->db->select("Customer",0,array("Email"=>$email),1);
 }
 
-function update($email,$data){
+function updateDetails($email,$data){
     $this->db->update("Customer",
     array("LastName"=>$data['lname'],"FirstName"=>$data['fname'],"Age"=>$data['age'],
     "Gender"=>$data['gender'],"Telephone"=>$data['tel']),array("Email"=>$data['email']),'ssdss');
@@ -45,6 +45,12 @@ function registeredCoaches($email){
     }
     return $coach_arr;
 }
+
+//Observer
+public function update($data){
+    $this->db->insert("notifications",array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Customer","Notification_Type"=>$data['type'],"Details"=>$data['details']),'ssss');
+}
+
 
 
 

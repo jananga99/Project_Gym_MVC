@@ -26,7 +26,7 @@ class Customer extends Controller{
             }  
         }else if($action==="edit"){
             if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Customer"){
-                $this->model->update($_SESSION['user']['email'],$_POST);
+                $this->model->updateDetails($_SESSION['user']['email'],$_POST);
                 header("Location:".BASE_DIR."customer/profile");
                 die();
             }else{

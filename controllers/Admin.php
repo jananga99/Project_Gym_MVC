@@ -26,7 +26,7 @@ class Admin extends Controller{
             }  
         }else if($action==="edit"){
             if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Admin"){
-                $this->model->update($_SESSION['user']['email'],$_POST);
+                $this->model->updateDetails($_SESSION['user']['email'],$_POST);
                 header("Location:".BASE_DIR."admin/profile");
                 die();
             }else{

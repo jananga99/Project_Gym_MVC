@@ -7,6 +7,7 @@ class Coach extends Controller{
     }
 
     function index(){
+        
         if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Coach")
             $this->view->render('coach/Dash');
         else{
@@ -26,7 +27,7 @@ class Coach extends Controller{
             }  
         }else if($action==="edit"){
             if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Coach"){
-                $this->model->update($_SESSION['user']['email'],$_POST);
+                $this->model->updateDetails($_SESSION['user']['email'],$_POST);
                 header("Location:".BASE_DIR."coach/profile");
                 die();
             }else{
