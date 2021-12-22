@@ -1,24 +1,30 @@
 <?php
-require 'ObjectPool.php';
+
 
 class Database{
 
-function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD){
-    if($DB_TYPE==='mysql'){
-        $this->_create($DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD);        
-    }
-}
+private static $instance;
 
-private function _create($DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD){
+private function __construct(){}
+
+public function create($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASSWORD){
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     try {
+        if(!($DB_TYPE==="mysql"))
+            throw new Exception('Not a mysql database.');
         $this->db = new mysqli($DB_HOST,$DB_USER,$DB_PASSWORD,$DB_NAME);
         $this->db->set_charset("utf8mb4");
-        return $this->db;
     } catch(Exception $e) {
         error_log($e->getMessage());
         exit('Error connecting to database'); //Should be a message a typical user could understand
     }        
+}
+
+//Singleton Design Pattern
+public static function getInstance(){
+    if(!isset(self::$instance))
+        self::$instance = new Database();
+    return self::$instance;;
 }
 
 private function _execute($commd,$bind_string=0,$bind_arr=0){
