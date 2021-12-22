@@ -1,9 +1,11 @@
 <?php
 
 class Customer_Model extends Model{
-
-function __construct(){
+    
+function __construct($mediator){
     parent::__construct();
+    $this->messageMediator = $mediator;    //TODO
+    $this->email=0 ;                                     //TODO
 }
 
 
@@ -47,10 +49,14 @@ function registeredCoaches($email){
 }
 
 //Observer
-public function update($data){
+function update($data){
     $this->db->insert("notifications",array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Customer","Notification_Type"=>$data['type'],"Details"=>$data['details']),'ssss');
 }
 
+//Mediator
+function receieveMessage($data){       //TODO
+    $this->db->insert("messages",array("Receiver_Email"=>$this->email,"Sender_Email"=>$data['send_email'],"Details"=>$data['details']),'sss');    
+}
 
 
 

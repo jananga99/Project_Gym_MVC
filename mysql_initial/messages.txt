@@ -1,0 +1,9 @@
+CREATE TABLE Messages (
+    Message_id INT(10) AUTO_INCREMENT,
+    Receiver_Email varchar(255) NOT NULL,
+    Sender_Email varchar(255) NOT NULL,
+    Mark_As_Read INT(1) DEFAULT 0,
+    Delected INT(1) DEFAULT 0,
+    Details varchar(255) NOT NULL,
+    PRIMARY KEY (Message_id)
+);

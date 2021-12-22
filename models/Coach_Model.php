@@ -2,8 +2,10 @@
 
 class Coach_Model extends Model implements Observer{
 
-function __construct(){
+function __construct($mediator){
     parent::__construct();
+    $this->messageMediator = $mediator;    //TODO   
+    $this->email=0; 
 }
 
 function getData($email){
@@ -27,6 +29,10 @@ public function update($data){
     $this->db->insert("notifications",array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Coach","Notification_Type"=>$data['type'],"Details"=>$data['details']),'ssss');
 }
 
+//Mediator
+function sendMessage($data){       //TODO     
+    $this->messageMediator->sendMessage($data,$this);
+}
 
 
 }

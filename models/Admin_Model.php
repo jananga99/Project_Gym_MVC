@@ -2,8 +2,9 @@
 
 class Admin_Model extends Model{
 
-function __construct(){
+function __construct($mediator){
     parent::__construct();
+    $this->messageMediator = $mediator;    //TODO    
 }
 
 function getData($email){

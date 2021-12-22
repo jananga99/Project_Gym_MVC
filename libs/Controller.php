@@ -11,7 +11,10 @@ class Controller{
         if(file_exists($path)){
             require $path;
             $className = $modelName.'_Model';
-            $this->model = new $className();
+            if($modelName==="Customer" || $modelName==="Coach" || $modelName==="Admin")
+                $this->model = new $className(new MessageMediator());
+            else
+                $this->model = new $className();
         }
     }
 
