@@ -2,7 +2,7 @@
 
 class Customer_Model extends Model{
     
-function __construct($mediator){
+function __construct($mediator=0){
     parent::__construct();
     $this->messageMediator = $mediator;    //TODO
     $this->email=0 ;                                     //TODO
