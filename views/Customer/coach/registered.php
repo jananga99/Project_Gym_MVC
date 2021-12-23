@@ -67,8 +67,8 @@ $coach_arr = $_SESSION['data'];
                 echo "<tr>
                     <td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>
                     <td>" . $row['Gender'] . "</td>
-                    <td><form action='' method='POST'>
-                        <input type='text' name='select_email' value=" . $row['Email'] . " readonly style='display:none'>
+                    <td><form action=".BASE_DIR."Coach/profile/view"." method='POST'>
+                        <input type='text' name='coach_email' value=" . $row['Email'] . " readonly style='display:none'>
                         <button class='btn btn-outline-light btn-sm' name='view_coach'>View</button>
                         </form></td>
                 </tr>";

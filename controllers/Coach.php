@@ -18,9 +18,15 @@ class Coach extends Controller{
 
     function profile($action="view"){
         if($action==="view"){
-            if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Coach"){
-                $_SESSION['data'] = $this->model->getData($_SESSION['user']['email']);
-                $this->view->render('coach/view/my');
+            if(isset($_SESSION['user']) && isset($_SESSION['user']['type'])){
+                if($_SESSION['user']['type']==="Coach"){
+                    $_SESSION['data'] = $this->model->getData($_SESSION['user']['email']);
+                    $this->view->render('coach/view/my');    
+                }else{
+                    $_SESSION['data'] = $this->model->getData($_POST['coach_email']);
+                    $_SESSION['data']['isRegistered'] = 1;
+                    $this->view->render('coach/view/customer');    
+                }
             }else{
                 header("Location:".BASE_DIR."Auth/login/Coach");
                 die();
