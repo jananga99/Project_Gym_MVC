@@ -36,7 +36,8 @@
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/search" ?>>All Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "FitnessTip/create" ?>>Add Fitness Tips</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Message/send" ?>>Send Messages</a>
-
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "WorkoutPlan/create" ?>>CreatePlan</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "WorkoutPlan/view/1" ?>>View Work out Plans</a>
 
     </div>
 
