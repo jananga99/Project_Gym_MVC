@@ -16,16 +16,15 @@
 
 
     <?php
-        $menu_arr = array(
-            "Dashboard"=>"#",
-            "Profile"=>BASE_DIR . "Customer/profile",
-            "Notifications"=>BASE_DIR . "Notification",
-            "Reports"=>"#",
-            "Messages"=>BASE_DIR . "Message",
-            "Log Out"=>BASE_DIR . "Auth/logout"
-        );
-        $navbar =  new Navbar($menu_arr);
-        echo $navbar->get();
+    $menu_arr = array(
+        "Profile" => BASE_DIR . "Customer/profile",
+        "Notifications" => BASE_DIR . "Notification",
+        "Reports" => "#",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
     ?>
 
     <div class="container">
@@ -45,5 +44,12 @@
 
     </div>
 
+
+
+</body>
+
+<?php
+require 'public/html/footer.html';
+?>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['submit'])) {
     $_SESSION['data'] = $_POST;
-    header("Location:".BASE_DIR."FitnessTip/add");
+    header("Location:" . BASE_DIR . "FitnessTip/add");
 }
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
@@ -15,48 +15,49 @@ unset($_SESSION['msg']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <?php
-    include("public/HTML/boostraplinks.html");
+    require("public/HTML/boostraplinks.html");
     ?>
-    <link rel="stylesheet" href="public/CSS/signup.css">
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/search.css" ?>>
 
     <title>Add a fitness tip</title>
 </head>
 
 <body>
+    <a href=<?= BASE_DIR . "Coach" ?>>Dashboard</a>
 
-<div class="simple-login-container">
+    <div class="container">
 
-<a href=<?=BASE_DIR."Coach"?>>Dashboard</a>
 
-<h2>Add a fitness tip</h2>
-    <div>
-        <form action="" method="POST">
 
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <input type="text" class="form-control"  name='tip' placeholder="Enter tip">
+        <h2 class="m-5">Add a fitness tip</h2>
+        <div>
+            <form action="" method="POST">
+
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='tip' placeholder="Enter tip">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="mb-3 form-group">
-                    <label for="Gender">For which Gender</label>
-                    <select name="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Both">Not specific</option>
-                    </select><br>
+                <div class="row">
+                    <div class="mb-3 form-group">
+                        <label for="Gender">For which Gender</label>
+                        <select name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Both">Not specific</option>
+                        </select><br>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="d-grid gap-2">
-                    <input type="submit" class="btn btn-block btn-login" name='submit' value='add_tip'>
+                <div class="row">
+                    <div class="m-3">
+                        <input type="submit" class="btn btn-primary" name='submit' value='add fitness tip'>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>   
 
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>

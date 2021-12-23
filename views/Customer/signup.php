@@ -103,6 +103,10 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
 </body>
 
 </html>

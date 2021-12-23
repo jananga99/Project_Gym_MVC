@@ -69,12 +69,3 @@ class Customer extends Controller{
     }
 
 }
-
-
-
-
-
-
-
-
-?>
