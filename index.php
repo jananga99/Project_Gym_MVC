@@ -11,6 +11,7 @@ require 'libs/View.php';
 require 'libs/database/lib_database.php';
 require 'libs/interfaces/lib_interface.php';
 require 'libs/mediator/MessageMediator.php';
+require 'libs/flyweight/lib_flyweight.php';
 
 //require "models/Coach_Model.php";
 //require "models/Customer_Model.php";
