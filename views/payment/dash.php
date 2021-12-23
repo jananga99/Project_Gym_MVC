@@ -65,14 +65,16 @@ if (isset($_SESSION['payment_flag'])) {
                             <p class="text mb-1">Card Number</p> <input class="form-control mb-3" type="text" placeholder="1234 5678 435678">
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="d-flex flex-column">
-                            <p class="text mb-1">Expiry</p> <input class="form-control mb-3" type="text" placeholder="MM/YYYY">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1">Expiry</p> <input class="form-control mb-3" type="text" placeholder="MM/YYYY">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="d-flex flex-column">
-                            <p class="text mb-1">CVV/CVC</p> <input class="form-control mb-3 pt-2 " type="password" placeholder="***">
+                        <div class="col">
+                            <div class="d-flex flex-column">
+                                <p class="text mb-1">CVV/CVC</p> <input class="form-control mb-3 pt-2 " type="password" placeholder="***">
+                            </div>
                         </div>
                     </div>
                     <!--        <div class="col-12">

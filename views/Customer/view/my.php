@@ -21,26 +21,18 @@ $arr = $_SESSION['data'];
 
 
 
-<nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-    <div class="container-fluid">
-        <a href="#" class="navbar-brand">VirtualGYM</a>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto">
-                <a href=<?= BASE_DIR . "Customer" ?> class="nav-item nav-link ">Dashboard</a>
-                <a href="#" class="nav-item nav-link">Messages</a>
-
-
-                <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
-
-            </div>
-        </div>
-</nav>
-
 
 <body>
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . "Customer",
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
 
     <div class="simple-login-container">
@@ -116,6 +108,11 @@ $arr = $_SESSION['data'];
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
 </body>
 
 </html>
