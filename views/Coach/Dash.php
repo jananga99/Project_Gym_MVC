@@ -15,16 +15,15 @@
 <body>
 
     <?php
-        $menu_arr = array(
-            "Dashboard"=>BASE_DIR . "Coach/profile",
-            "Profile"=>BASE_DIR . "Coach/profile",
-            "Notifications"=>BASE_DIR . "Notification",
-            "Reports"=>"#",
-            "Messages"=>BASE_DIR . "Message",
-            "Log Out"=>BASE_DIR . "Auth/logout"
-        );
-        $navbar =  new Navbar($menu_arr);
-        echo $navbar->get();
+    $menu_arr = array(
+        "Profile" => BASE_DIR . "Coach/profile",
+        "Notifications" => BASE_DIR . "Notification",
+        "Reports" => "#",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
     ?>
 
     <div class="container">
@@ -41,9 +40,11 @@
 
     </div>
 
-</body>
 
-</nav>
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 
 </body>
 

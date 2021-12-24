@@ -1,3 +1,3 @@
 <?php
 
-define('BASE_DIR', '/myphp/sem2project/Project_Gym_MVC/');
+define('BASE_DIR', '/Project_Gym_MVC/');
