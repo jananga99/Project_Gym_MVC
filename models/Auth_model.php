@@ -11,7 +11,7 @@ function getData(){
 }
 
 function validateLogIn($type,$email,$password){
-    return $this->db->select("Customer",array("Email"),array("Email"=>$email,"password"=>sha1($password)),1,0,0,"ss");
+    return $this->db->select($type,array("Email"),array("Email"=>$email,"password"=>sha1($password)),1,0,0,"ss");
 }
 
 function validateSignup($email){
