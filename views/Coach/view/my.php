@@ -21,7 +21,18 @@ $arr = $_SESSION['data'];
 
 <body>
 
-    <a href=<?= BASE_DIR . 'Coach/' ?>>Dashboard</a>
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . "Coach/",
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
+
+    <!-- <a href=<?= BASE_DIR . 'Coach/' ?>>Dashboard</a> -->
 
     <div class="simple-login-container">
         <h2>My Details</h2>
@@ -94,6 +105,11 @@ $arr = $_SESSION['data'];
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>
