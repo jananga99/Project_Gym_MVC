@@ -19,11 +19,22 @@ unset($_SESSION['msg']);
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/search.css" ?>>
 
-    <title>Add a fitness tip</title>
+    <title>Add fitness tips</title>
 </head>
 
 <body>
-    <a href=<?= BASE_DIR . "Coach" ?>>Dashboard</a>
+    <!-- <a href=<?= BASE_DIR . "Coach" ?>>Dashboard</a> -->
+
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . "Coach/",
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
     <div class="container">
 
@@ -62,6 +73,12 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>

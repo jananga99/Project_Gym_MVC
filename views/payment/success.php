@@ -25,17 +25,35 @@ if (isset($_SESSION['back_flag'])) {
 </head>
 
 <body>
-    <div class="container">
 
-        <div class="m-6">
-            <h1>PAYMENT SUCCESS</h1>
+    <body>
+
+        <?php
+        $menu_arr = array(
+            "Dashboard" => BASE_DIR . $_SESSION['user']['type'],
+            "Log Out" => BASE_DIR . "Auth/logout"
+        );
+        $navbar =  new Navbar($menu_arr);
+        echo $navbar->get();
+        ?>
+
+
+
+        <div class="container">
+
+            <div class="m-6">
+                <h1>PAYMENT SUCCESS</h1>
+            </div>
+
+            <a class="btn btn-primary" href=<?= $backAddress; ?>>Go back to registerd session</a>
+
         </div>
 
-        <a class="btn btn-primary" href=<?= $backAddress; ?>>Go back to registerd session</a>
+        <?php
+        require 'public/html/footer.html';
+        ?>
 
-    </div>
 
-
-</body>
+    </body>
 
 </html>

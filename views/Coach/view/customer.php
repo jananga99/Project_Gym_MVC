@@ -26,9 +26,21 @@ unset($_SESSION['msg']);
 </head>
 
 <body>
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . "Customer",
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Back" => BASE_DIR . "Customer/coach/search",
 
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
+    <!-- 
     <a href=<?= BASE_DIR . 'Customer/coach/search' ?>>Back to search</a><br>
-    <a href=<?= BASE_DIR . 'Customer/coach/registered' ?>>My Coaches</a>
+    <a href=<?= BASE_DIR . 'Customer/coach/registered' ?>>My Coaches</a> -->
     <div class="simple-login-container">
         <h2>Coach Details</h2>
         <div>
@@ -87,8 +99,10 @@ unset($_SESSION['msg']);
                     </div>
                 </div>
             </form>
-            <div class="row" style=<?php echo $styleReg; ?>>
-                <button class="btn btn-block btn-login" value='Already registered.'>Already Registered</button>
+            <div class="row m-3" style=<?php echo $styleReg; ?>>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-block btn-login" value='Already registered.'>Already Registered</button>
+                </div>
             </div>
 
         </div>
@@ -100,6 +114,11 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>

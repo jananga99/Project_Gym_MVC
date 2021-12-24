@@ -15,6 +15,15 @@
 </head>
 
 <body>
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['user']['type'],
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
+
 
     <div class="container">
         <h1>TEMP PAGE UNTIL</h1>
@@ -40,6 +49,10 @@
             </form>
         </div>
     </div>
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>
