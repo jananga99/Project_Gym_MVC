@@ -8,7 +8,7 @@ class Coach_Controller extends Controller{
 
     function index(){
         
-        if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Coach")
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach")
             $this->view->render('coach/Dash');
         else{
             header("Location:".BASE_DIR."Auth/login/Coach");
@@ -16,11 +16,16 @@ class Coach_Controller extends Controller{
         } 
     }
 
+    //Renders Coach creating page
+    function create(){
+        $this->view->render('Coach/auth/create');
+    }    
+
     function profile($action="view"){
         if($action==="view"){
-            if(isset($_SESSION['user']) && isset($_SESSION['user']['type'])){
-                if($_SESSION['user']['type']==="Coach"){
-                    $_SESSION['data'] = $this->model->getData($_SESSION['user']['email']);
+            if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type'])){
+                if($_SESSION['logged_user']['type']==="Coach"){
+                    $_SESSION['data'] = $this->model->getData($_SESSION['logged_user']['email']);
                     $this->view->render('coach/view/my');    
                 }else{
                     $_SESSION['data'] = $this->model->getData($_POST['coach_email']);
@@ -32,8 +37,8 @@ class Coach_Controller extends Controller{
                 die();
             }  
         }else if($action==="edit"){
-            if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Coach"){
-                $this->model->updateDetails($_SESSION['user']['email'],$_POST);
+            if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+                $this->model->updateDetails($_SESSION['logged_user']['email'],$_POST);
                 header("Location:".BASE_DIR."coach/profile");
                 die();
             }else{

@@ -26,7 +26,7 @@ $session_arr = $_SESSION['data'];
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-                    <a href=<?= BASE_DIR . $_SESSION['user']['type'] ?> class="nav-item nav-link ">Dashboard</a>
+                    <a href=<?= BASE_DIR . $_SESSION['logged_user']['type'] ?> class="nav-item nav-link ">Dashboard</a>
                     <a href="#" class="nav-item nav-link">Messages</a>
 
 
@@ -36,7 +36,7 @@ $session_arr = $_SESSION['data'];
             </div>
     </nav>
 
-    <!-- <a href=<?= BASE_DIR . $_SESSION['user']['type'] ?>>Dashboard</a> -->
+    <!-- <a href=<?= BASE_DIR . $_SESSION['logged_user']['type'] ?>>Dashboard</a> -->
 
     <div class='container'>
         <h2>Search for a Session</h2>

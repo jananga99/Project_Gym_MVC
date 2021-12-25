@@ -7,7 +7,7 @@ class FitnessTip_Controller extends Controller{
     }
 
     function index(){
-        if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Customer"){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
             header("Location:".BASE_DIR."FitnessTip/search");
             die(); 
         }else{

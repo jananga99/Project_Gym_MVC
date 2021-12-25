@@ -9,6 +9,7 @@ CREATE TABLE Customer (
     Telephone varchar(100),
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Email)
 );
 
@@ -22,6 +23,7 @@ CREATE TABLE Coach (
     Telephone varchar(100) NOT NULL,
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Email)
 );
 
@@ -35,48 +37,10 @@ CREATE TABLE Admin (
     Telephone varchar(100) NOT NULL,
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Email)
 );
 
-CREATE TABLE Registration (
-    Customer varchar(255) NOT NULL,
-    Coach varchar(255) NOT NULL,
-    Details MEDIUMTEXT
-);
 
-CREATE TABLE Fitness_tips (
-    Tip_id INT(10) AUTO_INCREMENT,
-    Tip varchar(255) NOT NULL,
-    for_which_gender varchar(15) NOT NULL,
-    Details MEDIUMTEXT,
-    PRIMARY KEY (Tip_id)
-);
-
-INSERT INTO `fitness_tips`(`Tip`, `for_which_gender`, `Details`) VALUES ('Do plank 30 minutes','Male','');
-INSERT INTO `fitness_tips`(`Tip`, `for_which_gender`, `Details`) VALUES ('Do squat 45 minutes','FeMale','');
-INSERT INTO `fitness_tips`(`Tip`, `for_which_gender`, `Details`) VALUES ('Do 25 push ups','Both','');
-
-CREATE TABLE Report (
-    Report_id INT(10) AUTO_INCREMENT,
-    Reason varchar(255) NOT NULL,
-    Email varchar(255) NOT NULL,
-    PRIMARY KEY (Report_id)
-);
-
-CREATE TABLE Session_Registration (
-    Customer varchar(255) NOT NULL,
-    Session_id varchar(255) NOT NULL,
-    Details MEDIUMTEXT
-);
-
-CREATE TABLE Session (
-    Session_id INT(10) AUTO_INCREMENT,
-    Coach_Email varchar(255) NOT NULL,
-    Session_Name varchar(255) NOT NULL,
-    Date_and_Time DATETIME NULL,
-    Duration TIME NOT NULL,
-    Num_Participants INT(5) NOT NULL,
-    PRIMARY KEY (Session_id)
-);
 
 

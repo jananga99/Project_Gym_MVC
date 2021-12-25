@@ -9,6 +9,7 @@ CREATE TABLE Customer (
     Telephone varchar(100),
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Email)
 );
 
@@ -22,6 +23,7 @@ CREATE TABLE Coach (
     Telephone varchar(100) NOT NULL,
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Email)
 );
 
@@ -35,6 +37,7 @@ CREATE TABLE Admin (
     Telephone varchar(100) NOT NULL,
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Email)
 );
 

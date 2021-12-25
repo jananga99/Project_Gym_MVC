@@ -32,68 +32,81 @@ unset($_SESSION['msg']);
                     <a href="#" class="nav-item nav-link">Profile</a>
                     <a href="#" class="nav-item nav-link">Messages</a>
                     <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
+
+
                 </div>
             </div>
         </div>
     </nav>
 
+
+
     <div class="simple-login-container">
-        <h2>SIGNUP CUSTOMER</h2>
+        <h2>SIGNUP COACH</h2>
         <div>
-            <form action=<?php echo BASE_DIR . "Auth/addsignup/Customer" ?> method="POST">
+            <form action=<?php echo BASE_DIR . "Factory/coach" ?> method="POST">
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='fname' placeholder="First Name">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='lname' placeholder="Last Name">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='age' placeholder="Age(years)">
                     </div>
                 </div>
 
+
+
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='city' placeholder="City">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='gender' placeholder="Gender">
                     </div>
                 </div>
 
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='tel' placeholder="Tel No">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='email' placeholder="Email">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="password" class="form-control" name='password' placeholder="Password">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="mb-3  form-group">
+                    <div class="mb-3 form-group">
                         <input type="password" class="form-control" name='cpassword' placeholder="Confirm Password">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="d-grid gap-2  form-group">
-                        <input type="submit" class="btn btn-block btn-login" value='Sign Up' name='submit' placeholder="Enter your Password">
+                    <div class="d-grid gap-2">
+                        <input type="submit" class="btn btn-block btn-login" name='submit' placeholder="Enter your Password">
                     </div>
                 </div>
 
@@ -104,9 +117,11 @@ unset($_SESSION['msg']);
         <p><?= $msg ?></p>
     </div>
 
+
     <?php
     require 'public/html/footer.html';
     ?>
+
 </body>
 
 </html>

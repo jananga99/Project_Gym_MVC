@@ -21,7 +21,7 @@ else    $flag = 1;
 
 <?php
 $menu_arr = array(
-    "Dashboard" => BASE_DIR . $_SESSION['user']['type'],
+    "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
     "Messages" => BASE_DIR . "Message",
     "Log Out" => BASE_DIR . "Auth/logout"
 );

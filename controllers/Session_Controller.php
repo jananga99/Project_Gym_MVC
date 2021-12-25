@@ -7,7 +7,7 @@ class Session_Controller extends Controller{
     }
 
     function index(){
-        if(isset($_SESSION['user']) && $_SESSION['user']['type']==="Customer"){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
             header("Location:".BASE_DIR."Session/customer/search");
             die(); 
         }else{
@@ -18,8 +18,8 @@ class Session_Controller extends Controller{
 
     //Renders registered sessions by a customer
     function registered(){
-        if($_SESSION['user']['type']==="Customer"){
-            $_SESSION['data'] = $this->model->registeredSessions($_SESSION['user']['email']);
+        if($_SESSION['logged_user']['type']==="Customer"){
+            $_SESSION['data'] = $this->model->registeredSessions($_SESSION['logged_user']['email']);
             $this->view->render('session/registered');  
         }else{
             header("Location:".BASE_DIR."Auth/login/Customer");
@@ -30,13 +30,13 @@ class Session_Controller extends Controller{
     //Unregister current customer from selected seesion and redirects to selected session view.
     //Observable
     function unregister(){
-        if($_SESSION['user']['type']==="Customer"){    
+        if($_SESSION['logged_user']['type']==="Customer"){    
             if(isset($_POST) && isset($_POST['unregister_session'])){  
-                $this->model->unregister($_SESSION['user']['email'],$_POST['unregister_session']);
+                $this->model->unregister($_SESSION['logged_user']['email'],$_POST['unregister_session']);
                 $data=array();
                 $data['session_id'] =  $_SESSION['data']['select_session'];
                 $data['notification_type'] = NOTIFICATION_SESSION_UNREGISTER;
-                $data['customer_email'] = $_SESSION['user']['email'];
+                $data['customer_email'] = $_SESSION['logged_user']['email'];
                 $this->model->notifyObservers($data); 
             }
             header("Location:".BASE_DIR."Session/view");
@@ -50,13 +50,13 @@ class Session_Controller extends Controller{
     //register current customer from selected seesion and redirects to selected session view.
     //Observable
     function register(){
-        if($_SESSION['user']['type']==="Customer"){ 
+        if($_SESSION['logged_user']['type']==="Customer"){ 
             if(isset($_SESSION['data']) && isset($_SESSION['data']['select_session'])){
-                $this->model->register($_SESSION['user']['email'],$_SESSION['data']['select_session']);
+                $this->model->register($_SESSION['logged_user']['email'],$_SESSION['data']['select_session']);
                 $data=array();
                 $data['session_id'] =  $_SESSION['data']['select_session'];
                 $data['notification_type'] = NOTIFICATION_SESSION_REGISTER;
-                $data['customer_email'] = $_SESSION['user']['email'];
+                $data['customer_email'] = $_SESSION['logged_user']['email'];
                 $this->model->notifyObservers($data);               
             }    
             header("Location:".BASE_DIR."Payment/success/registerSession");
@@ -68,13 +68,13 @@ class Session_Controller extends Controller{
     }
 
     function create($p1=0){
-        if($_SESSION['user']['type']==="Coach"){
+        if($_SESSION['logged_user']['type']==="Coach"){
             if($p1){                //Creates a session 
                 if(isset($_SESSION['session_create_data'])){
-                    $this->model->add($_SESSION['user']['email'],$_SESSION['session_create_data']);
+                    $this->model->add($_SESSION['logged_user']['email'],$_SESSION['session_create_data']);
                     $data=array();
                     $data['notification_type'] = NOTIFICATION_SESSION_CREATE;
-                    $data['coach_email'] = $_SESSION['user']['email'];
+                    $data['coach_email'] = $_SESSION['logged_user']['email'];
                     $this->model->notifyObservers($data);                       
                 }
                 header("Location:".BASE_DIR."Payment/success/createSession");
@@ -89,15 +89,15 @@ class Session_Controller extends Controller{
 
     //Renders selected session for user view
     function view($p1=0){
-        if($_SESSION['user']['type']==="Customer"){
+        if($_SESSION['logged_user']['type']==="Customer"){
             $temp = isset($_POST['select_session']) ? $_POST['select_session'] :  $_SESSION['data']['select_session'];
             $_SESSION['data'] = $this->model->view($temp);
-            $_SESSION['data']['isRegistered'] = $this->model->isSessionRegistered($_SESSION['user']["email"],$temp);
+            $_SESSION['data']['isRegistered'] = $this->model->isSessionRegistered($_SESSION['logged_user']["email"],$temp);
             $_SESSION['data']['select_session'] = $temp;
             $this->view->render('session/view/customer');
-        }elseif($_SESSION['user']['type']==="Coach"){
+        }elseif($_SESSION['logged_user']['type']==="Coach"){
             if($p1==="all"){    //All sessions created by logged in coach
-                $_SESSION['data'] = $this->model->createdSessions($_SESSION['user']['email']);
+                $_SESSION['data'] = $this->model->createdSessions($_SESSION['logged_user']['email']);
                 $this->view->render('session/created');    
             }else{       
                 //TODO check logged coach is the creator of selected session
@@ -115,7 +115,7 @@ class Session_Controller extends Controller{
 
     //Renders search session interface.
     function search(){
-        if($_SESSION['user']['type']==="Customer" || $_SESSION['user']['type']==="Coach"){
+        if($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach"){
             $_SESSION['data'] =  $this->model->search();
             $this->view->render('session/searchAll');         
         }else{
@@ -126,11 +126,11 @@ class Session_Controller extends Controller{
 
     //Deletes a session by created coach and redirected to all sessions interface
     function delete(){
-        if($_SESSION['user']['type']==="Coach"){
+        if($_SESSION['logged_user']['type']==="Coach"){
             $this->model->remove($_POST['delete_session']);
             $data=array();
             $data['notification_type'] = NOTIFICATION_SESSION_DELETE;
-            $data['coach_email'] = $_SESSION['user']['email'];
+            $data['coach_email'] = $_SESSION['logged_user']['email'];
             $data['session_id'] =  $_POST['delete_session'];
             $this->model->notifyObservers($data);     
             header("Location:".BASE_DIR."Session/search");
@@ -143,11 +143,11 @@ class Session_Controller extends Controller{
 
     //Edits a session by created coach and redirected to all sessions interface
     function edit(){
-        if($_SESSION['user']['type']==="Coach"){
+        if($_SESSION['logged_user']['type']==="Coach"){
             $this->model->updateDetails($_POST['session_id'],$_POST);
             $data=array();
             $data['notification_type'] = NOTIFICATION_SESSION_EDIT;
-            $data['coach_email'] = $_SESSION['user']['email'];
+            $data['coach_email'] = $_SESSION['logged_user']['email'];
             $data['session_id'] = $_POST['session_id'];  
             $this->model->notifyObservers($data);              
             header("Location:".BASE_DIR."Session/view/my");

@@ -30,7 +30,7 @@ if (isset($_SESSION['back_flag'])) {
 
         <?php
         $menu_arr = array(
-            "Dashboard" => BASE_DIR . $_SESSION['user']['type'],
+            "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
             "Log Out" => BASE_DIR . "Auth/logout"
         );
         $navbar =  new Navbar($menu_arr);

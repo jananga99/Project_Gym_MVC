@@ -61,9 +61,9 @@
 
             <div id="demo2" class="panel-collapse collapse">
                 <ul class="list-group">
-                    <li class="list-group-item"><a class="li" href="Auth/signup/Customer">Customer</a></li>
-                    <li class="list-group-item"><a class="li" href="Auth/signup/Coach">Coach</a></li>
-                    <li class="list-group-item"><a class="li" href="Auth/signup/Admin">Admin</a></li>
+                    <li class="list-group-item"><a class="li" href="Customer/create">Customer</a></li>
+                    <li class="list-group-item"><a class="li" href="Coach/create">Coach</a></li>
+                    <li class="list-group-item"><a class="li" href="Admin/create">Admin</a></li>
                 </ul>
             </div>
         </div>

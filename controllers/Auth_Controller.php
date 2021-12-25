@@ -11,6 +11,7 @@ class Auth_Controller extends Controller{
         die();
     }
 
+    //Renders login page
     function login(){
         $this->view->render('Auth/login');
     }
@@ -29,15 +30,14 @@ class Auth_Controller extends Controller{
         }
     }
 
+    //logging out the current user by resetting logged_user
     function logout(){
-        unset( $_SESSION['user']);
+        unset( $_SESSION['logged_user']);
         header("Location:".BASE_DIR);
         die();
     }
 
-    function signup($type="Customer"){
-        $this->view->render($type.'/signup',array("type"=>$type));
-    }
+
 
     function addsignup($type){
         if($this->model->validateSignup($_POST['email'])){

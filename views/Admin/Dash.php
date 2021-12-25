@@ -41,8 +41,7 @@
 
         <h1 class="mb-4">Welcome</h1>
 
-        <a class="btn btn-outline-light btn-lg mb-3" href=#>Create a session</a>
-
+     
 
     </div>
 </body>

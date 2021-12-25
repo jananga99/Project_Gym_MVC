@@ -6,8 +6,8 @@ class Index_Controller extends Controller{
     }
 
     function index(){
-        if(isset($_SESSION['user']) && isset($_SESSION['user']['type']) && ($_SESSION['user']['type']==="Customer" || $_SESSION['user']['type']==="Coach" || $_SESSION['user']['type']==="Admin")){
-            header("Location:".BASE_DIR.$_SESSION['user']['type']);
+        if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Admin")){
+            header("Location:".BASE_DIR.$_SESSION['logged_user']['type']);
             die();
         }
         $this->view->render('access');

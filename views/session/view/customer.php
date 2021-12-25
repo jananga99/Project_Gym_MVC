@@ -41,7 +41,7 @@ unset($_SESSION['msg']);
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
-                <a href=<?= BASE_DIR . $_SESSION['user']['type'] ?> class="nav-item nav-link ">Dashboard</a>
+                <a href=<?= BASE_DIR . $_SESSION['logged_user']['type'] ?> class="nav-item nav-link ">Dashboard</a>
                 <a href=<?= BASE_DIR . "Session/search" ?> class="nav-item nav-link">Back</a>
                 <a href=<?= BASE_DIR . "Session/registered" ?> class="nav-item nav-link">Registered Sessions</a>
 
