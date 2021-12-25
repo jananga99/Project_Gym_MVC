@@ -7,15 +7,12 @@ class Controller{
     }
 
     public function loadModel($modelName){
+        require 'models/Factory.php';
         $path = 'models/'.$modelName.'_Model.php';
-        if(file_exists($path)){
-            require $path;
-            $className = $modelName.'_Model';
-           // if($modelName==="Customer" || $modelName==="Coach" || $modelName==="Admin")
-           //     $this->model = new $className(new MessageMediator());
-          //  else
-                $this->model = new $className();
-        }
+        $factory = new Factory();
+        $model = $factory->getModel($modelName);
+        if($model)
+            $this->model = $model;
     }
 
 
