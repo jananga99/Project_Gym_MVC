@@ -1,6 +1,6 @@
 <?php
 
-class Payment extends Controller
+class Payment_Controller extends Controller
 {
 
     function __construct()

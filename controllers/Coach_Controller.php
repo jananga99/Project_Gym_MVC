@@ -1,6 +1,6 @@
 <?php
 
-class Coach extends Controller{
+class Coach_Controller extends Controller{
 
     function __construct(){
         parent::__construct();

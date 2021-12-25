@@ -1,6 +1,6 @@
 <?php
 
-class FitnessTip extends Controller{
+class FitnessTip_Controller extends Controller{
 
     function __construct(){
         parent::__construct();

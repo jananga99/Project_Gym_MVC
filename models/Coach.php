@@ -1,6 +1,6 @@
 <?php
 
-class Coach_Model extends Model implements Observer{
+class Coach extends Model implements Observer{
 
 function __construct($mediator=0){
     parent::__construct();

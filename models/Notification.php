@@ -1,6 +1,6 @@
 <?php
 
-class Notification_Model extends Model{
+class Notification extends Model{
 
 function __construct(){
     parent::__construct();

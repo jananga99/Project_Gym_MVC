@@ -1,27 +1,30 @@
 <?php
 
-class Auth extends Controller{
+class Auth_Controller extends Controller{
 
     function __construct(){
         parent::__construct();
     }
 
     function index(){
-        $this->view->render('customer/Dash');
+        header("Location:".BASE_DIR.'Auth/login');
+        die();
     }
 
-    function login($type="Customer"){
-        $this->view->render('login',array("type"=>$type));
+    function login(){
+        $this->view->render('Auth/login');
     }
 
-    function checklogin($type="Customer"){
-        if($this->model->validateLogIn($type,$_POST['email'],$_POST["password"])){
-            $_SESSION['user'] = array("email"=>$_POST['email'],"type"=>$type);
+    //Redirects to dashboard if login credentials are valid
+    function checklogin(){
+        $type=$this->model->validateLogIn($_POST['email'],$_POST["password"]);
+        if($type){
+            $_SESSION['logged_user'] = array("email"=>$_POST['email'],"type"=>$type);
             header("Location:".BASE_DIR.$type);
             die();
         }else{
             $_SESSION['msg'] = "Wrong Username or password";
-            header("Location:".BASE_DIR.'Auth/login/'.$type);
+            header("Location:".BASE_DIR.'Auth/login');
             die();            
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-class WorkoutPlan_Model extends Model{
+class WorkoutPlan extends Model{
 
 
 function __construct(){

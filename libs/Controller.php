@@ -6,11 +6,11 @@ class Controller{
         $this->view = new View();
     }
 
+    //Loads the Model using Factroy object
     public function loadModel($modelName){
         require 'models/Factory.php';
-        $path = 'models/'.$modelName.'_Model.php';
-        $factory = new Factory();
-        $model = $factory->getModel($modelName);
+        $path = 'models/'.$modelName.'.php';
+        $model = Factory::getModel($modelName);
         if($model)
             $this->model = $model;
     }

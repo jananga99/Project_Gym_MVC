@@ -1,10 +1,10 @@
 <?php
 
-require "models/Coach_Model.php";
-require "models/Customer_Model.php";
-require "models/Admin_Model.php";
+require "models/Coach.php";
+require "models/Customer.php";
+require "models/Admin.php";
 
-class Session_Model extends Model implements Observable{
+class Session extends Model implements Observable{
 
 function __construct(){
     parent::__construct();
@@ -106,7 +106,7 @@ function notifyObservers($data){
         $data['rec_email'] = $coach;
         $data['details'] = $details;
         $data['type'] = $type;
-        $observer = new Coach_Model();
+        $observer = new Coach();
         $observer->update($data);    
     }elseif($type===NOTIFICATION_SESSION_CREATE){
         $registered_customers =  $this->getRegisterCustomersForCoach($data['coach_email']);
@@ -117,7 +117,7 @@ function notifyObservers($data){
             $data['rec_email'] = $reg_customer['Customer'];
             $data['details'] = $details;
             $data['type'] = $type;
-            $observer = new Customer_Model();
+            $observer = new Customer();
             $observer->update($data);                      
         }
     }elseif($type===NOTIFICATION_SESSION_DELETE){
@@ -130,7 +130,7 @@ function notifyObservers($data){
             $data1['rec_email'] = $reg_customer['Customer'];
             $data1['details'] = $details;
             $data1['type'] = $type;
-            $observer = new Customer_Model();
+            $observer = new Customer();
             $observer->update($data1);
         }      
     }elseif($type===NOTIFICATION_SESSION_EDIT){
@@ -143,7 +143,7 @@ function notifyObservers($data){
             $data1['rec_email'] = $reg_customer['Customer'];
             $data1['details'] = $details;
             $data1['type'] = $type;
-            $observer = new Customer_Model();
+            $observer = new Customer();
             $observer->update($data1);
         }      
     }

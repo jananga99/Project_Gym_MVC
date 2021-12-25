@@ -1,6 +1,6 @@
 <?php
 
-class Message extends Controller{
+class Message_Controller extends Controller{
 
     function __construct(){
         parent::__construct();

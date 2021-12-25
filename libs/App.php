@@ -6,6 +6,8 @@ class App{
     private $_controller = null;
 
     function __construct(){
+        
+        //Gets the url in request
         $this->_getURL();
 
         //If url is empty load default construtcor
@@ -14,6 +16,7 @@ class App{
             return;
         }
 
+        //Loads the controller
         if($this->_loadController()){
             $this->_loadControllerMethod();
         }
@@ -30,16 +33,18 @@ class App{
     }
 
     private function _loadDefaultController(){
-        require 'controllers/Index.php';
-        $this->_controller = new Index();
+        require 'controllers/Index_Controller.php';
+        $this->_controller = new Index_Controller();
         $this->_controller->index();
     }
 
+    //Loads controller according to first parameter of url
     private function _loadController(){
-        $file = 'controllers/'.$this->_url[0].'.php';
+        $controllerName = $this->_url[0].'_Controller';
+        $file = 'controllers/'.$controllerName.'.php';
         if(file_exists($file)){
             require $file;
-            $this->_controller = new $this->_url[0];
+            $this->_controller = new $controllerName;
             $this->_controller->loadModel($this->_url[0]);
             return TRUE;
         }else{
@@ -48,6 +53,7 @@ class App{
         }
     }
 
+    //Loads controller according to second parameter of url
     private function _loadControllerMethod(){
         $urlLength = count($this->_url);     
         if($urlLength > 1){
@@ -57,6 +63,7 @@ class App{
             }
         }
 
+        //Paremeters after second in url are parameters to controller method
         switch ($urlLength){
             case 6:
                 $this->_controller->{$this->_url[1]}($this->_url[2],$this->_url[3],$this->_url[4],$this->_url[5]);

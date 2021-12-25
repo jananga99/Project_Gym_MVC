@@ -6,7 +6,8 @@ class View{
         
     }
 
-    public function render($viewName,$data=0){
+    //Requires view page
+    public function render($viewName){
         require 'views/'.$viewName.'.php';
     }
 

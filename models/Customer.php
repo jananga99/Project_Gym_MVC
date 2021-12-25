@@ -1,6 +1,6 @@
 <?php
 
-class Customer_Model extends Model{
+class Customer extends Model{
     
 function __construct($mediator=0){
     parent::__construct();

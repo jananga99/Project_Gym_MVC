@@ -1,6 +1,6 @@
 <?php
 
-class FitnessTip_Model extends Model{
+class FitnessTip extends Model{
 
 function __construct(){
     parent::__construct();

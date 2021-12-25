@@ -1,6 +1,6 @@
 <?php
 
-class Admin_Model extends Model{
+class Admin extends Model{
 
 function __construct($mediator=0){
     parent::__construct();

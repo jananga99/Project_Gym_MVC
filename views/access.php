@@ -31,6 +31,8 @@
 
 <body>
 
+   
+
     <div class="container">
 
         <img src="public/images/mainlogocpy.png" class="img1" alt="Welcome to the VirtualGYM">
@@ -45,9 +47,9 @@
 
             <div id="demo1" class="panel-collapse collapse">
                 <ul class="list-group">
-                    <li class="list-group-item"><a class="li" href="Auth/login/Customer">Customer</a></li>
-                    <li class="list-group-item"><a class="li" href="Auth/login/Coach">Coach</a></li>
-                    <li class="list-group-item"><a class="li" href="Auth/login/Admin">Admin</a></li>
+                    <li class="list-group-item"><a class="li" href="Auth/login">Customer</a></li>
+                    <li class="list-group-item"><a class="li" href="Auth/login">Coach</a></li>
+                    <li class="list-group-item"><a class="li" href="Auth/login">Admin</a></li>
                 </ul>
             </div>
         </div>

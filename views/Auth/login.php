@@ -36,7 +36,7 @@ unset($_SESSION['msg']);
 
     <div class="simple-login-container">
         <h2 class="m-5">Login Form</h2>
-        <form action=<?php echo BASE_DIR . "Auth/checklogin/" . $data['type']; ?> method="post">
+        <form action=<?php echo BASE_DIR . "Auth/checklogin" ; ?> method="post">
             <div class="row">
                 <div class="mb-3 form-group">
                     <input type="text" class="form-control" placeholder="Email" name='email'>

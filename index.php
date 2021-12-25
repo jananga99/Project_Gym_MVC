@@ -13,9 +13,9 @@ require 'libs/interfaces/lib_interface.php';
 require 'libs/mediator/MessageMediator.php';
 require 'libs/flyweight/lib_flyweight.php';
 
-//require "models/Coach_Model.php";
-//require "models/Customer_Model.php";
-//require "models/Admin_Model.php";
+//require "models/Coach.php";
+//require "models/Customer.php";
+//require "models/Admin.php";
 
 $app = new App();
 

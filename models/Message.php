@@ -1,8 +1,8 @@
 <?php
-require "models/Coach_Model.php";
-require "models/Customer_Model.php";
-require "models/Admin_Model.php";
-class Message_Model extends Model{
+require "models/Coach.php";
+require "models/Customer.php";
+require "models/Admin.php";
+class Message extends Model{
 
 function __construct(){
     parent::__construct();
@@ -29,9 +29,9 @@ function delete($id){
 
 //Mediator
 function send($data){
-    $coach = new Coach_Model(new MessageMediator());
+    $coach = new Coach(new MessageMediator());
     foreach( $this->db->select("Registration",array("Customer"),array("Coach"=>$data['coach_email'])) as $row ) {
-        $c = new Customer_Model($coach->messageMediator);
+        $c = new Customer($coach->messageMediator);
         $c->email = $row['Customer'];
         if(!$coach->messageMediator->isUserAdded($c))
             $coach->messageMediator->addUser($c);

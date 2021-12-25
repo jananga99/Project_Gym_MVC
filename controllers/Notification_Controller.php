@@ -1,6 +1,6 @@
 <?php
 
-class Notification extends Controller{
+class Notification_Controller extends Controller{
 
     function __construct(){
         parent::__construct();
