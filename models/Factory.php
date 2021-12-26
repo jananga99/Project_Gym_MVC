@@ -21,33 +21,29 @@ class Factory extends Model{
             return self::getInstance();
         $path = 'models/'.$modelName.'.php';
         if(file_exists($path)){
-            require $path;
-            return new $modelName();
-        }        
+            
+            if(!(self::_getFunction()==="create")){
+                require $path;
+                return new $modelName();
+            }else{
+                require 'models/User123.php';
+                return new User123();
+            }
+                
+        }       
         return 0;
     }
 
-    //Returns true if email is unique from all previous users, false otherwise
-    function isEmailunique($email){
-        foreach(array("Customer","Coach","Admin") as $type){
-            if($this->db->select($type,array("Email"),array("Email"=>$email),1,0,0,"s"))
-                return FALSE;
-        }
-        return TRUE;        
+    //returns the function part of the url
+    private static function _getFunction(){
+        $url = isset($_GET['url']) ? $_GET['url'] : null;  
+        $url = rtrim($url, '/'); 
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $url = explode('/',$url);
+        if(isset($url[1]))
+            return $url[1];
+        return NULL; 
     }
-
-    function addCustomerToDatabase($arr){
-        $this->db->insert("Customer",array("LastName"=>$arr['lname'], "FirstName"=>$arr['fname'], "Age"=>$arr['age'], "Gender"=>$arr['gender'], "Telephone"=>$arr['tel'], "email"=>$arr['email'], "password"=>sha1($arr['password'])),"ssdssss");
-    }
-
-    function addCoachToDatabase($arr){
-        $this->db->insert("Coach",array("LastName"=>$arr['lname'], "FirstName"=>$arr['fname'], "Age"=>$arr['age'], "Gender"=>$arr['gender'],"City"=>$arr['city'], "Telephone"=>$arr['tel'], "email"=>$arr['email'], "password"=>sha1($arr['password'])),"ssdsssss");
-    }
-
-    function addAdminToDatabase($arr){
-        $this->db->insert("Admin",array("LastName"=>$arr['lname'], "FirstName"=>$arr['fname'], "Age"=>$arr['age'], "Gender"=>$arr['gender'],"City"=>$arr['city'], "Telephone"=>$arr['tel'], "email"=>$arr['email'], "password"=>sha1($arr['password'])),"ssdsssss");
-    }
-
 
 }
 

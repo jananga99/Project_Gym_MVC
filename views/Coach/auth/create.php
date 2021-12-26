@@ -44,7 +44,7 @@ unset($_SESSION['msg']);
     <div class="simple-login-container">
         <h2>SIGNUP COACH</h2>
         <div>
-            <form action=<?php echo BASE_DIR . "Factory/coach" ?> method="POST">
+            <form action=<?php echo BASE_DIR . "Coach/create/1" ?> method="POST">
 
                 <div class="row">
                     <div class="mb-3 form-group">
@@ -74,8 +74,14 @@ unset($_SESSION['msg']);
 
 
                 <div class="row">
-                    <div class="mb-3 form-group">
-                        <input type="text" class="form-control" name='gender' placeholder="Gender">
+                    <div class="mb-3  form-group">
+                        <label for="gender">Gender</label>
+                        <select name="gender" >
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select> 
+                        
                     </div>
                 </div>
 

@@ -1,8 +1,6 @@
 <?php
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
-//unset($_SESSION['msg']);
-echo $msg;
-echo "fuck";
+unset($_SESSION['msg']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +40,7 @@ echo "fuck";
     <div class="simple-login-container">
         <h2>SIGNUP CUSTOMER</h2>
         <div>
-            <form action=<?php echo BASE_DIR . "Factory/customer" ?> method="POST">
+            <form action=<?php echo BASE_DIR . "Customer/create/1" ?> method="POST">
 
                 <div class="row">
                     <div class="mb-3  form-group">
@@ -64,7 +62,13 @@ echo "fuck";
 
                 <div class="row">
                     <div class="mb-3  form-group">
-                        <input type="text" class="form-control" name='gender' placeholder="Gender">
+                        <label for="gender">Gender</label>
+                        <select name="gender" >
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select> 
+                        
                     </div>
                 </div>
 

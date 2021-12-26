@@ -15,10 +15,28 @@ class Customer_Controller extends Controller{
         } 
     }
 
-    //Renders Customer creating page
-    function create(){
-        $this->view->render('Customer/auth/create');
-    } 
+    //Creating/signing up Customers
+    function create($submitted=0){
+        if($submitted){
+            //Do validations TODO
+            $success = $this->model->isEmailUnique($_POST['email']);
+            if($success){
+                $this->model->createUser("Customer",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+                "Gender"=>$_POST['gender'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], "password"=>sha1($_POST['password'])),
+                "ssdssss");
+                header("Location:".BASE_DIR.'Auth');
+                die();    
+            }else{
+                $_SESSION['msg'] = "This email is already registered.";
+                header("Location:".BASE_DIR."Customer/create");
+                die();    
+            }                 
+        }
+        else{
+            $this->view->render('Customer/auth/create');
+            
+        } 
+    }
 
     function profile($action="view"){
         if($action==="view"){
