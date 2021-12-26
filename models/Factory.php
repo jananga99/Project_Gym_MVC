@@ -24,7 +24,37 @@ class Factory extends Model{
             
             if(!(self::_getFunction()==="create")){
                 require $path;
-                return new $modelName();
+                $model=0;
+
+                if($modelName==="Auth"){
+                    $model = new Auth();
+                }
+
+                elseif($modelName==="Customer"){
+                    if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
+                    && $_SESSION['logged_user']['type']==="Customer")
+                        $model = new Customer($_SESSION['logged_user']['email']);
+                }
+                
+                elseif($modelName==="Coach"){
+                    if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
+                    && $_SESSION['logged_user']['type']==="Coach")
+                        $model = new Coach($_SESSION['logged_user']['email']);
+                }
+
+                elseif($modelName==="Admin"){
+                    if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
+                    && $_SESSION['logged_user']['type']==="Admin")
+                        $model = new Admin($_SESSION['logged_user']['email']);
+                }
+
+
+                return $model;
+            
+            
+            
+            
+            
             }else{
                 require 'models/User123.php';
                 return new User123();

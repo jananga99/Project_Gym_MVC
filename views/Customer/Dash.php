@@ -17,7 +17,7 @@
 
     <?php
     $menu_arr = array(
-        "Profile" => BASE_DIR . "Customer/profile",
+        "My Profile" => BASE_DIR . "Customer/view",
         "Notifications" => BASE_DIR . "Notification",
         "Reports" => "#",
         "Messages" => BASE_DIR . "Message",

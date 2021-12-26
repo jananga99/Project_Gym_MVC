@@ -16,7 +16,7 @@
 
     <?php
     $menu_arr = array(
-        "Profile" => BASE_DIR . "Coach/profile",
+        "Profile" => BASE_DIR . "Coach/view",
         "Notifications" => BASE_DIR . "Notification",
         "Reports" => "#",
         "Messages" => BASE_DIR . "Message",

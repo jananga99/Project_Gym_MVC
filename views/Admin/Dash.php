@@ -1,3 +1,4 @@
+<!-- View by himself -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
                     <a href="#" class="nav-item nav-link ">Dashboard</a>
-                    <a href=<?php echo BASE_DIR . "Admin/profile" ?> class="nav-item nav-link">Profile</a>
+                    <a href=<?php echo BASE_DIR . "Admin/view" ?> class="nav-item nav-link">Profile</a>
                     <a href=<?php echo BASE_DIR . "Notification" ?> class="nav-item nav-link">Notifications</a>
                     <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
 

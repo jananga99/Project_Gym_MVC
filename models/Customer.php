@@ -2,24 +2,28 @@
 
 class Customer extends Model{
     
-function __construct($mediator=0){
+private $email;
+
+function __construct($email,$mediator=0){
     parent::__construct();
     $this->messageMediator = $mediator;    //TODO
-    $this->email=0 ;                                     //TODO
+    $this->email=$email ; 
 }
 
+//Edits Customer data in database
+function edit($data,$dataTypes){
+    $this->db->update("Customer",$data,array("Email"=>$this->email),$dataTypes);
+}
 
+//Returns details for this cutomer
+function getData(){
+    return $this->db->select("Customer",0,array("Email"=>$this->email),1);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function getData($email){
-    return $this->db->select("Customer",0,array("Email"=>$email),1);
-}
 
-function updateDetails($email,$data){
-    $this->db->update("Customer",
-    array("LastName"=>$data['lname'],"FirstName"=>$data['fname'],"Age"=>$data['age'],
-    "Gender"=>$data['gender'],"Telephone"=>$data['tel']),array("Email"=>$data['email']),'ssdss');
-}
+
+
 
 function searchCoach($sort_arr=0,$orderField=0,$reverse=0){
     $fields = array("Email","FirstName","LastName","Gender");

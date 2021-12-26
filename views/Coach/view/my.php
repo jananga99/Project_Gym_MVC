@@ -1,3 +1,4 @@
+<!-- View by himself -->
 <?php
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
@@ -37,7 +38,7 @@ $arr = $_SESSION['data'];
     <div class="simple-login-container">
         <h2>My Details</h2>
         <div>
-            <form action=<?= BASE_DIR . 'Coach/profile/edit' ?> method="POST">
+            <form action=<?= BASE_DIR . 'Coach/edit' ?> method="POST">
                 <div class="row">
                     <div class="mb-3 form-group">
                         <label>First Name</label>
@@ -60,16 +61,22 @@ $arr = $_SESSION['data'];
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 form-group">
-                        <input type="text" class="form-control" name='city' placeholder="City">
+                    <div class="mb-3 form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name='city' placeholder="City"  value=<?php echo $arr["City"] ?>>
                     </div>
                 </div>
 
 
                 <div class="row">
-                    <div class="mb-3 form-group">
-                        <label>Gender</label>
-                        <input type="text" class="form-control" name='gender' value=<?php echo $arr["Gender"] ?>>
+                    <div class="mb-3  form-group">
+                        <label for="gender">Gender</label>
+                        <select name="gender" value=<?php echo $arr["gender"] ?>>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select> 
+                        
                     </div>
                 </div>
 

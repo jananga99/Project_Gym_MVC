@@ -2,21 +2,22 @@
 
 class Admin extends Model{
 
-function __construct($mediator=0){
+function __construct($email,$mediator=0){
     parent::__construct();
+    $this->email = $email;
     $this->messageMediator = $mediator;    //TODO    
 }
 
-function getData($email){
-    return $this->db->select("Coach",0,array("Email"=>$email),1);
+//Edits Customer data in database
+function edit($data,$dataTypes){
+    $this->db->update("Admin",$data,array("Email"=>$this->email),$dataTypes);
 }
 
-function updateDetails($email,$data){
-    $this->db->update("Coach",
-    array("LastName"=>$data['lname'],"FirstName"=>$data['fname'],"Age"=>$data['age'], "City"=>$data['city'],
-    "Gender"=>$data['gender'],"Telephone"=>$data['tel']),array("Email"=>$data['email']),'ssdsss');
-}
 
+//Returns details for this cutomer
+function getData(){
+    return $this->db->select("Admin",0,array("Email"=>$this->email),1);
+}
 
 
 
