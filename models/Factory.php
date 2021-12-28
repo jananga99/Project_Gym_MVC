@@ -61,6 +61,18 @@ class Factory extends Model{
                     $model = new Coach_Registration();
                 }
 
+                elseif($modelName==="Session"){
+                    require "models/Coach.php";
+                    require "models/Customer.php";
+                    require "models/Admin.php";
+                    if(self::_getFirstParametre())
+                        $model = new Session(self::_getFirstParametre());
+                    else
+                        Session::setDatabase();
+                }
+
+                
+
                 return $model;
             
             
@@ -86,6 +98,20 @@ class Factory extends Model{
             return $url[1];
         return NULL; 
     }
+
+
+    //returns the function part of the url
+    private static function _getFirstParametre(){
+        $url = isset($_GET['url']) ? $_GET['url'] : null;  
+        $url = rtrim($url, '/'); 
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $url = explode('/',$url);
+        if(isset($url[2]))
+            return $url[2];
+        return NULL; 
+    }    
+
+
 
 }
 

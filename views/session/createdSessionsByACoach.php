@@ -45,8 +45,7 @@ else    $flag=1;
             <td>".$row['End_Time']."</td>
             <td>".$row['Price']."</td>
             <td>".$row['Details']."</td>
-                <td><form action=".BASE_DIR."Session/view/my method='POST'>
-                    <input type='text' name='select_session' value=".$row['Session_id']." readonly style='display:none'>
+                <td><form action=".BASE_DIR."Session/view/".$row['Session_id']." method='POST'>
                     <button name='view_session'>View</button>
                     </form></td>
             </tr>";
@@ -63,5 +62,4 @@ else    $flag=1;
     
 
 </body>
-<script src="public/js/search.js"></script>
 </html>

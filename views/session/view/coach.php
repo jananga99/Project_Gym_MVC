@@ -1,6 +1,5 @@
 <?php
 
-$sessionId = $_SESSION['data']['select_session'];
 $arr = $_SESSION['data'];
 
 ?>
@@ -27,7 +26,7 @@ $arr = $_SESSION['data'];
     <?php
     // require_once("../../../build/HTML/navbar.php");
     ?>
-    <a href=<?= BASE_DIR . "Session/search" ?>>Back to search</a><br>
+    <a href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a><br>
 
     <div class="simple-login-container">
         <h2>Session Details</h2>

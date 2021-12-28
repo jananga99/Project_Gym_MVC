@@ -1,15 +1,96 @@
 <?php
 
-require "models/Coach.php";
-require "models/Customer.php";
-require "models/Admin.php";
 
 class Session extends Model implements Observable{
 
-function __construct(){
+function __construct($id){
     parent::__construct();
+    $this->id = $id;
 }
 
+
+//Returns created sessions for given coach_email
+static function createdSessions($email){
+    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",
+    "Num_Participants","Price","Details");
+    return self::$dbStatic->select("session_details",$fields,array("Coach_Email"=>$email,"Delected"=>'0'));
+}
+
+
+//Returns the coach who created the session 
+function getCreatedCoach(){
+    return $this->db->select("session_details",array("Coach_Email"),
+    array("Session_id"=>$this->id),1)['Coach_Email'];    
+}
+
+
+//Get the Session data
+function getData(){
+    return $this->db->select("session_details",0,array("Session_id"=>$this->id,"Delected"=>'0'),1);
+}
+
+
+//Get the Session data for given session_id
+static function getSessionData($session_id){
+    return self::$dbStatic->select("session_details",0,array("Session_id"=>$session_id,"Delected"=>'0'),1);
+}
+
+
+//Deletes the session
+function delete(){
+    //delete session registrations
+    $this->db->update("Session_details",array("Delected"=>'1'),array("Session_id"=>$this->id,"Delected"=>'0'),'d');
+}
+
+
+//Edits the sessin details
+function edit($data,$dataTypes){
+    $this->db->update("Session_details",$data,array("Session_id"=>$this->id,"Delected"=>'0'),$dataTypes);
+}
+
+
+//Returns all the sessions
+function getAllSessions($sort_arr=0,$orderField=0,$reverse=0){
+    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",
+    "Num_Participants","Price","Details");
+    if($sort_arr==0)    $sort_arr=array();
+    $sort_arr['Delected'] = '0';
+    return self::$dbStatic->select("session_details",$fields,$sort_arr,0,$orderField,$reverse);
+}
+
+
+//Registers given customer for the session
+function register($customer){
+    $this->db->insert("Session_registration",array("Session_id"=>$this->id,"Customer"=>$customer),"ds");
+
+}
+
+
+//Unregisters current customer from session
+function unregister($customer){
+    $this->db->update("Session_registration",array("Delected"=>'1'),array("Session_id"=>$this->id,
+    "Customer"=>$customer,"Delected"=>'0'),"d");
+}
+
+
+//Returns Sessions id if given customer registered for session
+function isCustomerRegistered($customer){
+    return $this->db->select("Session_registration",array("Session_id"),array("Customer"=>$customer,
+    "Session_id"=>$this->id,"Delected"=>'0'),1)['Session_id'] ;  
+}
+
+
+//Returns al registered sessions by given customer email
+static function registeredSessions($email){
+    $session_arr = array();
+    foreach( self::$dbStatic->select("Session_Registration",array("Session_id"),
+    array("Customer"=>$email,"Delected"=>'0')) as $row ) 
+        $session_arr[] = self::getSessionData($row['Session_id']);
+    return $session_arr;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 //TODO : CHANGE THIS
 function getRegisterCustomersForCoach($coach){
@@ -27,69 +108,15 @@ function getLatestCreatedSession($coach){
     return $this->db->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
 }
 
-//Returns the coach who created the session for given session  id
-function getCreatedCoach($id){
-    return $this->db->select("session_details",array("Coach_Email"),array("Session_id"=>$id),1)['Coach_Email'];    
-}
-
-function updateDetails($id,$data){
-    //TODO notify all customers
-    $this->db->update("Session_details",
-    array("Session_Name"=>$data['session_name'],"Date"=>$data['date'],"Start_Time"=>$data['startTime'],"End_Time"=>$data['endTime'],
-    "Num_Participants"=>$data['num_participants'],"Price"=>$data['price'],"Details"=>$data['details']),array("Session_id"=>$id),'sssssds');
-}
-
-function search($sort_arr=0,$orderField=0,$reverse=0){
-    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time","Num_Participants","Price","Details");
-    return $this->db->select("session_details",$fields,$sort_arr,0,$orderField,$reverse);
-}
-
-function view($id){
-    return $this->db->select("session_details",0,array("Session_id"=>$id),1);
-}
-
-function register($customer,$session_id){
-    $this->db->insert("Session_registration",array("Session_id"=>$session_id,"Customer"=>$customer),"ss");
-}
-
-function unregister($customer,$session_id){
-    $this->db->delete("Session_registration",array("Session_id"=>$session_id,"Customer"=>$customer),"ss");
-}
-
-function remove($session_id){
-    //TODO notify all customers and delete theirs too
-    $this->db->delete("Session_details",array("Session_id"=>$session_id),'s');
-}
 
 
-function isSessionRegistered($customer,$session_id){
-    if($this->db->select("Session_registration",array("Session_id"),array("Customer"=>$customer,
-    "Session_id"=>$session_id),1))
-        return True;
-    else
-        return False;    
-}
 
 
-function registeredSessions($email){
-    $session_arr = array();
-    foreach( $this->db->select("Session_Registration",array("Session_id"),array("Customer"=>$email)) as $row ) {
-        $session_arr[] = $this->view($row['Session_id']);
-    }
-    return $session_arr;
-}
 
-function createdSessions($email){
-    return $this->search(array("Coach_Email"=>$email));
-}
 
-function add($coach,$data){
-    //TODO check whether date is in future
-    //TODO check start Time < End Time
-    //TODO any other sessions in same time span as this coach
-    $this->db->insert("session_details",
-    array("Coach_Email"=>$coach,"Session_Name"=>$data['sessionName'],"Date"=>$data["date"],"Start_Time"=>$data["startTime"],"End_Time"=>$data["endTime"],"Num_Participants"=>$data["maxParticipants"],"Price"=>$data["price"],"Details"=>$data["details"]),"ssssssds");
-}
+
+
+
 
 
 

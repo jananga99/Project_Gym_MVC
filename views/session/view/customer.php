@@ -1,16 +1,11 @@
 <?php
 
-$sessionId = $_SESSION['data']['select_session'];
+
 $arr = $_SESSION['data'];
-$styleReg = "display:none";
-$styleAddSession = "";
+
 
 $price = 1000;
 
-if ($_SESSION['data']['isRegistered']) {
-    $styleAddSession = "display:none";
-    $styleReg = "";
-}
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 
@@ -127,22 +122,43 @@ unset($_SESSION['msg']);
                 </div>
             </div>
 
-            <div class="row" style=<?php echo $styleAddSession; ?>>
-                <div class="col-md-12 form-group">
+
+            <?php
+                if($arr['isRegistered'])
+                    echo "<form action=".BASE_DIR ."Session/unregister/".$arr["Session_id"]." method='POST'>";
+                else
+                    echo "<form action=".BASE_DIR ."Session/register/".$arr["Session_id"]." method='POST'>";           
+            ?>
+                <div class="row" >
+                    <div class="col-md-12 form-group" >
+                        <?php
+                            if($arr['isRegistered']){
+                                echo "<input type='submit' class='btn btn-block btn-login' value='Unregister For Coach' >";
+                                echo "<input type='text' value=".$arr['isRegistered']." name='Session_Registration_id' readonly style='display:none'>";
+                            }else
+                                echo "<input type='submit' class='btn btn-block btn-login' value='Register For Coach' >";            
+                        ?>   
+                    </div>                    
+                </div>
+            </form>
+
+
+         
+   <!--
                     <form action=<?= BASE_DIR . "Payment/session" ?> method="POST">
                         <input type="text" class="form-control" name='select_session' value=<?php echo $arr["Session_id"] ?> readonly style="display:none">
                         <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"] ?> readonly style="display:none">
                         <input type="submit" class="btn btn-block btn-login m-3" value='Register' name='add_session'>
                     </form>
-                </div>
-            </div>
-            <div class="row" style=<?php echo $styleReg; ?>>
+      
+      
+          
                 <form action=<?= BASE_DIR . "Session/unregister" ?> method="POST">
                     <input type="text" name='unregister_session' value=<?php echo $arr["Session_id"] ?> style="display:none" readonly>
                     <button class="btn btn-block btn-login m-3" name="unregister" value='Unregister'>Unregister</button>
                 </form>
 
-            </div>
+                        -->
 
         </div>
     </div>

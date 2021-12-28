@@ -32,8 +32,8 @@
 
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/RegisteredCustomers" ?>>Registered Customers</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/create" ?>>Create a session</a>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/view/all" ?>>My Sessions</a>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/search" ?>>All Sessions</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/createdByMe" ?>>My Sessions</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "FitnessTip/create" ?>>Add Fitness Tips</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Message/send" ?>>Send Messages</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "WorkoutPlan/create" ?>>CreatePlan</a>

@@ -1,7 +1,10 @@
 CREATE TABLE Session_Registration (
+    Session_Registration_id INT(15) AUTO_INCREMENT,
     Customer varchar(255) NOT NULL,
     Session_id varchar(255) NOT NULL,
-    Details MEDIUMTEXT
+    Delected INT(1) DEFAULT 0,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Session_Registration_id)
 );
 
 CREATE TABLE Session_Details (
@@ -14,6 +17,6 @@ CREATE TABLE Session_Details (
     Num_Participants INT(5) NOT NULL,
     Price DOUBLE NOT NULL,
     Details MEDIUMTEXT NULL,
-    Delected INT(1) NULL,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Session_id)
 );

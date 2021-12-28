@@ -21,9 +21,11 @@ class Auth_Controller extends Controller{
         $type=$this->model->validateLogIn($_POST['email'],$_POST["password"]);
         if($type){
             $_SESSION['logged_user'] = array("email"=>$_POST['email'],"type"=>$type);
-            if(isset($_SESSION['requested_address']))
-                header("Location:".$_SESSION['requested_address']);
-            else
+            if(isset($_SESSION['requested_address'])){
+                $requested_address = $_SESSION['requested_address'];
+                unset($_SESSION['requested_address']); 
+                header("Location:".$requested_address);
+            }else
                 header("Location:".BASE_DIR.$type);
             die();
         }else{
