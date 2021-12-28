@@ -20,39 +20,38 @@ function getData(){
     return $this->db->select("Customer",0,array("Email"=>$this->email),1);
 }
 
+
+//Returns details of the given customer_email
+static function getCustomerData($customer_email){
+    return self::$dbStatic->select("Customer",array("LastName", "FirstName", "Age", "Gender", "Telephone", "Email", 
+    ),array("Email"=>$customer_email,"Delected"=>'0'),1);
+}
+
+
+//Returns all coach data
+static function getAllCustomerData($sort_arr=0,$orderField=0,$reverse=0){
+    $fields = array("Email","FirstName","LastName","Gender");
+    if($sort_arr==0)
+        $sort_arr = array();
+    $sort_arr['Delected'] = 0;
+    return self::$dbStatic->select("Customer",$fields,$sort_arr,0,$orderField,$reverse);
+}
+
+
+//Returns all registered customer data 
+function getRegisteredCoachesData(){
+    $coach_Registration = new Coach_Registration();
+    $coach_arr = array();
+    Coach::setDatabase();
+    foreach( $coach_Registration->registeredCoaches($this->email) as $row ) 
+        $coach_arr[] = Coach::getCoachData($row['Coach']);
+    return $coach_arr;    
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-
-function searchCoach($sort_arr=0,$orderField=0,$reverse=0){
-    $fields = array("Email","FirstName","LastName","Gender");
-    return $this->db->select("Coach",$fields,$sort_arr,0,$orderField,$reverse);
-}
-
-function viewCoach($email){
-    return $this->db->select("Coach",array("LastName", "FirstName", "Age", "Gender", "Telephone", "Email", "City"),array("Email"=>$email),1);
-}
-
-function addCoach($customer,$coach){
-    $this->db->insert("Registration",array("Customer"=>$customer, "Coach"=>$coach),"ss");
-}
-
-function isCoachRegistered($customer,$coach){
-    if($this->db->select("Registration",array("Customer","Coach"),array("Customer"=>$customer,
-    "Coach"=>$coach),1))
-        return True;
-    else
-        return False;    
-}
-
-function registeredCoaches($email){
-    $coach_arr = array();
-    foreach( $this->db->select("Registration",array("Coach"),array("Customer"=>$email)) as $row ) {
-        $coach_arr[] = $this->viewCoach($row['Coach']);
-    }
-    return $coach_arr;
-}
 
 //Observer
 function update($data){

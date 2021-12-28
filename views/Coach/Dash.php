@@ -30,6 +30,7 @@
 
         <h1 class="mb-4">Welcome</h1>
 
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/RegisteredCustomers" ?>>Registered Customers</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/create" ?>>Create a session</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/view/all" ?>>My Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/search" ?>>All Sessions</a>

@@ -1,5 +1,8 @@
-CREATE TABLE Registration (
+CREATE TABLE Coach_Registration (
+    Registration_id INT(10) AUTO_INCREMENT,
     Customer varchar(255) NOT NULL,
     Coach varchar(255) NOT NULL,
-    Details MEDIUMTEXT
+    Delected INT(1) DEFAULT 0,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Registration_id)
 );

@@ -31,23 +31,35 @@ class Factory extends Model{
                 }
 
                 elseif($modelName==="Customer"){
+                    require 'models/Coach_Registration.php';
+                    require 'models/Coach.php';
                     if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
                     && $_SESSION['logged_user']['type']==="Customer")
                         $model = new Customer($_SESSION['logged_user']['email']);
+                    else
+                        Customer::setDatabase();
                 }
                 
                 elseif($modelName==="Coach"){
+                    require 'models/Coach_Registration.php';
+                    require 'models/Customer.php';
                     if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
                     && $_SESSION['logged_user']['type']==="Coach")
                         $model = new Coach($_SESSION['logged_user']['email']);
+                    else    //For static access
+                        Coach::setDatabase();
                 }
 
                 elseif($modelName==="Admin"){
+                    require 'models/Coach_Registration.php';
                     if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
                     && $_SESSION['logged_user']['type']==="Admin")
                         $model = new Admin($_SESSION['logged_user']['email']);
                 }
 
+                elseif($modelName==="Coach_Registration"){
+                    $model = new Coach_Registration();
+                }
 
                 return $model;
             

@@ -34,7 +34,7 @@
 
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/coach/search" ?>>add coach</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/profile/edit" ?>>edit profile</a>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/coach/registered" ?>>Registered Coaches</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/registeredCoaches" ?>>Registered Coaches</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/search" ?>>Find Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/registered" ?>>My Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "FitnessTip/search" ?>>Get Finess Tips</a>

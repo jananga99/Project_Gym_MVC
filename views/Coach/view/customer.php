@@ -1,12 +1,5 @@
 <?php
-
 $arr = $_SESSION['data'];
-$styleReg = "display:none";
-$styleAddCoach = "";
-if ($arr['isRegistered']) {
-    $styleAddCoach = "display:none";
-    $styleReg = "";
-}
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 ?>
@@ -84,26 +77,32 @@ unset($_SESSION['msg']);
                     <input type="text" class="form-control" name='tel' value=<?php echo $arr["Telephone"] ?> readonly>
                 </div>
             </div>
-            <form action=<?= BASE_DIR . "Payment/coachRegister" ?> method="POST">
+
+        <!--    <form action=<?= BASE_DIR . "Payment/coachRegister" ?> method="POST">    -->
+            <?php
+                if($arr['isRegistered'])
+                    echo "<form action=".BASE_DIR ."Coach_Registration/unregister"." method='POST'>";
+                else
+                    echo "<form action=".BASE_DIR ."Coach_Registration/register"." method='POST'>";           
+            ?>
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" name='select_email' value=<?php echo $arr["Email"] ?> readonly>
+                        <input type="text" class="form-control" name='coach_email' value=<?php echo $arr["Email"] ?> readonly>
                     </div>
                 </div>
-                <div class="row" style=<?php echo $styleAddCoach; ?>>
-                    <div class="col-md-12 form-group">
-
-                        <input type="submit" class="btn btn-block btn-login" value='Add Coach' name='add_coach'>
-
-                    </div>
+                <div class="row" >
+                    <div class="col-md-12 form-group" >
+                        <?php
+                            if($arr['isRegistered']){
+                                echo "<input type='submit' class='btn btn-block btn-login' value='Unregister For Coach' >";
+                                echo "<input type='text' value=".$arr['isRegistered']." name='Registration_id' readonly >";
+                            }else
+                                echo "<input type='submit' class='btn btn-block btn-login' value='Register For Coach' >";            
+                        ?>   
+                    </div>                    
                 </div>
             </form>
-            <div class="row m-3" style=<?php echo $styleReg; ?>>
-                <div class="d-grid gap-2">
-                    <button class="btn btn-block btn-login" value='Already registered.'>Already Registered</button>
-                </div>
-            </div>
 
         </div>
     </div>

@@ -18,7 +18,7 @@ $coach_arr = $_SESSION['data'];
     require("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/search.css" ?>>
-    <title>Registered Coaches</title>
+    <title>Registered Customers</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@ $coach_arr = $_SESSION['data'];
 
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer",
+        "Dashboard" => BASE_DIR . "Coach",
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"
@@ -43,7 +43,7 @@ $coach_arr = $_SESSION['data'];
     <div class="container">
 
 
-        <h2 class='m-5'>Registered Coaches</h2>
+        <h2 class='m-5'>Registered Customers</h2>
 
         <?php
         if ($flag) {
@@ -60,9 +60,9 @@ $coach_arr = $_SESSION['data'];
                 echo "<tr>
                     <td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>
                     <td>" . $row['Gender'] . "</td>
-                    <td><form action=" . BASE_DIR . "Coach/profile/view" . " method='POST'>
-                        <input type='text' name='coach_email' value=" . $row['Email'] . " readonly style='display:none'>
-                        <button class='btn btn-outline-light btn-sm' name='view_coach'>View</button>
+                    <td><form action=" . BASE_DIR . "Customer/view" . " method='POST'>
+                            <input type='text' name='select_customer_email' value=" . $row['Email'] . " readonly style='display:none'>
+                            <button class='btn btn-outline-light btn-sm' >View</button>
                         </form></td>
                 </tr>";
             }

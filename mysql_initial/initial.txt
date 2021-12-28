@@ -42,5 +42,14 @@ CREATE TABLE Admin (
 );
 
 
+CREATE TABLE Coach_Registration (
+    Registration_id INT(10) AUTO_INCREMENT,
+    Customer varchar(255) NOT NULL,
+    Coach varchar(255) NOT NULL,
+    Delected INT(1) DEFAULT 0,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Registration_id)
+);
+
 
 

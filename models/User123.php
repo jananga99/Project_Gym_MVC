@@ -19,6 +19,11 @@ function isEmailunique($email){
 function createUser($user_type,$data,$data_types){
     $this->db->insert($user_type,$data,$data_types);
 }
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

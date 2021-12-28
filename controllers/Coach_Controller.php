@@ -59,9 +59,15 @@ function edit(){
 
 //Displaying coach details
 function view(){
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){     //For himself
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Coach/view/my');
+    }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){    //For a customer
+        $_SESSION['data'] = Coach::getCoachData($_POST['select_coach_email']);
+        $coach_registration = new Coach_Registration();
+        $_SESSION['data']['isRegistered'] = $coach_registration->isCoachRegistered($_SESSION['logged_user']['email'],
+            $_POST['select_coach_email']);
+        $this->view->render('Coach/view/customer');
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach/view";
         header("Location:".BASE_DIR."Auth/login/Coach");
@@ -69,7 +75,30 @@ function view(){
     }  
 }    
     
-  
+
+//Displaying all coaches accordign to sorting options
+function viewAll(){
+    $sort_arr=isset($_POST["by"]) && isset($_POST["sort_by_gender"]) ? array("gender"=>$_POST["sort_radio_gender"]) : 0;
+    $orderField=isset($_POST["by"]) && isset($_POST["order_by"])  && $_POST["order_by"] != "none" ? "CONCAT(FirstName,LastName)" : 0;
+    $reverse=isset($_POST["by"]) && isset($_POST['order_radio_name']) && $_POST['order_radio_name'] == 'z_to_a' ? 1 : 0;
+    $_SESSION['data'] =  Coach::getAllCoachData($sort_arr,$orderField,$reverse);
+    $this->view->render('coach/view/all');
+}
+
+
+//Displaying registered customers
+function registeredCustomers(){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+        $_SESSION['data'] = $this->model->getRegisteredCustomersData();
+        $this->view->render('Coach_registration/registeredCustomers');
+    }else{
+        $_SESSION['requested_address'] = BASE_DIR."Customer/registeredCustomers";
+        header("Location:".BASE_DIR."Auth/login/Coach");
+        die();
+    }
+}
+
+
 
 }
 
