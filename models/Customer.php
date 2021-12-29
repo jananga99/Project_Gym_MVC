@@ -62,8 +62,9 @@ function update($data){
 
 
 //Mediator
-function receieveMessage($data){       //TODO
-    $this->db->insert("messages",array("Receiver_Email"=>$this->email,"Sender_Email"=>$data['send_email'],"Details"=>$data['details']),'sss');    
+//Receieves the sent message
+function receieveMessage($data){      
+    
 }
 
 

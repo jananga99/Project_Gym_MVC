@@ -38,6 +38,7 @@ class Auth_Controller extends Controller{
     //logging out the current user by resetting logged_user
     function logout(){
         unset( $_SESSION['logged_user']);
+        unset($_SESSION['requested_address']); 
         header("Location:".BASE_DIR);
         die();
     }

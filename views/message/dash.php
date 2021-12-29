@@ -1,9 +1,9 @@
 <?php
-$sent_arr = $_SESSION['sent'];
+$sent_arr = $_SESSION['sent_messages'];
 if (sizeof($sent_arr) == 0) $sent_flag = 0;
 else    $sent_flag = 1;
-$receieved_arr = $_SESSION['receieved'];
-if (sizeof($receieved_arr) == 0) $receievedt_flag = 0;
+$receieved_arr = $_SESSION['receieved_messages'];
+if (sizeof($receieved_arr) == 0) $receieved_flag = 0;
 else    $receieved_flag = 1;
 ?>
 <!DOCTYPE html>
@@ -16,18 +16,18 @@ else    $receieved_flag = 1;
 </head>
 <body>
     
-    <h1>Messages</h1>
+    <a href=<?=BASE_DIR?>>Dashbaord</a>
 
-    <a href=<?=BASE_DIR."Message/send"?>>SEND</a>
+    <h1>Messages</h1>
 
     <h2>Sent Messages</h2>
     <?php
         if ($sent_flag) {
+            echo "<table><tbody>";
             foreach ($sent_arr as $row) {
                 echo "<tr>
                 <td>" . $row['Details'] . "</td>
-                <td><form action=" . BASE_DIR . "Message/delete method='POST'>
-                    <input type='text' name='message_id' value=" . $row['Message_id'] . " readonly style='display:none'>
+                <td><form action=" . BASE_DIR . "Message/delete/".$row['Message_id']." method='POST'>
                     <button  class='btn btn-danger' name='delete'>Delete</button>
                     </form>
                 </td>
@@ -35,7 +35,7 @@ else    $receieved_flag = 1;
             }
             echo "</tbody>
             </table>
-        </div>";
+        ";
         } else {
             echo "<p>You haven't send any messages yet.</p>";
         }
@@ -45,17 +45,16 @@ else    $receieved_flag = 1;
     <h2>Receieved Messages</h2>
     <?php
         if ($receieved_flag) {
+            echo "<table><tbody>";
             foreach ($receieved_arr as $row) {
                 echo "<tr>
                 <td>" . $row['Details'] . "</td>
-                <td><form action=" . BASE_DIR . "Message/read method='POST'>
-                    <input type='text' name='message_id' value=" . $row['Message_id'] . " readonly style='display:none'>
-                    <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
+                <td><form action=" . BASE_DIR . "Message/markAsRead/".$row['Message_id']." method='POST'>
+                        <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
                     </form>
                 </td>
-                <td><form action=" . BASE_DIR . "Message/delete/receieved method='POST'>
-                    <input type='text' name='message_id' value=" . $row['Message_id'] . " readonly style='display:none'>
-                    <button  class='btn btn-danger' name='delete'>Delete</button>
+                <td><form action=" . BASE_DIR . "Message/delete/".$row['Message_id']." method='POST'>
+                        <button  class='btn btn-danger' name='delete'>Delete</button>
                     </form>
                 </td>
                 </tr>";

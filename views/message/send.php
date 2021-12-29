@@ -11,9 +11,9 @@
     <h1>Message Send</h1>
 
 
-    <form action=<?=BASE_DIR."Message/send/1"?> method="post">
+    <form action=<?=BASE_DIR."Message/send"?> method="post">
 
-        <input type="text" name="details" >
+        <input type="text" name="message" >
         <input type="submit" value="SEND">
 
 

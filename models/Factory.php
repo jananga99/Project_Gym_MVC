@@ -71,8 +71,20 @@ class Factory extends Model{
                         $model = new Session(self::_getFirstParametre());
                     else
                         Session::setDatabase();
+                
                 }
 
+                elseif($modelName==="Message"){
+                    require "models/Coach.php";
+                    require "models/Customer.php";
+                    require "models/Admin.php";
+                    require 'models/Coach_Registration.php';
+                    require 'models/MessageMediator.php';
+                    if(self::_getFirstParametre())    
+                        $model = new Message(self::_getFirstParametre());
+                    else
+                        Message::setDatabase();                
+                }
                 
 
                 return $model;

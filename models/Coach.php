@@ -62,8 +62,9 @@ public function update($data){
 
 
 //Mediator
-function sendMessage($data){       //TODO     
-    $this->messageMediator->sendMessage($data,$this);
+//Sends message using mediator
+function sendMessage($message){      
+    $this->messageMediator->sendMessage($message,$this);
 }
 
 

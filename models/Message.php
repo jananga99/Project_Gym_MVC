@@ -1,46 +1,58 @@
 <?php
-require "models/Coach.php";
-require "models/Customer.php";
-require "models/Admin.php";
+
 class Message extends Model{
 
-function __construct(){
+function __construct($id){
     parent::__construct();
-}
-
-function getReceievedMessages($email){
-    return $this->db->select("Messages",array("Details","Message_id","Sender_Email"),array("Receiver_Email"=>$email,"Delected"=>'0'));
-}
-
-function getSentMessages($email){
-    return $this->db->select("Messages",array("Details","Message_id","Receiver_Email"),array("Sender_Email"=>$email,"Delected"=>'0'));
+    $this->id = $id;
 }
 
 
-function markAsRead($id){
-    $this->db->update("Messages",array("Mark_As_Read"=>'1'),array("Message_id"=>$id),'d');    
+//Returns received messages for given email
+static function getReceievedMessages($email){
+    return self::$dbStatic->select("Messages",array("Details","Message_id","Sender_Email"),
+    array("Receiver_Email"=>$email,"Delected"=>'0'));
 }
 
-//MAKE ALL MESSAGES DELEECT WHEN DELECT SELECT MESSAGE
-//TODo
-function delete($id){
-    $this->db->update("Messages",array("Delected"=>'1'),array("Message_id"=>$id),'d');    
+
+//Returns sent messages for given email
+static function getSentMessages($email){
+    return self::$dbStatic->select("Messages",array("Details","Message_id","Receiver_Email"),
+    array("Sender_Email"=>$email,"Delected"=>'0'));
 }
 
-//Mediator
-function send($data){
-    $coach = new Coach(new MessageMediator());
-    foreach( $this->db->select("Registration",array("Customer"),array("Coach"=>$data['coach_email'])) as $row ) {
-        $c = new Customer($coach->messageMediator);
-        $c->email = $row['Customer'];
-        if(!$coach->messageMediator->isUserAdded($c))
-            $coach->messageMediator->addUser($c);
+
+//Marks this message as read.
+function markAsRead(){
+    $this->db->update("Messages",array("Mark_As_Read"=>'1'),array("Message_id"=>$this->id),'d');    
+}
+
+
+//Deletes this message
+function delete(){
+    $this->db->update("Messages",array("Delected"=>'1'),array("Message_id"=>$this->id),'d');    
+}
+
+
+//Set receievers for Mediator according to sendeing type
+static function setReceievers($sender_email,$sender_type,$mediator){
+    if($sender_type==="Coach"){
+        $coach_Registration = new Coach_Registration();
+        foreach( $coach_Registration->registeredCustomers($sender_email) as $row ) {
+            $customer = new Customer($row['Customer'],$mediator);
+            if(!$mediator->isUserAdded($customer))
+                $mediator->addUser($customer);
+        }
     }
-    $msg = array();
-    $msg['send_email'] = $data['coach_email'];
-    $msg['details'] = $data['details'];     
-    $coach->sendMessage($msg);
+}
 
+
+//Mediator Design Pattrns
+//Sends (broadcasts) messages
+static function send($sender_email,$sender_type,$message){
+    $sender = new $sender_type($sender_email,new MessageMediator());
+    self::setReceievers($sender_email,$sender_type,$sender->messageMediator);
+    $sender->sendMessage($message);
 }
 
 
