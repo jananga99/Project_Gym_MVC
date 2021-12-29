@@ -96,10 +96,11 @@ class Factory extends Model{
 
 
                 elseif($modelName==="WorkoutPlan"){
+                    require 'models/Coach_Registration.php';
                     if(self::_getFirstParametre())    
-                        $model = new FitnessTip(self::_getFirstParametre());
+                        $model = new WorkoutPlan(self::_getFirstParametre());
                     else
-                        FitnessTip::setDatabase();
+                        WorkoutPlan::setDatabase();
                 }
 
                 return $model;
