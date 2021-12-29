@@ -20,6 +20,11 @@ function getData(){
 }
 
 
+//Returns details for this cutomer
+function getEmail(){
+    return $this->email;
+}
+
 
 
 

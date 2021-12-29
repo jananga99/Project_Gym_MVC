@@ -78,12 +78,7 @@ class Session_Controller extends Controller{
     //Delecting the session
     function delete($session_id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" && $_SESSION['logged_user']['email']===$this->model->getCreatedCoach()){
-            $this->model->delete($session_id);
-           // $data=array();
-            //$data['notification_type'] = NOTIFICATION_SESSION_DELETE;
-            //$data['coach_email'] = $_SESSION['logged_user']['email'];
-           // $data['session_id'] =  $_POST['delete_session'];
-            //$this->model->notifyObservers($data);     
+            $this->model->delete($session_id); 
             header("Location:".BASE_DIR."Session/createdByMe");
             die();     
         }else{
@@ -97,16 +92,10 @@ class Session_Controller extends Controller{
     //Editing the seesiosn
     function edit($session_id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" && $_SESSION['logged_user']['email']===$this->model->getCreatedCoach()){
-
             $this->model->edit(array("Coach_Email"=>$_SESSION['logged_user']['email'],
             "Session_Name"=>$_POST['session_name'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
             "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["num_participants"],
-            "Price"=>$_POST["price"],"Details"=>$_POST["details"]),"ssssssds");
-         //   $data=array();
-          //  $data['notification_type'] = NOTIFICATION_SESSION_EDIT;
-          //  $data['coach_email'] = $_SESSION['logged_user']['email'];
-           // $data['session_id'] = $_POST['session_id'];  
-            //$this->model->notifyObservers($data);              
+            "Price"=>$_POST["price"],"Details"=>$_POST["details"]),"ssssssds");         
             header("Location:".BASE_DIR."Session/view/".$session_id);
             die();
         }else{
@@ -121,12 +110,7 @@ class Session_Controller extends Controller{
     //Observable
     function register($session_id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){ 
-            $this->model->register($_SESSION['logged_user']['email'],$session_id);
-           //     $data=array();
-             //   $data['session_id'] =  $_SESSION['data']['select_session'];
-              //  $data['notification_type'] = NOTIFICATION_SESSION_REGISTER;
-              //  $data['customer_email'] = $_SESSION['logged_user']['email'];
-                //$this->model->notifyObservers($data);               
+            $this->model->register($_SESSION['logged_user']['email'],$session_id);          
                 header("Location:".BASE_DIR."Session/view/".$session_id);
                 die();                   
         }else{
@@ -142,11 +126,6 @@ class Session_Controller extends Controller{
     function unregister($session_id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){ 
             $this->model->unregister($_SESSION['logged_user']['email'],$session_id);
-            //$data=array();
-            //$data['session_id'] =  $_SESSION['data']['select_session'];
-            //$data['notification_type'] = NOTIFICATION_SESSION_UNREGISTER;
-            //$data['customer_email'] = $_SESSION['logged_user']['email'];
-            //$this->model->notifyObservers($data); 
             header("Location:".BASE_DIR."Session/view/".$session_id);
             die();    
         }else{

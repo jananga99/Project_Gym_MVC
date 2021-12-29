@@ -133,10 +133,10 @@ unset($_SESSION['msg']);
                     <div class="col-md-12 form-group" >
                         <?php
                             if($arr['isRegistered']){
-                                echo "<input type='submit' class='btn btn-block btn-login' value='Unregister For Coach' >";
+                                echo "<input type='submit' class='btn btn-block btn-login' value='Unregister From Session' >";
                                 echo "<input type='text' value=".$arr['isRegistered']." name='Session_Registration_id' readonly style='display:none'>";
                             }else
-                                echo "<input type='submit' class='btn btn-block btn-login' value='Register For Coach' >";            
+                                echo "<input type='submit' class='btn btn-block btn-login' value='Register For Session' >";            
                         ?>   
                     </div>                    
                 </div>

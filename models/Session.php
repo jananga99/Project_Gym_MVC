@@ -6,6 +6,12 @@ class Session extends Model implements Observable{
 function __construct($id){
     parent::__construct();
     $this->id = $id;
+    $this->observers = array();
+}
+
+
+function init(){
+    $this->notifyObservers(NOTIFICATION_SESSION_CREATE);
 }
 
 
@@ -38,14 +44,16 @@ static function getSessionData($session_id){
 
 //Deletes the session
 function delete(){
-    //delete session registrations
+    $this->notifyObservers(NOTIFICATION_SESSION_DELETE);
     $this->db->update("Session_details",array("Delected"=>'1'),array("Session_id"=>$this->id,"Delected"=>'0'),'d');
+    $this->db->update("Session_registration",array("Delected"=>'1'),array("Session_id"=>$this->id,"Delected"=>'0'),'d');
 }
 
 
 //Edits the sessin details
 function edit($data,$dataTypes){
     $this->db->update("Session_details",$data,array("Session_id"=>$this->id,"Delected"=>'0'),$dataTypes);
+    $this->notifyObservers(NOTIFICATION_SESSION_EDIT);
 }
 
 
@@ -62,7 +70,7 @@ function getAllSessions($sort_arr=0,$orderField=0,$reverse=0){
 //Registers given customer for the session
 function register($customer){
     $this->db->insert("Session_registration",array("Session_id"=>$this->id,"Customer"=>$customer),"ds");
-
+    $this->notifyObservers(NOTIFICATION_SESSION_REGISTER,array("customer_email"=>$customer));
 }
 
 
@@ -70,6 +78,7 @@ function register($customer){
 function unregister($customer){
     $this->db->update("Session_registration",array("Delected"=>'1'),array("Session_id"=>$this->id,
     "Customer"=>$customer,"Delected"=>'0'),"d");
+    $this->notifyObservers(NOTIFICATION_SESSION_UNREGISTER,array("customer_email"=>$customer));
 }
 
 
@@ -90,94 +99,67 @@ static function registeredSessions($email){
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-//TODO : CHANGE THIS
-function getRegisterCustomersForCoach($coach){
-    return $this->db->select("Registration",array("Customer"),array("Coach"=>$coach));
+//Returns all customers registered for the sesssion
+function registeredCustomers(){
+    $customer_arr = array();
+    foreach( $this->db->select("Session_Registration",array("Customer"),
+    array("Session_id"=>$this->id,"Delected"=>'0')) as $row ) 
+        $customer_arr[] = $row['Customer'];
+    return $customer_arr;
 }
 
-//TODO : CHANGE THIS
-function getRegisterCustomersForSession($session_id){
-    return $this->db->select("session_registration",array("Customer"),array("Session_id"=>$session_id));
-}
 
 //Get the latest created session by logged in coach
 //TODO
-function getLatestCreatedSession($coach){
-    return $this->db->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
+static function getLatestCreatedSession($coach){
+    return self::$dbStatic->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
 }
 
 
+//Sets Customer observers for the session
+function setCustomerObservers($notificationType){
+    $coach_Registration = new Coach_Registration();
+    if($notificationType===NOTIFICATION_SESSION_CREATE)
+        foreach( $coach_Registration->registeredCustomers($this->getCreatedCoach()) as $row ) 
+            $this->observers[] = new Customer($row['Customer']);
+    elseif($notificationType===NOTIFICATION_SESSION_DELETE || $notificationType===NOTIFICATION_SESSION_EDIT)
+        foreach( $this->registeredCustomers() as $customer ) 
+            $this->observers[] = new Customer($customer);        
+}
 
 
+//Sets Coach observers for the session
+function setCoachObservers($notificationType){ 
+    $this->observers[] = new Coach($this->getCreatedCoach());
+}
 
 
-
-
-
-
-
+//Sets observers for the session
+function setObservers($notificationType){ 
+    if($notificationType===NOTIFICATION_SESSION_DELETE || $notificationType===NOTIFICATION_SESSION_EDIT || $notificationType===NOTIFICATION_SESSION_CREATE)
+        $this->setCustomerObservers($notificationType);
+    elseif($notificationType===NOTIFICATION_SESSION_REGISTER || $notificationType===NOTIFICATION_SESSION_UNREGISTER)
+        $this->setCoachObservers($notificationType);
+}
 
 
 //Observable
-function notifyObservers($data){
-    $type = $data['notification_type'];  
-    if($type===NOTIFICATION_SESSION_REGISTER || $type===NOTIFICATION_SESSION_UNREGISTER){
-        $coach = $this->getCreatedCoach($data['session_id']);
-        $details = $data['customer_email']." Customer ";
-        if($type===NOTIFICATION_SESSION_UNREGISTER)   $details.= "unregistered from";
-        else   $details.= "registered for";
-        $details.=" the Session (Session id = ".$data['session_id']." )";
-        $data = array();
-        $data['rec_email'] = $coach;
-        $data['details'] = $details;
-        $data['type'] = $type;
-        $observer = new Coach();
-        $observer->update($data);    
-    }elseif($type===NOTIFICATION_SESSION_CREATE){
-        $registered_customers =  $this->getRegisterCustomersForCoach($data['coach_email']);
-        $session_id = $this->getLatestCreatedSession($data['coach_email']);
-        foreach($registered_customers as $reg_customer){
-            $details = $data['coach_email']." Coach created a Session (id = ".$session_id." )";  
-            $data = array();
-            $data['rec_email'] = $reg_customer['Customer'];
-            $data['details'] = $details;
-            $data['type'] = $type;
-            $observer = new Customer();
-            $observer->update($data);                      
+function notifyObservers($type,$data=0){
+    $this->setObservers($type);
+    foreach($this->observers as $observer){
+        $notification_data = array('id'=>$this->id);
+        if($type===NOTIFICATION_SESSION_REGISTER || $type===NOTIFICATION_SESSION_UNREGISTER){
+            $rec_email = $this->getCreatedCoach();
+            $notification_data['customer_email'] = $data['customer_email'];
+        }elseif($type===NOTIFICATION_SESSION_CREATE || NOTIFICATION_SESSION_DELETE || NOTIFICATION_SESSION_EDIT ){
+            $rec_email = $observer->getEmail();
+            $notification_data['coach_email'] = $this->getCreatedCoach();
         }
-    }elseif($type===NOTIFICATION_SESSION_DELETE){
-        
-        $registered_customers =  $this->getRegisterCustomersForSession($data['session_id']);
-        //TODO
-        foreach($registered_customers as $reg_customer){
-            $details = $data['coach_email']." Coach delected the Session (id = ".$data['session_id']." ). You will be refunded.";  
-            $data1 = array();
-            $data1['rec_email'] = $reg_customer['Customer'];
-            $data1['details'] = $details;
-            $data1['type'] = $type;
-            $observer = new Customer();
-            $observer->update($data1);
-        }      
-    }elseif($type===NOTIFICATION_SESSION_EDIT){
-        
-        $registered_customers =  $this->getRegisterCustomersForSession($data['session_id']);
-        //TODO
-        foreach($registered_customers as $reg_customer){
-            $details = $data['coach_email']." Coach edited the Session (id = ".$data['session_id']." )";  
-            $data1 = array();
-            $data1['rec_email'] = $reg_customer['Customer'];
-            $data1['details'] = $details;
-            $data1['type'] = $type;
-            $observer = new Customer();
-            $observer->update($data1);
-        }      
+        $observer->update(array('rec_email'=>$rec_email,
+        'details'=>Notification::createNotificationDetails($type,$notification_data),'type'=>$type)); 
     }
-
+   
 }
-
-
 
 }
 ?>

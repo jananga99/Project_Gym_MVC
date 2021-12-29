@@ -24,6 +24,9 @@ function createUser($user_type,$data,$data_types){
 //Inserts given user details to database
 function createSession($data,$data_types){
     $this->db->insert("session_details",$data,$data_types);
+    Session::setDatabase();
+    $created_Session = new Session(Session::getLatestCreatedSession($data['Coach_Email']));
+    $created_Session->init();
 }
 
 

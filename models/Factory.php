@@ -65,6 +65,8 @@ class Factory extends Model{
                     require "models/Coach.php";
                     require "models/Customer.php";
                     require "models/Admin.php";
+                    require 'models/Coach_Registration.php';
+                    require 'models/Notification.php';
                     if(self::_getFirstParametre())
                         $model = new Session(self::_getFirstParametre());
                     else
@@ -80,6 +82,12 @@ class Factory extends Model{
             
             
             }else{
+                require "models/Coach.php";
+                require "models/Customer.php";
+                require "models/Admin.php";
+                require 'models/Coach_Registration.php'; 
+                require 'models/Notification.php';               
+                require 'models/Session.php';
                 require 'models/User123.php';
                 return new User123();
             }

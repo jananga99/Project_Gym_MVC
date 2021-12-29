@@ -21,6 +21,12 @@ function getData(){
 }
 
 
+//Returns details for this cutomer
+function getEmail(){
+    return $this->email;
+}
+
+
 //Returns details of the given coach_email
 static function getCoachData($coach_email){
     return self::$dbStatic->select("Coach",array("LastName", "FirstName", "Age", "Gender", "Telephone", "Email", 
@@ -48,11 +54,12 @@ function getRegisteredCustomersData(){
     return $customer_arr;    
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+
 //Observer
 public function update($data){
     $this->db->insert("notifications",array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Coach","Notification_Type"=>$data['type'],"Details"=>$data['details']),'ssss');
 }
+
 
 //Mediator
 function sendMessage($data){       //TODO     
