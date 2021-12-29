@@ -2,18 +2,24 @@
 
 class FitnessTip extends Model{
 
-function __construct(){
+function __construct($id){
     parent::__construct();
+    $this->id = $id;
 }
 
-function search($sort_arr=0){
+
+//Returns all fitness tips
+static function getAllFitnessTips($sort_arr=0){
     $fields = array("Tip");
-    return $this->db->select("Fitness_tips",$fields,$sort_arr);
+    return self::$dbStatic->select("Fitness_tips",$fields,$sort_arr);
 }
 
-function add($data){
-    $this->db->insert("Fitness_Tips",array("Tip"=>$data['tip'],"for_which_gender"=>$data['gender']),"ss");
+
+//Creates the fitness tip
+static function create($data){
+    self::$dbStatic->insert("Fitness_Tips",$data,"ss");
 }
+
 
 }
 ?>

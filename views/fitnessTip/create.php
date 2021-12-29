@@ -1,8 +1,4 @@
 <?php
-if (isset($_POST['submit'])) {
-    $_SESSION['data'] = $_POST;
-    header("Location:" . BASE_DIR . "FitnessTip/add");
-}
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 ?>
@@ -42,7 +38,7 @@ unset($_SESSION['msg']);
 
         <h2 class="m-5">Add a fitness tip</h2>
         <div>
-            <form action="" method="POST">
+            <form action=<?=BASE_DIR."FitnessTip/create1"?> method="POST">
 
                 <div class="row">
                     <div class="mb-3 form-group">

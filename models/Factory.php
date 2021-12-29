@@ -87,6 +87,21 @@ class Factory extends Model{
                 }
                 
 
+                elseif($modelName==="FitnessTip"){
+                    if(self::_getFirstParametre())    
+                        $model = new FitnessTip(self::_getFirstParametre());
+                    else
+                        FitnessTip::setDatabase();
+                }
+
+
+                elseif($modelName==="WorkoutPlan"){
+                    if(self::_getFirstParametre())    
+                        $model = new FitnessTip(self::_getFirstParametre());
+                    else
+                        FitnessTip::setDatabase();
+                }
+
                 return $model;
             
             

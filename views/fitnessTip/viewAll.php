@@ -1,10 +1,5 @@
 <?php
-if (isset($_POST['submit'])) {
-    $_SESSION['data']['sort_arr'] = array();
-    $_SESSION['data']['sort_arr']['for_which_gender'] = $_POST["gender"];
-    header("Location:" . BASE_DIR . "FitnessTip/search");
-    die();
-}
+
 $tip_arr =  isset($_SESSION['data']) ? $_SESSION['data'] : array();
 ?>
 
@@ -36,17 +31,11 @@ $tip_arr =  isset($_SESSION['data']) ? $_SESSION['data'] : array();
     echo $navbar->get();
     ?>
 
-
-
-    <!-- <a href=<?= BASE_DIR . "Customer" ?>>Dashboard</a> -->
-
     <div class="container">
 
         <h2>Get Tipness fits</h2>
 
-
-
-        <form action="" method="POST">
+        <form action=<?=BASE_DIR."FitnessTip/viewAll"?> method="POST">
             <div class='d-flex flex-column m-3 bd-highlight mb-3'>
                 <div class="m-3">
                     <label for="Gender">Gender</label>

@@ -7,29 +7,44 @@ class FitnessTip_Controller extends Controller{
     }
 
     function index(){
-        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
-            header("Location:".BASE_DIR."FitnessTip/search");
-            die(); 
+        header("Location:".BASE_DIR."FitnessTip/viewAll");
+        die(); 
+    }
+
+
+    //Displaying all fitness tips
+    function viewAll(){
+        $arr=0;
+        if(isset($_POST['gender']))
+            $arr = array('for_which_gender'=>$_POST['gender']);
+        $_SESSION['data'] =  FitnessTip::getAllFitnessTips($arr);
+        $this->view->render('fitnessTip/viewAll');        
+    }
+
+
+    //Displaying fitness tip creating interfcae
+    function viewCreate(){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+            $this->view->render('fitnessTip/create');
         }else{
-            header("Location:".BASE_DIR);
+            $_SESSION['requested_address'] = BASE_DIR."FitnessTip/viewCreate";
+            header("Location:".BASE_DIR."Auth/login/Customer");
             die();
         }
     }
 
-    function search(){
-        $sort_arr = isset($_SESSION['data']['sort_arr']) ? $_SESSION['data']['sort_arr'] : 0;  
-        $_SESSION['data'] =  $this->model->search($sort_arr);
-        $this->view->render('fitnessTip/searchAll');        
-    }
 
-    function create(){
-        $this->view->render('fitnessTip/create');
-    }
-
-    function add(){
-        $this->model->add($_SESSION['data']);
-        header("Location:".BASE_DIR."FitnessTip/create");
-        die();
+    //Creating the fitness tip
+    function create1(){   //TODO
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){        
+            FitnessTip::create(array("Tip"=>$_POST['tip'],"for_which_gender"=>$_POST['gender']));
+            header("Location:".BASE_DIR."FitnessTip/viewCreate");
+            die();
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."FitnessTip/create";
+            header("Location:".BASE_DIR."Auth/login/Customer");
+            die();
+        }            
     }
 
 

@@ -29,14 +29,14 @@ static function getReadNotifications($email){
 
 
 //Mark this notification as read
-function markAsRead($id){
-    $this->db->update("Notifications",array("Mark_As_Read"=>'1'),array("Notification_id"=>$id),'d');    
+function markAsRead(){
+    $this->db->update("Notifications",array("Mark_As_Read"=>'1'),array("Notification_id"=>$this->id),'d');    
 }
 
 
 //Delets this notification
-function delete($id){
-    $this->db->update("Notifications",array("Delected"=>'1'),array("Notification_id"=>$id),'d');    
+function delete(){
+    $this->db->update("Notifications",array("Delected"=>'1'),array("Notification_id"=>$this->id),'d');    
 }
 
 

@@ -55,7 +55,7 @@ class Message_Controller extends Controller{
             header("Location:".BASE_DIR."Message/".$$message_id);
             die();            
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Message/".$$message_id;
+            $_SESSION['requested_address'] = BASE_DIR."Message/markAsRead/".$message_id;
             header("Location:".BASE_DIR);
             die();
         } 
@@ -69,7 +69,7 @@ class Message_Controller extends Controller{
             header("Location:".BASE_DIR."Message/".$$message_id);
             die();    
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Message/delete";
+            $_SESSION['requested_address'] = BASE_DIR."Message/delete/".$id;
             header("Location:".BASE_DIR);
             die();
         } 

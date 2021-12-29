@@ -58,13 +58,11 @@ echo $navbar->get();
             foreach ($notification_arr as $row) {
                 echo "<tr>
                 <td>" . $row['Details'] . "</td>
-                <td><form action=" . BASE_DIR . "Notification/read method='POST'>
-                    <input type='text' name='notification_id' value=" . $row['Notification_id'] . " readonly style='display:none'>
+                <td><form action=" . BASE_DIR . "Notification/read/".$row['Notification_id']." method='POST'>
                     <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
                     </form>
                 </td>
-                <td><form action=" . BASE_DIR . "Notification/delete method='POST'>
-                    <input type='text' name='notification_id' value=" . $row['Notification_id'] . " readonly style='display:none'>
+                <td><form action=" . BASE_DIR . "Notification/delete/".$row['Notification_id']." method='POST'>
                     <button  class='btn btn-danger' name='delete'>Delete</button>
                     </form>
                 </td>

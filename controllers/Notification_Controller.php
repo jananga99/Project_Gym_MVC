@@ -16,23 +16,25 @@ class Notification_Controller extends Controller{
         } 
     }
 
-    function read(){
+    function markAsRead($id){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
-            $this->model->markAsRead($_POST['notification_id']);
+            $this->model->markAsRead();
             header("Location:".BASE_DIR."Notification");
             die();            
         }else{
+            $_SESSION['requested_address'] = BASE_DIR."Notification/markAsRead/".$id;
             header("Location:".BASE_DIR);
             die();
         } 
     }
   
-    function delete(){
+    function delete($id){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
-            $this->model->delete($_POST['notification_id']);
+            $this->model->delete();
             header("Location:".BASE_DIR."Notification");
             die();    
         }else{
+            $_SESSION['requested_address'] = BASE_DIR."Notification/delete/".$id;
             header("Location:".BASE_DIR);
             die();
         } 
