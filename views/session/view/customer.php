@@ -1,6 +1,5 @@
 <?php
 
-
 $arr = $_SESSION['data'];
 
 
@@ -127,11 +126,13 @@ unset($_SESSION['msg']);
                 if($arr['isRegistered'])
                     echo "<form action=".BASE_DIR ."Session/unregister/".$arr["Session_id"]." method='POST'>";
                 else
-                    echo "<form action=".BASE_DIR ."Session/register/".$arr["Session_id"]." method='POST'>";           
+                    echo "<form action=".BASE_DIR ."Payment/session method='POST'>";           
             ?>
                 <div class="row" >
                     <div class="col-md-12 form-group" >
                         <?php
+                            echo "<input type='text' class='form-control' name='price' readonly style='display:none' value=".$arr['Price'].">";
+                            echo "<input type='text' class='form-control' name='select_session' readonly style='display:none' value=".$arr['Session_id'].">";
                             if($arr['isRegistered']){
                                 echo "<input type='submit' class='btn btn-block btn-login' value='Unregister From Session' >";
                                 echo "<input type='text' value=".$arr['isRegistered']." name='Session_Registration_id' readonly style='display:none'>";
@@ -141,24 +142,6 @@ unset($_SESSION['msg']);
                     </div>                    
                 </div>
             </form>
-
-
-         
-   <!--
-                    <form action=<?= BASE_DIR . "Payment/session" ?> method="POST">
-                        <input type="text" class="form-control" name='select_session' value=<?php echo $arr["Session_id"] ?> readonly style="display:none">
-                        <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"] ?> readonly style="display:none">
-                        <input type="submit" class="btn btn-block btn-login m-3" value='Register' name='add_session'>
-                    </form>
-      
-      
-          
-                <form action=<?= BASE_DIR . "Session/unregister" ?> method="POST">
-                    <input type="text" name='unregister_session' value=<?php echo $arr["Session_id"] ?> style="display:none" readonly>
-                    <button class="btn btn-block btn-login m-3" name="unregister" value='Unregister'>Unregister</button>
-                </form>
-
-                        -->
 
         </div>
     </div>

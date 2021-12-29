@@ -40,7 +40,7 @@ unset($_SESSION['msg']);
     <div class="simple-login-container">
         <h2>SIGNUP ADMIN</h2>
         <div>
-            <form action=<?php echo BASE_DIR . "Admin/create/1" ?> method="POST">
+            <form action=<?php echo BASE_DIR . "Admin/create" ?> method="POST">
 
                 <div class="row">
                     <div class="mb-3 form-group">

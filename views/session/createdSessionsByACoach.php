@@ -55,7 +55,7 @@ else    $flag=1;
     </div>";
     }else{
         echo "<p>You have not started any sessions yet.</p>";
-        echo "<a href=".BASE_DIR . "Session/create".">START NOW</a>";
+        echo "<a href=".BASE_DIR . "Session/viewCreate".">START NOW</a>";
     }
     ?>
 

@@ -8,14 +8,13 @@ function __construct(){
 
 function index(){
    
-    die();
 }
 
 
 //Registering a Customer for a coach
 function register(){
-    $this->model->register($_SESSION['logged_user']['email'],$_POST['coach_email']);
-    header("Location:".BASE_DIR."Coach/view");
+    $this->model->register($_SESSION['logged_user']['email'],$_SESSION['data']['register_coach']);
+    header("Location:".BASE_DIR."Coach/viewAll");
     //header("Location:".BASE_DIR."Payment/success/coachRegister");
     die();     
 }
@@ -24,7 +23,7 @@ function register(){
 //UnRegistering a Customer from a coach
 function unregister(){
     $this->model->unregister($_POST['Registration_id']);
-    header("Location:".BASE_DIR."Coach/view");
+    header("Location:".BASE_DIR."Coach/viewAll");
     //header("Location:".BASE_DIR."Payment/success/coachRegister");
     die();     
 }

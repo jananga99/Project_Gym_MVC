@@ -15,6 +15,14 @@ function init(){
 }
 
 
+//Inserts given user details to database
+static function create($data,$data_types){
+    self::$dbStatic->insert("session_details",$data,$data_types);
+    $created_Session = new Session(self::getLatestCreatedSession($data['Coach_Email']));
+    $created_Session->init();
+}
+
+
 //Returns created sessions for given coach_email
 static function createdSessions($email){
     $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",

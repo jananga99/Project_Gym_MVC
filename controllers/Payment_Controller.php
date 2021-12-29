@@ -35,16 +35,17 @@ class Payment_Controller extends Controller
         if ($_SESSION['logged_user']['type'] === "Customer") {
             if($paid){
                 //Check Payments
-                header("Location:".BASE_DIR."Customer/coach/add");
+                header("Location:".BASE_DIR."Coach_Registration/register");
                 die();
             }else{
                 $_SESSION['data'] = array();
-                $_SESSION['data']['register_coach'] = $_POST['select_email'];
+                $_SESSION['data']['register_coach'] = $_POST['coach_email'];
                 $_SESSION['data']['price'] = $coach_register_price;   
                 $_SESSION['data']['flag'] = "register_coach";
                 $this->view->render('payment/temp');
             }
         }else{
+            $_SESSION['requestedAddress'] = BASE_DIR."Payment/coachRegister";
             header("Location:" . BASE_DIR . "Auth/login/Customer");
             die();
         } 
@@ -55,11 +56,11 @@ class Payment_Controller extends Controller
         if ($paid) {
             if ($_SESSION['logged_user']['type'] === "Customer") {        //Customer paying for a session
                 //Check for payments
-                header("Location:".BASE_DIR."Session/register");
+                header("Location:".BASE_DIR."Session/register/".$_SESSION['data']['select_session']);
                 die();
             } elseif ($_SESSION['logged_user']['type'] === "Coach") {   //User registering for a session
                 //Check payments
-                header("Location:" . BASE_DIR . "Session/create/1");
+                header("Location:" . BASE_DIR . "Session/create");
                 die();
             } else {
                 header("Location:" . BASE_DIR . "Auth/login/Coach");
@@ -67,6 +68,7 @@ class Payment_Controller extends Controller
             }
         } else {
             if ($_SESSION['logged_user']['type'] === "Customer") {        //Customer registering for a session.
+                
                 $_SESSION['data'] = array();
                 $_SESSION['data']['select_session'] = $_POST['select_session'];
                 $_SESSION['data']['price'] = $_POST['price'];   
@@ -75,7 +77,8 @@ class Payment_Controller extends Controller
             }elseif($_SESSION['logged_user']['type']==="Coach"){   //Coach starting a session
                 $_POST["startTime"].=":00";
                 $_POST["endTime"].=":00";
-                $_POST['price']=(float) $_POST['price'];                
+                $_SESSION['data'] = array();
+                $_SESSION['data']['price']=$_POST['price'];                
                 $_SESSION['session_create_data'] = $_POST;
                 $_SESSION['data']['flag'] = "create_session";  
                 $this->view->render('payment/temp');         

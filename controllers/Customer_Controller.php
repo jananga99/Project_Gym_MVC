@@ -18,27 +18,27 @@ function index(){
 }
 
 
+//Displaying interface for signing up.
+function viewCreate(){
+    $this->view->render('Customer/auth/create');
+}
+
+
 //Creating/signing up Customers
-function create($submitted=0){
-    if($submitted){
-        //Do validations TODO
-        $success = $this->model->isEmailUnique($_POST['email']);
-        if($success){
-            $this->model->createUser("Customer",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
-            "Gender"=>$_POST['gender'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], "password"=>sha1($_POST['password'])),
-            "ssdssss");
-            header("Location:".BASE_DIR.'Auth');
-            die();    
-        }else{
-            $_SESSION['msg'] = "This email is already registered.";
-            header("Location:".BASE_DIR."Customer/create");
-            die();    
-        }                 
-    }
-    else{
-        $this->view->render('Customer/auth/create');
-        
-    } 
+function create(){
+    //Do validations TODO
+    $success = Customer::isEmailUnique($_POST['email']);
+    if($success){
+        Customer::create("Customer",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        "Gender"=>$_POST['gender'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], "password"=>sha1($_POST['password'])),
+        "ssdssss");
+        header("Location:".BASE_DIR.'Auth');
+        die();    
+    }else{
+        $_SESSION['msg'] = "This email is already registered.";
+        header("Location:".BASE_DIR."Customer/create");
+        die();    
+    }                 
 }
   
 
@@ -62,6 +62,8 @@ function edit(){
 function view(){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
         $_SESSION['data'] = $this->model->getData();
+       // print_r($_SESSION['data']);
+        //die();
         $this->view->render('Customer/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
         $_SESSION['data'] = Customer::getCustomerData($_POST['select_customer_email']);

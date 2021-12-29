@@ -11,23 +11,30 @@ class Session_Controller extends Controller{
     }
 
 
-    //Creating Virtual Gym Sessions
-    function create($submitted=0){
+    //Providing display to create sessiosn
+    function viewCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            if($submitted){
-                //Do validations TODO
-                $this->model->createSession(array("Coach_Email"=>$_SESSION['logged_user']['email'],
-                "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
-                "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],
-                "Price"=>$_POST["price"],"Details"=>$_POST["details"]),"ssssssds");
-                header("Location:".BASE_DIR.'Session/create');
-                die();               
-            }
-            else{
-                $this->view->render('Session/create');
-            } 
+            $this->view->render('Session/create');
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Session/create";
+            $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
+            header("Location:".BASE_DIR."Auth/login/Coach");
+            die();
+        }            
+    }    
+
+
+    //Creating Virtual Gym Sessions
+    function create(){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+            //Do validations TODO
+            Session::create(array("Coach_Email"=>$_SESSION['logged_user']['email'],
+            "Session_Name"=>$_SESSION['session_create_data']['sessionName'],"Date"=>$_SESSION['session_create_data']["date"],"Start_Time"=>$_SESSION['session_create_data']["startTime"],
+            "End_Time"=>$_SESSION['session_create_data']["endTime"],"Num_Participants"=>$_SESSION['session_create_data']["maxParticipants"],
+            "Price"=>$_SESSION['session_create_data']["price"],"Details"=>$_SESSION['session_create_data']["details"]),"ssssssds");
+            header("Location:".BASE_DIR."Payment/success/createSession");
+            die();                    
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
             header("Location:".BASE_DIR."Auth/login/Coach");
             die();
         }
@@ -146,37 +153,5 @@ class Session_Controller extends Controller{
             die();  
         }       
     }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////
-    function create1($p1=0){
-        if($_SESSION['logged_user']['type']==="Coach"){
-            if($p1){                //Creates a session 
-                if(isset($_SESSION['session_create_data'])){
-                    $this->model->add($_SESSION['logged_user']['email'],$_SESSION['session_create_data']);
-                    $data=array();
-                    $data['notification_type'] = NOTIFICATION_SESSION_CREATE;
-                    $data['coach_email'] = $_SESSION['logged_user']['email'];
-                    $this->model->notifyObservers($data);                       
-                }
-                header("Location:".BASE_DIR."Payment/success/createSession");
-                die();                          
-            }else
-                $this->view->render('session/create');  //Renders session interface
-        }else{
-            header("Location:".BASE_DIR."Auth/login/Coach");
-            die();                
-        }
-    }
-
-
-
 
 }

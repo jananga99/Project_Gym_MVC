@@ -22,9 +22,10 @@ class Factory extends Model{
         $path = 'models/'.$modelName.'.php';
         if(file_exists($path)){
             
-            if(!(self::_getFunction()==="create")){
+                require 'models/User.php';
                 require $path;
                 $model=0;
+                $first_para = self::_getFirstParametre();
 
                 if($modelName==="Auth"){
                     $model = new Auth();
@@ -33,8 +34,8 @@ class Factory extends Model{
                 elseif($modelName==="Customer"){
                     require 'models/Coach_Registration.php';
                     require 'models/Coach.php';
-                    if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
-                    && $_SESSION['logged_user']['type']==="Customer")
+                    if(!(self::_getFunction()==="create") && isset($_SESSION['logged_user']) &&
+                    $_SESSION['logged_user']['type']==="Customer")
                         $model = new Customer($_SESSION['logged_user']['email']);
                     else
                         Customer::setDatabase();
@@ -43,8 +44,8 @@ class Factory extends Model{
                 elseif($modelName==="Coach"){
                     require 'models/Coach_Registration.php';
                     require 'models/Customer.php';
-                    if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
-                    && $_SESSION['logged_user']['type']==="Coach")
+                    if(!(self::_getFunction()==="create") && isset($_SESSION['logged_user']) &&
+                    $_SESSION['logged_user']['type']==="Coach")
                         $model = new Coach($_SESSION['logged_user']['email']);
                     else    //For static access
                         Coach::setDatabase();
@@ -52,9 +53,11 @@ class Factory extends Model{
 
                 elseif($modelName==="Admin"){
                     require 'models/Coach_Registration.php';
-                    if(isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) 
-                    && $_SESSION['logged_user']['type']==="Admin")
+                    if(!(self::_getFunction()==="create") && isset($_SESSION['logged_user']) &&
+                    $_SESSION['logged_user']['type']==="Admin")
                         $model = new Admin($_SESSION['logged_user']['email']);
+                    else
+                        Admin::setDatabase();
                 }
 
                 elseif($modelName==="Coach_Registration"){
@@ -104,22 +107,6 @@ class Factory extends Model{
                 }
 
                 return $model;
-            
-            
-            
-            
-            
-            }else{
-                require "models/Coach.php";
-                require "models/Customer.php";
-                require "models/Admin.php";
-                require 'models/Coach_Registration.php'; 
-                require 'models/Notification.php';               
-                require 'models/Session.php';
-                require 'models/User123.php';
-                return new User123();
-            }
-                
         }       
         return 0;
     }

@@ -18,27 +18,27 @@ function index(){
 }
 
 
+//Displaying interface for signing up.
+function viewCreate(){
+    $this->view->render('Admin/auth/create');
+}
+
+
 //Creating/signing up Admins
 function create($submitted=0){
-    if($submitted){
-        //Do validations TODO
-        $success = $this->model->isEmailUnique($_POST['email']);
-        if($success){
-            $this->model->createUser("Admin",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
-            "Gender"=>$_POST['gender'],"City"=>$_POST['city'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], 
-            "password"=>sha1($_POST['password'])),"ssdsssss");
-            header("Location:".BASE_DIR.'Auth');
-            die();    
-        }else{
-            $_SESSION['msg'] = "This email is already registered.";
-            header("Location:".BASE_DIR."Admin/create");
-            die();    
-        }                 
-    }
-    else{
-        $this->view->render('Admin/auth/create');
-        
-    } 
+    //Do validations TODO
+    $success = Admin::isEmailUnique($_POST['email']);
+    if($success){
+        Admin::create("Admin",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        "Gender"=>$_POST['gender'],"City"=>$_POST['city'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], 
+        "password"=>sha1($_POST['password'])),"ssdsssss");
+        header("Location:".BASE_DIR.'Auth');
+        die();    
+    }else{
+        $_SESSION['msg'] = "This email is already registered.";
+        header("Location:".BASE_DIR."Admin/create");
+        die();    
+    }                 
 }
 
   

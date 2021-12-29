@@ -1,29 +1,9 @@
 <?php
 
-class Customer extends Model{
-    
-private $email;
+class Customer extends User{
 
 function __construct($email,$mediator=0){
-    parent::__construct();
-    $this->messageMediator = $mediator;    //TODO
-    $this->email=$email ; 
-}
-
-//Edits Customer data in database
-function edit($data,$dataTypes){
-    $this->db->update("Customer",$data,array("Email"=>$this->email),$dataTypes);
-}
-
-//Returns details for this cutomer
-function getData(){
-    return $this->db->select("Customer",0,array("Email"=>$this->email),1);
-}
-
-
-//Returns details for this cutomer
-function getEmail(){
-    return $this->email;
+    parent::__construct("Customer",$email,$mediator);
 }
 
 

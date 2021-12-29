@@ -27,8 +27,6 @@
 
     <div class="container">
         <h1>TEMP PAGE UNTIL</h1>
-
-        <!--<form action=<?= BASE_DIR . "Payment/session/1" ?> method="post">-->
         <?php
 
         if ($_SESSION['data']['flag'] === "create_session")

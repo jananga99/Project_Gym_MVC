@@ -38,8 +38,7 @@ unset($_SESSION['msg']);
     <div class="container">
         <h2>CREATE SESSION</h2>
         <div>
-        <!--    <form action=<?= BASE_DIR . "Payment/session"; ?> method="POST">    -->
-            <form action=<?= BASE_DIR . "Session/create/1"; ?> method="POST">
+            <form action=<?= BASE_DIR . "Payment/session"; ?> method="POST">
                 <div class="row">
                     <label for="sessionName">Session Name</label>
                     <div class="mb-3 form-group">
