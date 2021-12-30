@@ -60,15 +60,15 @@ unset($_SESSION['msg']);
                     </tr>
                 </thead>
                 <tbody>";
-                $c=0;
+                $c = 0;
                 foreach ($customer_arr as $row) {
                     echo "<tr>
                     <td>" . $row['Customer'] . " </td>
                     <td>
-                        <input type='checkbox' id='check1' name='customer_email".$c."' class='pl' value=" . $row['Customer'] . "> 
+                        <input type='checkbox' id='check1' name='customer_email" . $c . "' class='pl' value=" . $row['Customer'] . "> 
                     </td>
                 </tr>";
-                $c+=1;
+                    $c += 1;
                 }
                 echo "</tbody>
             </table>
@@ -77,7 +77,7 @@ unset($_SESSION['msg']);
 
 
                 ?>
-             <!--   <input type="button" onclick="getCheckboxValue()" value="test">   -->
+                <!--   <input type="button" onclick="getCheckboxValue()" value="test">   -->
 
                 <div class="row">
 
@@ -92,6 +92,11 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
 </body>
 
 <script src=<?= BASE_DIR . "public/js/workout.js" ?>></script>
