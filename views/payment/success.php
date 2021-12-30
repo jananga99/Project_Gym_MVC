@@ -45,7 +45,7 @@ if (isset($_SESSION['back_flag'])) {
                 <h1>PAYMENT SUCCESS</h1>
             </div>
 
-            <a class="btn btn-primary" href=<?= BASE_DIR."Session/viewAll"; ?>>Go back to registerd session</a>
+            <a class="btn btn-primary" href=<?= BASE_DIR."Payment/finish"; ?>>Finish Payment</a>
 
         </div>
 

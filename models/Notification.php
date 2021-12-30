@@ -2,8 +2,9 @@
 
 class Notification extends Model{
 
-function __construct(){
+function __construct($id){
     parent::__construct();
+    $this->id = $id;
 }
 
 

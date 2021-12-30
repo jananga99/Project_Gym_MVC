@@ -58,7 +58,7 @@ echo $navbar->get();
             foreach ($notification_arr as $row) {
                 echo "<tr>
                 <td>" . $row['Details'] . "</td>
-                <td><form action=" . BASE_DIR . "Notification/read/".$row['Notification_id']." method='POST'>
+                <td><form action=" . BASE_DIR . "Notification/markAsRead/".$row['Notification_id']." method='POST'>
                     <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
                     </form>
                 </td>

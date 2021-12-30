@@ -64,6 +64,11 @@ class Factory extends Model{
                     $model = new Coach_Registration();
                 }
 
+                elseif($modelName==="Payment"){
+                    $model = new Payment();
+                }
+
+
                 elseif($modelName==="Session"){
                     require "models/Coach.php";
                     require "models/Customer.php";
@@ -75,6 +80,13 @@ class Factory extends Model{
                     else
                         Session::setDatabase();
                 
+                }
+
+                elseif($modelName==="Notification"){
+                    if(self::_getFirstParametre())
+                        $model = new Notification(self::_getFirstParametre());
+                    else
+                        Notification::setDatabase();                    
                 }
 
                 elseif($modelName==="Message"){

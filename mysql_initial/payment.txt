@@ -1,0 +1,8 @@
+CREATE TABLE Payment (
+    Payment_id INT(10) AUTO_INCREMENT,
+    Payer_Email varchar(255) NOT NULL,
+    Item_id INT(10) NOT NULL,
+    Amount DOUBLE NOT NULL,
+    Payment_Type INT(3) NOT NULL,
+    PRIMARY KEY (Payment_id)
+);

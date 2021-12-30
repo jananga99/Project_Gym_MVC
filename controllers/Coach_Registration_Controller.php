@@ -24,7 +24,6 @@ function register(){
 function unregister(){
     $this->model->unregister($_POST['Registration_id']);
     header("Location:".BASE_DIR."Coach/viewAll");
-    //header("Location:".BASE_DIR."Payment/success/coachRegister");
     die();     
 }
 

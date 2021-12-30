@@ -16,8 +16,8 @@ function init(){
 
 
 //Inserts given user details to database
-static function create($data,$data_types){
-    self::$dbStatic->insert("session_details",$data,$data_types);
+static function create($data){
+    self::$dbStatic->insert("session_details",$data,'ssssssds');
     $created_Session = new Session(self::getLatestCreatedSession($data['Coach_Email']));
     $created_Session->init();
 }

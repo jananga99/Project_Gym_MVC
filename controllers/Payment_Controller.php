@@ -3,89 +3,96 @@
 class Payment_Controller extends Controller
 {
 
-    function __construct()
-    {
+    function __construct(){
         parent::__construct();
     }
 
-    function index()
-    {
 
+    function index(){
         if (isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) && ($_SESSION['logged_user']['type'] === "Customer" || $_SESSION['logged_user']['type'] === "Coach" || $_SESSION['logged_user']['type'] === "Admin")) {
             header("Location:" . BASE_DIR . "Payment/dash.php");
             die();
         } else {
+            $_SESSION['requested_address'] = BASE_DIR . "Payment";
             header("Location:" . BASE_DIR);
             die();
         }
     }
 
-    function pay($flag){
-        $_SESSION['payment_flag'] = $flag;
-        $this->view->render('payment/dash');   
-    }
 
-    function success($flag){
-        $_SESSION['back_flag'] = $flag;
-        $this->view->render('payment/success');
-    }
-
-    function coachRegister($paid=0){
-        $coach_register_price =100;
-        if ($_SESSION['logged_user']['type'] === "Customer") {
-            if($paid){
-                //Check Payments
-                header("Location:".BASE_DIR."Coach_Registration/register");
-                die();
-            }else{
-                $_SESSION['data'] = array();
-                $_SESSION['data']['register_coach'] = $_POST['coach_email'];
-                $_SESSION['data']['price'] = $coach_register_price;   
-                $_SESSION['data']['flag'] = "register_coach";
-                $this->view->render('payment/temp');
-            }
+    //Handles payments requests
+    function viewPayment($type){
+        if(isset($_SESSION['logged_user'])){
+            $_SESSION['payment_data'] = array("Payer_Email"=>$_SESSION['logged_user']['email'],
+            "Amount"=>$_SESSION['payment_request_data']['price'],"Payment_Type"=>$type);
+            if($type==PAYMENT_SESSION_REGISTER){
+                $_SESSION['payment_data']["Item_id"]=$_SESSION['payment_request_data']['session_id'];
+            }elseif($type==PAYMENT_SESSION_CREATE){
+                $_SESSION['payment_data']["Item_id"]=-1;      //Denote it is item creating
+            }elseif($type==PAYMENT_COACH_REGISTER){
+                $_SESSION['payment_data']["Item_id"]=$_SESSION['payment_request_data']['coach'];      
+            }  
+            $this->view->render('payment/temp'); 
         }else{
-            $_SESSION['requestedAddress'] = BASE_DIR."Payment/coachRegister";
-            header("Location:" . BASE_DIR . "Auth/login/Customer");
-            die();
-        } 
-    }
-
-    function session($paid = 0)
-    {
-        if ($paid) {
-            if ($_SESSION['logged_user']['type'] === "Customer") {        //Customer paying for a session
-                //Check for payments
-                header("Location:".BASE_DIR."Session/register/".$_SESSION['data']['select_session']);
-                die();
-            } elseif ($_SESSION['logged_user']['type'] === "Coach") {   //User registering for a session
-                //Check payments
-                header("Location:" . BASE_DIR . "Session/create");
-                die();
-            } else {
-                header("Location:" . BASE_DIR . "Auth/login/Coach");
-                die();
-            }
-        } else {
-            if ($_SESSION['logged_user']['type'] === "Customer") {        //Customer registering for a session.
-                
-                $_SESSION['data'] = array();
-                $_SESSION['data']['select_session'] = $_POST['select_session'];
-                $_SESSION['data']['price'] = $_POST['price'];   
-                $_SESSION['data']['flag'] = "register_session";             
-                $this->view->render('payment/temp');   
-            }elseif($_SESSION['logged_user']['type']==="Coach"){   //Coach starting a session
-                $_POST["startTime"].=":00";
-                $_POST["endTime"].=":00";
-                $_SESSION['data'] = array();
-                $_SESSION['data']['price']=$_POST['price'];                
-                $_SESSION['session_create_data'] = $_POST;
-                $_SESSION['data']['flag'] = "create_session";  
-                $this->view->render('payment/temp');         
-           }else{
-                header("Location:".BASE_DIR."Auth/login/Coach");
-                die();               
-           } 
+            $_SESSION['requested_address'] = BASE_DIR."Payment/viewPayment/".$type;
+            header("Location:".BASE_DIR);
         }
     }
+
+
+    //Displaying paying options menu
+    function viewPay(){
+        if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
+            $this->view->render('payment/dash');   
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Session/register";
+            header("Location:".BASE_DIR);
+        }
+    }
+
+
+    //Paying the amount
+    function pay(){
+        if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
+                //Check for payments
+                $this->model->addPayment($_SESSION['payment_data']);
+                header("Location:".BASE_DIR."Payment/viewSuccess");
+                die();
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Session/register";
+            header("Location:".BASE_DIR);
+            die();
+        }
+    }
+
+    
+    //Displaying payment was succesful
+    function viewSuccess(){
+        if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
+            $this->view->render('payment/success');
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Payment/viewSuccess";
+            header("Location:".BASE_DIR);
+            die();
+        }
+    }
+
+
+    //Finishing payment procedure
+    function finish(){
+        if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
+            if($_SESSION['payment_data']['Payment_Type']==PAYMENT_SESSION_REGISTER)
+                header("Location:".BASE_DIR."Session/register/".$_SESSION['payment_data']["Item_id"]);
+            elseif($_SESSION['payment_data']['Payment_Type']==PAYMENT_SESSION_CREATE)
+                header("Location:".BASE_DIR."Session/create");
+            elseif($_SESSION['payment_data']['Payment_Type']==PAYMENT_COACH_REGISTER)
+                header("Location:".BASE_DIR."Coach/viewAll");
+            die();
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Payment/success";
+            header("Location:".BASE_DIR);
+            die();
+        }
+    }
+    
 }

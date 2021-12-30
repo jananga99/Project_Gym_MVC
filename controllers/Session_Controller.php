@@ -23,16 +23,28 @@ class Session_Controller extends Controller{
     }    
 
 
-    //Creating Virtual Gym Sessions
+    //Creating Virtual Gym Sessions or redirects for payments
     function create(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            //Do validations TODO
-            Session::create(array("Coach_Email"=>$_SESSION['logged_user']['email'],
-            "Session_Name"=>$_SESSION['session_create_data']['sessionName'],"Date"=>$_SESSION['session_create_data']["date"],"Start_Time"=>$_SESSION['session_create_data']["startTime"],
-            "End_Time"=>$_SESSION['session_create_data']["endTime"],"Num_Participants"=>$_SESSION['session_create_data']["maxParticipants"],
-            "Price"=>$_SESSION['session_create_data']["price"],"Details"=>$_SESSION['session_create_data']["details"]),"ssssssds");
-            header("Location:".BASE_DIR."Payment/success/createSession");
-            die();                    
+            if(isset($_SESSION['payment_data']) && $_SESSION['payment_data']['Item_id']==-1 &&
+            $_SESSION['payment_data']['Payer_Email']===$_SESSION['logged_user']['email'] &&
+            $_SESSION['payment_data']['Payment_Type']==PAYMENT_SESSION_CREATE){
+                Session::create($_SESSION['payment_request_data']);
+                unset($_SESSION['payment_data']);
+                header("Location:".BASE_DIR."Session/createdByMe");
+            }else{
+                //do validations TODO
+                $_POST["startTime"].=":00";
+                $_POST["endTime"].=":00";
+                $_SESSION['payment_request_data'] =  array("Coach_Email"=>$_SESSION['logged_user']['email'],
+                "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
+                "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["price"],
+                "Details"=>$_POST["details"]) ;          
+                header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_CREATE);
+            }
+            die();                
+
+
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
             header("Location:".BASE_DIR."Auth/login/Coach");
@@ -113,13 +125,21 @@ class Session_Controller extends Controller{
     }    
 
 
-    //registering current customer for the session
+    //registering current customer for the session or redirecting for payments
     //Observable
     function register($session_id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){ 
-            $this->model->register($_SESSION['logged_user']['email'],$session_id);          
-                header("Location:".BASE_DIR."Session/view/".$session_id);
-                die();                   
+            if(isset($_SESSION['payment_data']) && $_SESSION['payment_data']['Item_id']===$session_id &&
+            $_SESSION['payment_data']['Payer_Email']===$_SESSION['logged_user']['email'] &&
+            $_SESSION['payment_data']['Payment_Type']==PAYMENT_SESSION_REGISTER){
+                $this->model->register($_SESSION['logged_user']['email'],$session_id);   
+                unset($_SESSION['payment_data']);
+                header("Location:".BASE_DIR."Session/view/".$session_id);   
+            }else{
+                $_SESSION['payment_request_data'] = array("price"=>$_POST['price'],"session_id"=>$session_id);                 
+                header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_REGISTER);
+            }
+            die();    
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/register/".$session_id;
             header("Location:".BASE_DIR."Auth/login/Customer");

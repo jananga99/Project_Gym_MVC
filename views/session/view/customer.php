@@ -1,10 +1,6 @@
 <?php
 
 $arr = $_SESSION['data'];
-
-
-$price = 1000;
-
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 
@@ -126,13 +122,12 @@ unset($_SESSION['msg']);
                 if($arr['isRegistered'])
                     echo "<form action=".BASE_DIR ."Session/unregister/".$arr["Session_id"]." method='POST'>";
                 else
-                    echo "<form action=".BASE_DIR ."Payment/session method='POST'>";           
+                    echo "<form action=".BASE_DIR ."Session/register/".$arr['Session_id']." method='POST'>";           
             ?>
                 <div class="row" >
                     <div class="col-md-12 form-group" >
                         <?php
                             echo "<input type='text' class='form-control' name='price' readonly style='display:none' value=".$arr['Price'].">";
-                            echo "<input type='text' class='form-control' name='select_session' readonly style='display:none' value=".$arr['Session_id'].">";
                             if($arr['isRegistered']){
                                 echo "<input type='submit' class='btn btn-block btn-login' value='Unregister From Session' >";
                                 echo "<input type='text' value=".$arr['isRegistered']." name='Session_Registration_id' readonly style='display:none'>";

@@ -11,7 +11,7 @@
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/search.css" ?>>
 
-    <title>Document</title>
+    <title>Payment Details</title>
 </head>
 
 <body>
@@ -28,19 +28,11 @@
     <div class="container">
         <h1>TEMP PAGE UNTIL</h1>
         <?php
-
-        if ($_SESSION['data']['flag'] === "create_session")
-            echo "<form action= " . BASE_DIR . "Payment/pay/createSession" . "  method='post'>";
-        elseif ($_SESSION['data']['flag'] === "register_session")
-            echo "<form action=" . BASE_DIR . "Payment/pay/registerSession" . "  method='post'>";
-        elseif ($_SESSION['data']['flag'] === "register_coach")
-            echo "<form action=" . BASE_DIR . "Payment/pay/coachRegister" . "  method='post'>";
-
-
+            echo "<form action= " . BASE_DIR . "Payment/viewPay" . "  method='post'>";
         ?>
         <label for="price">Price ($)</label>
 
-        <input type="text" class="form-control" name='price' value=<?php echo $_SESSION['data']["price"] ?> readonly>
+        <input type="text" class="form-control" name='price' value=<?php echo $_SESSION['payment_data']["Amount"] ?> readonly>
         <div class="m-3">
             <input type="submit" class="btn btn-primary" value='Enter Payment Details'>
 
