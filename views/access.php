@@ -31,7 +31,7 @@
 
 <body>
 
-   
+
 
     <div class="container">
 
@@ -39,7 +39,7 @@
 
         <!-- <h3 class="mb-5">Welcome to the VirtualGYM</h3> -->
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
 
             <div class="d-grid gap-2">
                 <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="collapse" data-bs-target="#demo1">Login</button>
@@ -52,7 +52,17 @@
                     <li class="list-group-item"><a class="li" href="Auth/login">Admin</a></li>
                 </ul>
             </div>
+        </div> -->
+
+        <div class="mb-3">
+            <div class="d-grid gap-2">
+                <a class="btn btn-outline-light btn-lg" href="Auth/login">Login</a>
+            </div>
+
         </div>
+
+
+
 
         <div class="mb-3">
             <div class="d-grid gap-2">

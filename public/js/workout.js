@@ -21,3 +21,17 @@ cn =2;
     }
    }
 }
+
+
+
+function getCheckboxValue() {  
+    var res=" ";
+    var inputs = document.querySelectorAll('.pl');   
+    for (var i = 0; i < inputs.length; i++) {   
+          
+        if(inputs[i].checked == true){
+            res = res + ","+inputs[i].checked.value;  //not working well
+        }
+    }   
+    console.log(res);
+}  

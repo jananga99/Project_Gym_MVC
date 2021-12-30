@@ -62,7 +62,7 @@ unset($_SESSION['msg']);
                 <thead>
                     <tr>
                         <th>Customer Email</th>
-                        <th></th>
+                        <th>select</th>
                     </tr>
                 </thead>
                 <tbody>";
@@ -71,7 +71,8 @@ unset($_SESSION['msg']);
                     <td>" . $row['Customer'] . " </td>
                     <td>
                         <input type='text' name='customer_email' value=" . $row['Customer'] . " readonly style='display:none'>
-                        <button value='Select'>Select</button>
+                      
+                        <input type='checkbox' id='check1' class='pl' value=" . $row['Customer'] . "> 
                     </td>
                 </tr>";
                 }
@@ -82,6 +83,7 @@ unset($_SESSION['msg']);
 
 
                 ?>
+                <input type="button" onclick="getCheckboxValue()" value="test">
 
                 <div class="row">
 
