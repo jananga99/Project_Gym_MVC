@@ -94,22 +94,18 @@ CREATE TABLE Plan_Registration (
     Details MEDIUMTEXT
 );
 
+CREATE TABLE Plan_Registration (
+    Customer varchar(255) NOT NULL,
+    Plan_id varchar(255) NOT NULL,
+    Delected INT(1) DEFAULT 0,
+    Details MEDIUMTEXT
+);
+
 CREATE TABLE Plan_Details (
     Plan_id INT(10) AUTO_INCREMENT,
     Coach_Email varchar(255) NOT NULL,
     Plan_Name varchar(255) NOT NULL,
-    Date DATE NOT NULL,
     Plan MEDIUMTEXT NULL,
-    Delected INT(1) NULL,
+    Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Plan_id)
-);
-
-
-CREATE TABLE Payment (
-    Payment_id INT(10) AUTO_INCREMENT,
-    Payer_Email varchar(255) NOT NULL,
-    Item_id INT(10) NOT NULL,
-    Amount DOUBLE NOT NULL,
-    Payment_Type INT(3) NOT NULL,
-    PRIMARY KEY (Payment_id)
 );

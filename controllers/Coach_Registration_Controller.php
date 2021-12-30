@@ -13,7 +13,7 @@ function index(){
 
 //Registering a Customer for a coach
 function register(){
-    $this->model->register($_SESSION['logged_user']['email'],$_SESSION['data']['register_coach']);
+    $this->model->register($_SESSION['logged_user']['email'],$_POST['coach_email']);
     header("Location:".BASE_DIR."Coach/viewAll");
     //header("Location:".BASE_DIR."Payment/success/coachRegister");
     die();     

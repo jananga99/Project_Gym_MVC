@@ -37,7 +37,7 @@ class WorkoutPlan_Controller extends Controller{
                 $_SESSION['customer_arr'] = $this->model->getCustomersForPlan();
                 $this->view->render('workoutPlan/view/coach');
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
-                $_SESSION['plan'] = $this->model->getPlan();
+                $_SESSION['data'] = $this->model->getData();
                 $this->view->render('workoutPlan/view/customer');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."WorkoutPlan/view/".$id;
@@ -48,14 +48,28 @@ class WorkoutPlan_Controller extends Controller{
 
 
     //Creating a workout plan
-    function create1(){
+    function create(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            print_r($_POST);
-            //WorkoutPlan::create($_SESSION['logged_user']['email'],
-              //  array('plan_name'=>$_POST['plan_name'],'plan'=>$_POST['plan']));
-           // $plan_id = $this->model->getLatestCreatedPlan($_SESSION['logged_user']['email']);
-         //   $this->model->addCustomers($plan_id,$_POST['added_customers']);
-            //header("Location:".BASE_DIR."WorkoutPlan/create");
+            $plan = array();
+            $customers = array();
+            $step_count = 0;
+            $customer_count = 0;
+            foreach($_POST as $ind=>$data){
+                if($ind==="planTime".$step_count){
+                    $plan[$ind] = $data;
+                    $plan["planTodo".$step_count] = $_POST["planTodo".$step_count];
+                    $step_count+=1; 
+                }
+                if($ind==="customer_email".$customer_count){
+                    $customers[] = $data;
+                    $customer_count+=1;
+                }
+            }           
+            WorkoutPlan::create($_SESSION['logged_user']['email'],
+                array('plan_name'=>$_POST['plan_name'],'plan'=>$plan));
+            $new_plan = new WorkoutPlan(WorkoutPlan::getLatestCreatedPlan($_SESSION['logged_user']['email']));
+            $new_plan->addCustomers($customers);
+            header("Location:".BASE_DIR."WorkoutPlan/viewCreate");
             die();
         }else{
             $_SESSION['requested_address'] = BASE_DIR."WorkoutPlan/create".$id;

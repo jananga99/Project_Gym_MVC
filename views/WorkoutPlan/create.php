@@ -29,17 +29,11 @@ unset($_SESSION['msg']);
 
         <h2>Add a fitness tip</h2>
         <div>
-            <form action=<?= BASE_DIR . "WorkoutPlan/create/1" ?> method="POST">
+            <form action=<?= BASE_DIR . "WorkoutPlan/create" ?> method="POST">
 
                 <div class="row">
                     <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='plan_name' placeholder="Plan Name">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="mb-3 form-group">
-                        <input type="text" class="form-control" name='plan' placeholder="Enter Workout Plan number">
                     </div>
                 </div>
 
@@ -66,15 +60,15 @@ unset($_SESSION['msg']);
                     </tr>
                 </thead>
                 <tbody>";
+                $c=0;
                 foreach ($customer_arr as $row) {
                     echo "<tr>
                     <td>" . $row['Customer'] . " </td>
                     <td>
-                        <input type='text' name='customer_email' value=" . $row['Customer'] . " readonly style='display:none'>
-                      
-                        <input type='checkbox' id='check1' class='pl' value=" . $row['Customer'] . "> 
+                        <input type='checkbox' id='check1' name='customer_email".$c."' class='pl' value=" . $row['Customer'] . "> 
                     </td>
                 </tr>";
+                $c+=1;
                 }
                 echo "</tbody>
             </table>
@@ -83,12 +77,12 @@ unset($_SESSION['msg']);
 
 
                 ?>
-                <input type="button" onclick="getCheckboxValue()" value="test">
+             <!--   <input type="button" onclick="getCheckboxValue()" value="test">   -->
 
                 <div class="row">
 
                     <div class="m-3">
-                        <input type="submit" class="btn btn-primary btn-lg" name='submit' value='Create Plan'>
+                        <input type="submit" class="btn btn-primary btn-lg" value='Create Plan'>
                     </div>
                 </div>
             </form>

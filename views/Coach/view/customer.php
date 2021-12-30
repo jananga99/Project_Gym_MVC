@@ -83,7 +83,7 @@ unset($_SESSION['msg']);
                 if($arr['isRegistered'])
                     echo "<form action=".BASE_DIR ."Coach_Registration/unregister"." method='POST'>";
                 else
-                    echo "<form action=".BASE_DIR . "Payment/coachRegister".  " method='POST'>";           
+                    echo "<form action=".BASE_DIR . "Coach_Registration/register".  " method='POST'>";           
             ?>
                 <div class="row">
                     <div class="col-md-12 form-group">

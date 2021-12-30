@@ -11,11 +11,11 @@ cn =2;
      var y=  x.insertCell(c);
     //  y.innerHTML="Row-"+r+" Column-"+c; 
     if(c==0){
-        y.innerHTML='<input type="text" class="form-control" name="planTime"'+ c  +  'placeholder="Time"></input>';
+        y.innerHTML='<input type="text" class="form-control" name="planTime'+ r  +  '"placeholder="Time"></input>';
     }
     else{
     
-            y.innerHTML='<input type="text" class="form-control" name="planTodo"'+c+  'placeholder="todo"></input>';
+            y.innerHTML='<input type="text" class="form-control" name="planTodo'+r+  '"placeholder="todo"></input>';
     }
 
     }
