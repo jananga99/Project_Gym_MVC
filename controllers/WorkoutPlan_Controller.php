@@ -60,11 +60,11 @@ class WorkoutPlan_Controller extends Controller{
                     $plan["planTodo".$step_count] = $_POST["planTodo".$step_count];
                     $step_count+=1; 
                 }
-                if($ind==="customer_email".$customer_count){
+                if(substr($ind,0,14)==="customer_email"){
                     $customers[] = $data;
                     $customer_count+=1;
                 }
-            }           
+            }      
             WorkoutPlan::create($_SESSION['logged_user']['email'],
                 array('plan_name'=>$_POST['plan_name'],'plan'=>$plan));
             $new_plan = new WorkoutPlan(WorkoutPlan::getLatestCreatedPlan($_SESSION['logged_user']['email']));
