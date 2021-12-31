@@ -23,30 +23,34 @@ class Session_Controller extends Controller{
     }    
 
 
-    //Creating Virtual Gym Sessions or redirects for payments
+    //Validating and redirects to payments
+    function checkCreate(){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+            //do validations TODO
+            $_POST["startTime"].=":00";
+            $_POST["endTime"].=":00";
+            $_SESSION['payment_request_data'] =  array("Coach_Email"=>$_SESSION['logged_user']['email'],
+            "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
+            "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["price"],
+            "Details"=>$_POST["details"]) ;          
+            header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_CREATE);
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Session/checkCreate";
+            header("Location:".BASE_DIR."Auth/login/Coach");
+        }
+        die();
+    }
+
+
+    //Creating Virtual Gym Sessions 
     function create(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            if(isset($_SESSION['payment_data']) && $_SESSION['payment_data']['Item_id']==-1 &&
-            $_SESSION['payment_data']['Payer_Email']===$_SESSION['logged_user']['email'] &&
-            $_SESSION['payment_data']['Payment_Type']==PAYMENT_SESSION_CREATE){
-                Session::create($_SESSION['payment_request_data']);
-                unset($_SESSION['payment_data']);
-                header("Location:".BASE_DIR."Session/createdByMe");
-            }else{
-                //do validations TODO
-                $_POST["startTime"].=":00";
-                $_POST["endTime"].=":00";
-                $_SESSION['payment_request_data'] =  array("Coach_Email"=>$_SESSION['logged_user']['email'],
-                "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
-                "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["price"],
-                "Details"=>$_POST["details"]) ;          
-                header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_CREATE);
-            }
-            die();                
-
-
+            Session::create($_SESSION['payment_request_data']);
+            unset($_SESSION['payment_data']);
+            header("Location:".BASE_DIR."Session/createdByMe");
+            die();
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
+            $_SESSION['requested_address'] = BASE_DIR."Session/create";
             header("Location:".BASE_DIR."Auth/login/Coach");
             die();
         }
