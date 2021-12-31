@@ -1,24 +1,10 @@
-<?php
-
-
-
-
-
-$plan = $_SESSION['data'];
-
-
-echo "<pre>";
-print_r($plan['Plan']);
-echo "</pre>";
-
-
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+$plan_data = $_SESSION['data'];
+$plan = $plan_data['Plan'];
+$step_count = count($plan)/2;
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,20 +40,23 @@ echo "</pre>";
                 <th>TIME</th>
                 <th>TODO</th>
             </tr>
-            </thead>";
-
-            // foreach ($plan['Plan'] as $pla) {
-            //     echo "
-            // <tr>
-            //     <td>" . $plan['Plan_Name'] . "</td>
-            //     <td>
-            //         // <form action='" . BASE_DIR . "WorkoutPlan/view/" . $plan['Plan_id'] . "' method='post'>
-            //         //     <button class='btn btn-outline-light btn-sm'>View</button>
-            //         // </form>
-            //     </td>
-            //  </tr>            
-            // ";
-            //}
+            </thead>
+            
+            <tbody>";
+            
+            for($i=0;$i<$step_count;$i++){
+                echo "<tr>
+                <td>
+                    <p>{$plan['planTime'.$i]}</p>
+                </td>
+                <td>
+                    <p>{$plan['planTodo'.$i]}</p>
+                </td>
+                </tr>"    ;
+            }
+            
+            
+            echo "</tbody>";
 
             ?>
 

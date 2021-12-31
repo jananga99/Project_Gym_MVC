@@ -1,0 +1,9 @@
+<?php
+
+
+define('PAYMENT_SESSION_CREATE', 20);
+define('PAYMENT_SESSION_REGISTER', 21);
+define('PAYMENT_COACH_REGISTER', 25);
+
+
+?>
