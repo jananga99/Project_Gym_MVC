@@ -35,7 +35,7 @@ $tip_arr =  isset($_SESSION['data']) ? $_SESSION['data'] : array();
 
         <h2>Get Tipness fits</h2>
 
-        <form action=<?=BASE_DIR."FitnessTip/viewAll"?> method="POST">
+        <form action=<?= BASE_DIR . "FitnessTip/viewAll" ?> method="POST">
             <div class='d-flex flex-column m-3 bd-highlight mb-3'>
                 <div class="m-3">
                     <label for="Gender">Gender</label>

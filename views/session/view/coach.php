@@ -13,9 +13,9 @@ $arr = $_SESSION['data'];
 
 
     <?php
-    require 'public/html/boostraplinks.html';
+    require("public/HTML/boostraplinks.html");
     ?>
-    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/sessions.css" ?>>
 
 
     <title>Session View</title>
@@ -24,9 +24,15 @@ $arr = $_SESSION['data'];
 <body>
 
     <?php
-    // require_once("../../../build/HTML/navbar.php");
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
     ?>
-    <a href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a><br>
 
     <div class="simple-login-container">
         <h2>Session Details</h2>
@@ -101,6 +107,10 @@ $arr = $_SESSION['data'];
     <div class="d-flex justify-content-center" style="color:crimson">
 
     </div>
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>

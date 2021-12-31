@@ -1,5 +1,5 @@
 <?php
-$session_arr = isset($_SESSION['data']) ? $_SESSION['data']:0;
+$session_arr = isset($_SESSION['data']) ? $_SESSION['data'] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -18,31 +18,23 @@ $session_arr = isset($_SESSION['data']) ? $_SESSION['data']:0;
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-        <div class="container-fluid">
-            <a href="#" class="navbar-brand">VirtualGYM</a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a href=<?= BASE_DIR . $_SESSION['logged_user']['type'] ?> class="nav-item nav-link ">Dashboard</a>
-                    <a href="#" class="nav-item nav-link">Messages</a>
-
-
-                    <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
-
-                </div>
-            </div>
-    </nav>
-
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
 
     <div class='container'>
         <h2>All Sessions</h2>
 
         <?php
-        if($session_arr){
+        if ($session_arr) {
             echo "<div>
             <table class='table table-bordered table-hover' style='color:white'>
                 <thead>
@@ -72,7 +64,7 @@ $session_arr = isset($_SESSION['data']) ? $_SESSION['data']:0;
                     <td>" . $row['Price'] . "</td>
                    
                     
-                    <td><form action=" . BASE_DIR . "Session/view/".$row['Session_id']." method='POST'>
+                    <td><form action=" . BASE_DIR . "Session/view/" . $row['Session_id'] . " method='POST'>
                         <button class='btn btn-outline-light btn-sm' name='select'>Select</button>
                         </form></td>
                 </tr>";
@@ -80,7 +72,7 @@ $session_arr = isset($_SESSION['data']) ? $_SESSION['data']:0;
             echo "</tbody>
             </table>
         </div>";
-        }else{
+        } else {
             echo "<p>No available sessions yet</p>";
         }
 
@@ -89,6 +81,11 @@ $session_arr = isset($_SESSION['data']) ? $_SESSION['data']:0;
 
 
     </div>
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>

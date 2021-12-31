@@ -24,7 +24,7 @@ unset($_SESSION['msg']);
         "Dashboard" => BASE_DIR . "Customer",
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
-        "Back" => BASE_DIR . "Customer/coach/search",
+        "SearchCoach" => BASE_DIR . "Coach/viewAll",
 
         "Log Out" => BASE_DIR . "Auth/logout"
     );
@@ -78,30 +78,34 @@ unset($_SESSION['msg']);
                 </div>
             </div>
             <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label>Email</label>
-                        <input type="text" class="form-control" name='coach_email' value=<?php echo $arr["Email"] ?> readonly>
-                    </div>
+                <div class="col-md-12 form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" name='coach_email' value=<?php echo $arr["Email"] ?> readonly>
                 </div>
-        <!--        -->
-            <?php
-                if($arr['isRegistered'])
-                    echo "<form action=".BASE_DIR ."Coach_Registration/unregister/".$arr['isRegistered']." method='POST'>";
-                else
-                    echo "<form action=".BASE_DIR . "Coach_Registration/register/". $arr["Email"] ." method='POST'>";           
-            ?>
+            </div>
 
-                <div class="row" >
-                    <div class="col-md-12 form-group" >
-                        <?php
-                            if($arr['isRegistered']){
-                                echo "<input type='submit' class='btn btn-block btn-login' value='Unregister For Coach' >";
-                            }else
-                                echo "<input type='submit' class='btn btn-block btn-login' value='Register For Coach' >";            
-                        ?>   
-                    </div>                    
+
+            <div class="row m-3">
+
+                <?php
+                if ($arr['isRegistered'])
+                    echo "<form action=" . BASE_DIR . "Coach_Registration/unregister/" . $arr['isRegistered'] . " method='POST'>";
+                else
+                    echo "<form action=" . BASE_DIR . "Coach_Registration/register/" . $arr["Email"] . " method='POST'>";
+                ?>
+
+
+                <div class="d-grid gap-2">
+                    <?php
+                    if ($arr['isRegistered']) {
+                        echo "<input type='submit' class='btn btn-block btn-login' value='Unregister For Coach' >";
+                    } else
+                        echo "<input type='submit' class='btn btn-block btn-login' value='Register For Coach' >";
+                    ?>
                 </div>
-            </form>
+                </form>
+            </div>
+
 
         </div>
     </div>
