@@ -43,15 +43,15 @@ function create($submitted=0){
 
   
 //Editing Admin details
-function edit(){
+function edit($email){
     //Do validations TODO
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin" && $_SESSION['logged_user']['type']===$email){
         $this->model->edit(array("LastName"=>$_POST['lname'],"FirstName"=>$_POST['fname'],
         "Age"=>$_POST['age'],"Gender"=>$_POST['gender'],"City"=>$_POST['city'],"Telephone"=>$_POST['tel']),'ssdsss');
-        header("Location:".BASE_DIR."Admin/view");
+        header("Location:".BASE_DIR."Admin/view/".$email);
         die();
     }else{
-        $_SESSION['requested_address'] = BASE_DIR."Admin/edit";
+        $_SESSION['requested_address'] = BASE_DIR."Admin/edit/".$email;
         header("Location:".BASE_DIR."Auth/login/Admin");
         die();
     }     
@@ -59,12 +59,12 @@ function edit(){
   
 
 //Displaying Admin details
-function view(){
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+function view($email){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin" && $_SESSION['logged_user']['email']===$email){
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Admin/view/my');
     }else{
-        $_SESSION['requested_address'] = BASE_DIR."Admin/view";
+        $_SESSION['requested_address'] = BASE_DIR."Admin/view/".$email;
         header("Location:".BASE_DIR."Auth/login/Admin");
         die();
     }  

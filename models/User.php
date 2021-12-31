@@ -5,14 +5,12 @@ abstract class User extends Model{
 protected $email;
 protected $messageMediator;
 protected $type;
-protected $id;
 
 function __construct($type,$email,$mediator=0){
     parent::__construct();
     $this->messageMediator = $mediator;   
     $this->email=$email ; 
     $this->type = $type;
-    $this->id = self::getIdForEmail($type,$email);
 }
 
 
@@ -36,18 +34,6 @@ function getData(){
 //Returns details for this User
 function getEmail(){
     return $this->email;
-}
-
-
-//Returns Email for this User_id
-static function getEmailForId($type,$id){
-    return self::$dbStatic->select($type,array("Email"),array($type."_id"=>$id),1)['Email'];
-}
-
-
-//Returns User_id for this Email
-static function getIdForEmail($type,$email){
-    return  self::$dbStatic->select($type,array($type."_id"),array("Email"=>$email),1)[$type."_id"];
 }
 
 

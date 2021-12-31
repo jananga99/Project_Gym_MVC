@@ -43,15 +43,15 @@ function create(){
   
 
 // Editing Customer details
-function edit(){
+function edit($email){
     //Do validations TODO
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer" && $_SESSION['logged_user']['email']===$email){
         $this->model->edit(array("LastName"=>$_POST['lname'],"FirstName"=>$_POST['fname'],
         "Age"=>$_POST['age'],"Gender"=>$_POST['gender'],"Telephone"=>$_POST['tel']),'ssdss');
-        header("Location:".BASE_DIR."Customer/view");
+        header("Location:".BASE_DIR."Customer/view/".$email);
         die();
     }else{
-        $_SESSION['requested_address'] = BASE_DIR."Customer/edit";
+        $_SESSION['requested_address'] = BASE_DIR."Customer/edit/".$email;
         header("Location:".BASE_DIR."Auth/login/Customer");
         die();
     }     
@@ -59,17 +59,15 @@ function edit(){
 
 
 //Displaying customer details
-function view(){
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
+function view($email){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer" && $_SESSION['logged_user']['email']===$email){
         $_SESSION['data'] = $this->model->getData();
-       // print_r($_SESSION['data']);
-        //die();
         $this->view->render('Customer/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-        $_SESSION['data'] = Customer::getCustomerData($_POST['select_customer_email']);
+        $_SESSION['data'] = Customer::getCustomerData($email);
         $this->view->render('Customer/view/coach');        
     }else{
-        $_SESSION['requested_address'] = BASE_DIR."Customer/view";
+        $_SESSION['requested_address'] = BASE_DIR."Customer/view/".$email;
         header("Location:".BASE_DIR."Auth/login/Customer");
         die();
     }  

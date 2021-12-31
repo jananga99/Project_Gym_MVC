@@ -16,7 +16,7 @@
 
     <?php
     $menu_arr = array(
-        "Profile" => BASE_DIR . "Coach/view",
+        "Profile" => BASE_DIR . "Coach/view/{$_SESSION['logged_user']['email']}",
         "Notifications" => BASE_DIR . "Notification",
         "Reports" => "#",
         "Messages" => BASE_DIR . "Message",
@@ -29,7 +29,7 @@
     <div class="container">
 
         <h1 class="mb-4">Welcome</h1>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/view" ?>>edit profile</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/view/{$_SESSION['logged_user']['email']}" ?>>edit profile</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/RegisteredCustomers" ?>>Registered Customers</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewCreate" ?>>Create a session</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/createdByMe" ?>>My Sessions</a>

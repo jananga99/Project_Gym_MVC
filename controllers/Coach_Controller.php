@@ -42,15 +42,15 @@ function create($submitted=0){
 
 
 // Editing Coach details
-function edit(){
+function edit($email){
     //Do validations TODO
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" && $_SESSION['logged_user']['email']===$email){
         $this->model->edit(array("LastName"=>$_POST['lname'],"FirstName"=>$_POST['fname'],"Age"=>$_POST['age'], 
         "City"=>$_POST['city'],"Gender"=>$_POST['gender'],"Telephone"=>$_POST['tel']),'ssdsss');
-        header("Location:".BASE_DIR."Coach/view");
+        header("Location:".BASE_DIR."Coach/view/".$email);
         die();
     }else{
-        $_SESSION['requested_address'] = BASE_DIR."Coach/edit";
+        $_SESSION['requested_address'] = BASE_DIR."Coach/edit/".$email;
         header("Location:".BASE_DIR."Auth/login/Coach");
         die();
     }     
@@ -58,18 +58,18 @@ function edit(){
 
 
 //Displaying coach details
-function view(){
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){     //For himself
+function view($email){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" && $_SESSION['logged_user']['email']===$email){     //For himself
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Coach/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){    //For a customer
-        $_SESSION['data'] = Coach::getCoachData($_POST['select_coach_email']);
+        $_SESSION['data'] = Coach::getCoachData($email);
         $coach_registration = new Coach_Registration();
         $_SESSION['data']['isRegistered'] = $coach_registration->isCoachRegistered($_SESSION['logged_user']['email'],
-            $_POST['select_coach_email']);
+            $email);
         $this->view->render('Coach/view/customer');
     }else{
-        $_SESSION['requested_address'] = BASE_DIR."Coach/view";
+        $_SESSION['requested_address'] = BASE_DIR."Coach/view/".$email;
         header("Location:".BASE_DIR."Auth/login/Coach");
         die();
     }  

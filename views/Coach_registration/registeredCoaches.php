@@ -60,8 +60,7 @@ $coach_arr = $_SESSION['data'];
                 echo "<tr>
                     <td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>
                     <td>" . $row['Gender'] . "</td>
-                    <td><form action=" . BASE_DIR . "Coach/view" . " method='POST'>
-                            <input type='text' name='select_coach_email' value=" . $row['Email'] . " readonly style='display:none'>
+                    <td><form action=" . BASE_DIR . "Coach/view/" .$row['Email']. " method='POST'>
                             <button class='btn btn-outline-light btn-sm' >View</button>
                         </form></td>
                 </tr>";

@@ -12,19 +12,31 @@ function index(){
 
 
 //Registering a Customer for a coach
-function register(){
-    $this->model->register($_SESSION['logged_user']['email'],$_POST['coach_email']);
-    header("Location:".BASE_DIR."Coach/viewAll");
-    //header("Location:".BASE_DIR."Payment/success/coachRegister");
-    die();     
+function register($email){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
+        $this->model->register($_SESSION['logged_user']['email'],$email);
+        header("Location:".BASE_DIR."Coach/viewAll");
+        //header("Location:".BASE_DIR."Payment/success/coachRegister");
+        die();   
+    }else{
+        $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/register/".$email;
+        header("Location:".BASE_DIR."Auth/login/Customer");
+        die();
+    }
 }
 
 
 //UnRegistering a Customer from a coach
-function unregister(){
-    $this->model->unregister($_POST['Registration_id']);
-    header("Location:".BASE_DIR."Coach/viewAll");
-    die();     
+function unregister($id){ 
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){    
+        $this->model->unregister($id);
+        header("Location:".BASE_DIR."Coach/viewAll");
+        die();   
+    }else{
+        $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/unregister/".$id;
+        header("Location:".BASE_DIR."Auth/login/Customer");
+        die();
+    }  
 }
 
 

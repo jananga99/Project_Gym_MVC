@@ -1,7 +1,6 @@
 CREATE DATABASE gms; 
 
 CREATE TABLE Customer (
-    Customer_id INT(10) AUTO_INCREMENT,
     Email varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255) NOT NULL,
@@ -12,11 +11,10 @@ CREATE TABLE Customer (
     Details MEDIUMTEXT,
     Suspended INT(1) DEFAULT 0,
     Delected INT(1) DEFAULT 0,
-    PRIMARY KEY (Customer_id)
+    PRIMARY KEY (Email)
 );
 
 CREATE TABLE Coach (
-    Coach_id INT(10) AUTO_INCREMENT,
     Email varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255) NOT NULL,
@@ -28,11 +26,10 @@ CREATE TABLE Coach (
     Details MEDIUMTEXT,
     Suspended INT(1) DEFAULT 0,
     Delected INT(1) DEFAULT 0,
-    PRIMARY KEY (Coach_id)
+    PRIMARY KEY (Email)
 );
 
 CREATE TABLE Admin (
-    Admin_id INT(10) AUTO_INCREMENT,
     Email varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255) NOT NULL,
@@ -43,7 +40,7 @@ CREATE TABLE Admin (
     password varchar(255) NOT NULL,
     Details MEDIUMTEXT,
     Delected INT(1) DEFAULT 0,
-    PRIMARY KEY (Admin_id)
+    PRIMARY KEY (Email)
 );
 
 
