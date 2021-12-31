@@ -15,32 +15,23 @@ unset($_SESSION['msg']);
 
 
     <?php
-    require 'public/html/boostraplinks.html';
+    require("public/HTML/boostraplinks.html");
     ?>
-    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
-
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/sessions.css" ?>>
 
     <title>Session View</title>
 </head>
 
-<nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-    <div class="container-fluid">
-        <a href="#" class="navbar-brand">VirtualGYM</a>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto">
-                <a href=<?= BASE_DIR . $_SESSION['logged_user']['type'] ?> class="nav-item nav-link ">Dashboard</a>
-                <a href=<?= BASE_DIR . "Session/search" ?> class="nav-item nav-link">Back</a>
-                <a href=<?= BASE_DIR . "Session/registered" ?> class="nav-item nav-link">Registered Sessions</a>
-
-
-                <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
-
-            </div>
-        </div>
-</nav>
+<?php
+$menu_arr = array(
+    "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
+    "Notifications" => BASE_DIR . "Notification",
+    "Messages" => BASE_DIR . "Message",
+    "Log Out" => BASE_DIR . "Auth/logout"
+);
+$navbar =  new Navbar($menu_arr);
+echo $navbar->get();
+?>
 
 
 <body>
@@ -119,23 +110,23 @@ unset($_SESSION['msg']);
 
 
             <?php
-                if($arr['isRegistered'])
-                    echo "<form action=".BASE_DIR ."Session/unregister/".$arr["Session_id"]." method='POST'>";
-                else
-                    echo "<form action=".BASE_DIR ."Session/register/".$arr['Session_id']." method='POST'>";           
+            if ($arr['isRegistered'])
+                echo "<form action=" . BASE_DIR . "Session/unregister/" . $arr["Session_id"] . " method='POST'>";
+            else
+                echo "<form action=" . BASE_DIR . "Session/register/" . $arr['Session_id'] . " method='POST'>";
             ?>
-                <div class="row" >
-                    <div class="col-md-12 form-group" >
-                        <?php
-                            echo "<input type='text' class='form-control' name='price' readonly style='display:none' value=".$arr['Price'].">";
-                            if($arr['isRegistered']){
-                                echo "<input type='submit' class='btn btn-block btn-login' value='Unregister From Session' >";
-                                echo "<input type='text' value=".$arr['isRegistered']." name='Session_Registration_id' readonly style='display:none'>";
-                            }else
-                                echo "<input type='submit' class='btn btn-block btn-login' value='Register For Session' >";            
-                        ?>   
-                    </div>                    
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <?php
+                    echo "<input type='text' class='form-control' name='price' readonly style='display:none' value=" . $arr['Price'] . ">";
+                    if ($arr['isRegistered']) {
+                        echo "<input type='submit' class='btn btn-block btn-login' value='Unregister From Session' >";
+                        echo "<input type='text' value=" . $arr['isRegistered'] . " name='Session_Registration_id' readonly style='display:none'>";
+                    } else
+                        echo "<input type='submit' class='btn btn-block btn-login' value='Register For Session' >";
+                    ?>
                 </div>
+            </div>
             </form>
 
         </div>
@@ -147,6 +138,11 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>

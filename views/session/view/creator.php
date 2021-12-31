@@ -25,13 +25,20 @@ unset($_SESSION['msg']);
 <body>
 
     <?php
-    // require_once("../../../build/HTML/navbar.php");
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
     ?>
-    <a href=<?= BASE_DIR . "Session/createdByMe" ?>>My Sessions</a>
+    <!-- <a href=<?= BASE_DIR . "Session/createdByMe" ?>>My Sessions</a> -->
     <div class="simple-login-container">
         <h2>Session Details</h2>
         <div>
-            <form action=<?= BASE_DIR . "Session/edit/".$arr["Session_id"] ?> method="POST">
+            <form action=<?= BASE_DIR . "Session/edit/" . $arr["Session_id"] ?> method="POST">
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Session Id</label>
@@ -100,7 +107,7 @@ unset($_SESSION['msg']);
 
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <form action=<?= BASE_DIR . "Session/delete/".$arr["Session_id"] ?> method="POST">
+                    <form action=<?= BASE_DIR . "Session/delete/" . $arr["Session_id"] ?> method="POST">
                         <input type="submit" class="btn btn-block btn-login" value='Delete Session' name='delete_session_btn'>
                     </form>
                 </div>
@@ -121,6 +128,11 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+    <?php
+    require 'public/html/footer.html';
+    ?>
+
 </body>
 
 </html>

@@ -63,7 +63,7 @@ $arr = $_SESSION['data'];
                 <div class="row">
                     <div class="mb-3 form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name='city' placeholder="City"  value=<?php echo $arr["City"] ?>>
+                        <input type="text" class="form-control" name='city' placeholder="City" value=<?php echo $arr["City"] ?>>
                     </div>
                 </div>
 
@@ -71,12 +71,12 @@ $arr = $_SESSION['data'];
                 <div class="row">
                     <div class="mb-3  form-group">
                         <label for="gender">Gender</label>
-                        <select name="gender" value=<?php echo $arr["gender"] ?>>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Other">Other</option>
-                        </select> 
-                        
+                        <select class="form-select" name="gender" value=<?php echo $arr["gender"] ?>>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+
                     </div>
                 </div>
 
