@@ -66,12 +66,12 @@ function edit($data,$dataTypes){
 
 
 //Returns all the sessions
-function getAllSessions($sort_arr=0,$orderField=0,$reverse=0){
+function getAllSessions(){
     $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",
     "Num_Participants","Price","Details");
-    if($sort_arr==0)    $sort_arr=array();
+    $sort_arr=array();
     $sort_arr['Delected'] = '0';
-    return self::$dbStatic->select("session_details",$fields,$sort_arr,0,$orderField,$reverse);
+    return self::$dbStatic->select("session_details",$fields,$sort_arr,0,"Date");    
 }
 
 
@@ -91,9 +91,9 @@ function unregister($customer){
 
 
 //Returns Sessions id if given customer registered for session
-function isCustomerRegistered($customer){
-    return $this->db->select("Session_registration",array("Session_id"),array("Customer"=>$customer,
-    "Session_id"=>$this->id,"Delected"=>'0'),1)['Session_id'] ;  
+static function isCustomerRegistered($customer,$session_id){
+    return self::$dbStatic->select("Session_registration",array("Session_id"),array("Customer"=>$customer,
+    "Session_id"=>$session_id,"Delected"=>'0'),1)['Session_id'] ;  
 }
 
 
@@ -104,6 +104,18 @@ static function registeredSessions($email){
     array("Customer"=>$email,"Delected"=>'0')) as $row ) 
         $session_arr[] = self::getSessionData($row['Session_id']);
     return $session_arr;
+}
+
+
+//Returns all unregistered sessions by given customer email
+static function unregisteredSessions($email){
+    $session_arr = array();
+    foreach( self::getAllSessions() as $row ){
+        if(!self::isCustomerRegistered($email,$row['Session_id'])){
+            $session_arr[] = self::getSessionData($row['Session_id']);
+        }
+    }  
+    return $session_arr;   
 }
 
 

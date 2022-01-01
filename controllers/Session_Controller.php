@@ -81,7 +81,7 @@ class Session_Controller extends Controller{
             }
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){  //view by a customer
             $_SESSION['data'] = $this->model->getData();
-            $_SESSION['data']['isRegistered'] = $this->model->isCustomerRegistered($_SESSION['logged_user']['email']);
+            $_SESSION['data']['isRegistered'] = Session::isCustomerRegistered($_SESSION['logged_user']['email'],$session_id);
             $this->view->render("Session/view/customer");
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/view/".$session_id;
@@ -93,8 +93,34 @@ class Session_Controller extends Controller{
 
     //Displaying all available sessions
     function viewAll(){
-        $_SESSION['data'] = Session::getAllSessions();
-        $this->view->render("Session/viewAll");
+        $session_arr = array();
+        $arr = array();
+        if(isset($_POST['by_registered']) && $_POST['by_registered']==="registered")
+            $arr =  Session:: registeredSessions($_SESSION['logged_user']['email']);
+        elseif(isset($_POST['by_registered']) && $_POST['by_registered']==="unregistered")
+            $arr =  Session::unregisteredSessions($_SESSION['logged_user']['email']);
+        else
+            $arr = Session::getAllSessions();
+        if(isset($_POST["order_by_date"]) && $_POST["order_by_date"]==="decending")
+            $arr = array_reverse($arr);
+        $c = new Coach_Registration();
+        $coach_arr = $c->registeredCoaches($_SESSION['logged_user']['email']);
+        foreach($arr as $row){
+            if(isset($_POST["only_registered_coaches"]) && $_POST["only_registered_coaches"]==="on")    
+                if(!in_array($row['Coach_Email'],$coach_arr))   continue;
+            if(isset($_POST['by_time'])){
+                if($_POST['by_time']==="all")
+                    $session_arr[] = $row;
+                elseif($_POST['by_time']==="upcoming" && date('Y-m-d')<=$row['Date'])
+                    $session_arr[] = $row;
+                elseif($_POST['by_time']==="previous" && date('Y-m-d')>$row['Date'])
+                    $session_arr[] = $row;
+            }else
+                if(date('Y-m-d')<=$row['Date'])
+                    $session_arr[] = $row;
+        }  
+        $_SESSION['data'] = $session_arr;
+        $this->view->render("Session/viewAll");    
     }
 
 

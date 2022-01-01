@@ -29,7 +29,11 @@ function isCoachRegistered($customer,$coach){
 
 //Returns the registered coaches for the given customer email
 function registeredCoaches($email){
-   return $this->db->select("coach_registration",array("Coach"),array("Customer"=>$email,"Delected"=>'0')) ;
+    $coach_arr = array();
+    foreach ($this->db->select("coach_registration",array("Coach"),array("Customer"=>$email,
+    "Delected"=>'0')) as $row) 
+        $coach_arr[] = $row['Coach'];
+    return  $coach_arr;
 }
 
 

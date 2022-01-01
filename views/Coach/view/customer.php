@@ -32,9 +32,6 @@ unset($_SESSION['msg']);
     $navbar =  new Navbar($menu_arr);
     echo $navbar->get();
     ?>
-    <!-- 
-    <a href=<?= BASE_DIR . 'Customer/coach/search' ?>>Back to search</a><br>
-    <a href=<?= BASE_DIR . 'Customer/coach/registered' ?>>My Coaches</a> -->
     <div class="simple-login-container">
         <h2>Coach Details</h2>
         <div>

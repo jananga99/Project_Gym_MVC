@@ -104,7 +104,7 @@ echo $navbar->get();
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Details</label>
-                    <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?> readonly>
+                    <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".arr["Details"]; ?> readonly>
                 </div>
             </div>
 

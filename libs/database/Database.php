@@ -68,7 +68,6 @@ public function select($table,$fields=0,$sort_arr=0,$one=0,$orderField=0,$revers
         $bind_arr = array();
         foreach($sort_arr as $val)    $bind_arr[] = $val;
     }
-    
     if($one)    $arr=$this->result_to_one($this->_execute($commd,$bind_string,$bind_arr));
     else $arr=$this->result_to_array($this->_execute($commd,$bind_string,$bind_arr));
     return $arr;        

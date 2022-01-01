@@ -41,41 +41,41 @@ $arr = $_SESSION['data'];
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Session Id</label>
-                    <input type="text" class="form-control" name='session_id' value=<?php echo $arr["Session_id"] ?> readonly>
+                    <input type="text" class="form-control" name='session_id' value=<?php echo $arr["Session_id"]; ?> readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Session Name</label>
-                    <input type="text" class="form-control" name='session_name' value=<?php echo $arr["Session_Name"] ?> readonly>
+                    <input type="text" class="form-control" name='session_name' value=<?php echo $arr["Session_Name"]; ?> readonly>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Coach</label>
-                    <input type="text" class="form-control" name='coach_email' value=<?php echo $arr["Coach_Email"] ?> readonly>
+                    <input type="text" class="form-control" name='coach_email' value=<?php echo $arr["Coach_Email"]; ?> readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Date</label>
-                    <input type="text" class="form-control" name='date' value=<?php echo $arr["Date"] ?> readonly>
+                    <input type="text" class="form-control" name='date' value=<?php echo $arr["Date"]; ?> readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Start Time</label>
-                    <input type="text" class="form-control" name='startTime' value=<?php echo $arr["Start_Time"] ?> readonly>
+                    <input type="text" class="form-control" name='startTime' value=<?php echo $arr["Start_Time"]; ?> readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>End Time</label>
-                    <input type="text" class="form-control" name='endTime' value=<?php echo $arr["End_Time"] ?> readonly>
+                    <input type="text" class="form-control" name='endTime' value=<?php echo $arr["End_Time"]; ?> readonly>
                 </div>
             </div>
 
@@ -83,21 +83,21 @@ $arr = $_SESSION['data'];
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Number of participants</label>
-                    <input type="text" class="form-control" name='num_participants' value=<?php echo $arr["Num_Participants"] ?> readonly>
+                    <input type="text" class="form-control" name='num_participants' value=<?php echo $arr["Num_Participants"]; ?> readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Price</label>
-                    <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"] ?> readonly>
+                    <input type="text" class="form-control" name='price' value=<?php echo $arr["Price"]; ?> readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Details</label>
-                    <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?> readonly>
+                    <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".arr["Details"]; ?> readonly>
                 </div>
             </div>
 
