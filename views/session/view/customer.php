@@ -17,7 +17,7 @@ unset($_SESSION['msg']);
     <?php
     require("public/HTML/boostraplinks.html");
     ?>
-    <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/sessions.css" ?>>
+    <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
     <title>Session View</title>
 </head>

@@ -1,5 +1,6 @@
 <?php
 $arr = $_SESSION['data'];
+$register_price = 1000;
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 ?>
@@ -83,18 +84,20 @@ unset($_SESSION['msg']);
                     <input type="text" class="form-control" name='coach_email' value=<?php echo $arr["Email"] ?> readonly>
                 </div>
             </div>
-
-
-            <div class="row m-3">
-
-                <?php
+            <?php
                 if ($arr['isRegistered'])
                     echo "<form action=" . BASE_DIR . "Coach_Registration/unregister/" . $arr['isRegistered'] . " method='POST'>";
                 else
-                    echo "<form action=" . BASE_DIR . "Coach_Registration/register/" . $arr["Email"] . " method='POST'>";
+                    echo "<form action=" . BASE_DIR . "Coach_Registration/checkRegister/" . $arr["Email"] . " method='POST'>";
                 ?>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>Registration Price</label>
+                    <input type="text" class="form-control" name='price' value=<?php echo $register_price ?> readonly>
+                </div>
+            </div>
 
-
+            <div class="row m-3">
                 <div class="d-grid gap-2">
                     <?php
                     if ($arr['isRegistered']) {

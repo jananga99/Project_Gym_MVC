@@ -10,7 +10,7 @@ class Payment_Controller extends Controller
 
     function index(){
         if (isset($_SESSION['logged_user']) && isset($_SESSION['logged_user']['type']) && ($_SESSION['logged_user']['type'] === "Customer" || $_SESSION['logged_user']['type'] === "Coach" || $_SESSION['logged_user']['type'] === "Admin")) {
-            header("Location:" . BASE_DIR . "Payment/dash.php");
+            header("Location:" . BASE_DIR . "Payment/dash");
             die();
         } else {
             $_SESSION['requested_address'] = BASE_DIR . "Payment";
@@ -30,7 +30,7 @@ class Payment_Controller extends Controller
             }elseif($type==PAYMENT_SESSION_CREATE){
                 $_SESSION['payment_data']["Item_id"]=-1;      //Denote it is item creating
             }elseif($type==PAYMENT_COACH_REGISTER){
-                $_SESSION['payment_data']["Item_id"]=$_SESSION['payment_request_data']['coach'];      
+                $_SESSION['payment_data']["Item_id"]=$_SESSION['payment_request_data']['coach_email'];      
             }  
             $this->view->render('payment/temp'); 
         }else{
@@ -45,7 +45,7 @@ class Payment_Controller extends Controller
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
             $this->view->render('payment/dash');   
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Session/register";
+            $_SESSION['requested_address'] = BASE_DIR."Payment/viewpay";
             header("Location:".BASE_DIR);
         }
     }
@@ -86,7 +86,7 @@ class Payment_Controller extends Controller
             elseif($_SESSION['payment_data']['Payment_Type']==PAYMENT_SESSION_CREATE)
                 header("Location:".BASE_DIR."Session/create");
             elseif($_SESSION['payment_data']['Payment_Type']==PAYMENT_COACH_REGISTER)
-                header("Location:".BASE_DIR."Coach/viewAll");
+                header("Location:".BASE_DIR."Coach_Registration/register/".$_SESSION['payment_data']["Item_id"]);
             die();
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/success";
