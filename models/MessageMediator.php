@@ -19,7 +19,7 @@ class MessageMediator extends Model implements Mediator{
     //Checks whether the given user is added for mediator
     function isUserAdded($user){
         foreach($this->users as $u){
-            if($u->email===$user->email)
+            if($u->getEmail()===$user->getEmail())
                 return 1;
         }
         return 0;
@@ -32,7 +32,8 @@ class MessageMediator extends Model implements Mediator{
             if(!($u->getEmail()===$sender->getEmail())){
                 $u->receieveMessage($message);
                 $this->db->insert("messages",array("Receiver_Email"=>$u->getEmail(),
-                "Sender_Email"=>$sender->getEmail(),"Details"=>$message),'sss');    
+                "Sender_Email"=>$sender->getEmail(),"Message"=>$message['data'],
+                "Type"=>$message['type'],"message_sent_id"=>$message['sent_id']),'sssdd');    
             }
         }
     }

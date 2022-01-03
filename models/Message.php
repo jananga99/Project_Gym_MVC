@@ -9,16 +9,23 @@ function __construct($id){
 
 
 //Returns received messages for given email
-static function getReceievedMessages($email){
-    return self::$dbStatic->select("Messages",array("Details","Message_id","Sender_Email"),
-    array("Receiver_Email"=>$email,"Delected"=>'0'));
+static function getReceievedMessages($email,$type_read="all"){ 
+    if($type_read==="all")
+        return self::$dbStatic->select("Messages",array("Message","Message_id","Sender_Email",
+        "Type","Mark_as_read"),array("Receiver_Email"=>$email,"Receiver_Delected"=>'0'));
+    elseif($type_read==="read")
+        return self::$dbStatic->select("Messages",array("Message","Message_id","Sender_Email",
+        "Type","Mark_as_read"),array("Receiver_Email"=>$email,"Receiver_Delected"=>'0',"Mark_as_read"=>1));
+    elseif($type_read==="unread")
+        return self::$dbStatic->select("Messages",array("Message","Message_id","Sender_Email",
+        "Type","Mark_as_read"),array("Receiver_Email"=>$email,"Receiver_Delected"=>'0',"Mark_as_read"=>0));
 }
 
 
 //Returns sent messages for given email
 static function getSentMessages($email){
-    return self::$dbStatic->select("Messages",array("Details","Message_id","Receiver_Email"),
-    array("Sender_Email"=>$email,"Delected"=>'0'));
+    return self::$dbStatic->select("sent_messages",array("Message","Message_Sent_id","Type"),
+    array("Sender_Email"=>$email,"Sender_Delected"=>'0'));
 }
 
 
@@ -28,31 +35,68 @@ function markAsRead(){
 }
 
 
+//Returns the type of given message id
+static function getMessageType($id){
+    return self::$dbStatic->select("Messages",array("Type"),array("Message_id"=>$id),1)["Type"];
+}
+
+
 //Deletes this message
-function delete(){
-    $this->db->update("Messages",array("Delected"=>'1'),array("Message_id"=>$this->id),'d');    
+function delete($type){  
+    if($type==="rec")
+        $this->db->update("Messages",array("Receiver_Delected"=>'1'),array("Message_id"=>$this->id),'d'); 
+    elseif($type==="sent_me" || $type==="sent_everyone"){
+        $this->db->update("sent_messages",array("Sender_Delected"=>'1'),array("Message_Sent_id"=>$this->id),'d');
+        if($type==="sent_everyone") 
+            $this->db->update("Messages",array("Receiver_Delected"=>'1'),array("Message_Sent_id"=>$this->id),'d');
+    }
+}
+
+//Get the latest sent message
+static function getLatestSentMessage($sender){
+    return self::$dbStatic->select("Sent_messages",array("Message_sent_id"),array("Sender_Email"=>$sender),1,"Message_sent_id",1)['Message_sent_id'];
 }
 
 
 //Set receievers for Mediator according to sendeing type
-static function setReceievers($sender_email,$sender_type,$mediator){
-    if($sender_type==="Coach"){
+static function setReceievers($message_type,$mediator,$coach_email=0){
+    //echo $message_type;
+    if($message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS){
         $coach_Registration = new Coach_Registration();
-        foreach( $coach_Registration->registeredCustomers($sender_email) as $row ) {
+        foreach( $coach_Registration->registeredCustomers($coach_email) as $row ) {
             $customer = new Customer($row['Customer'],$mediator);
             if(!$mediator->isUserAdded($customer))
                 $mediator->addUser($customer);
         }
+    }elseif($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_ADMIN_TO_ALL_CUSTOMERS){
+        foreach(Customer::getAllCustomers() as $customer_email){
+            $customer = new Customer($customer_email,$mediator);
+            if(!$mediator->isUserAdded($customer))
+                $mediator->addUser($customer);            
+        }
+    }elseif($message_type==MESSAGE_ADMIN_TO_ALL_COACHES){
+        foreach(Coach::getAllCoaches() as $email){
+            $coach = new Coach($email,$mediator);
+            if(!$mediator->isUserAdded($coach))
+                $mediator->addUser($coach);            
+        }
     }
+    
 }
 
 
 //Mediator Design Pattrns
 //Sends (broadcasts) messages
-static function send($sender_email,$sender_type,$message){
+static function send($sender_email,$message_type,$message){
+    if($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS)
+        $sender_type = "Coach";
+    elseif ($message_type==MESSAGE_ADMIN_TO_ALL_CUSTOMERS || $message_type==MESSAGE_ADMIN_TO_ALL_COACHES)
+        $sender_type = "Admin";
     $sender = new $sender_type($sender_email,new MessageMediator());
-    self::setReceievers($sender_email,$sender_type,$sender->messageMediator);
-    $sender->sendMessage($message);
+    self::$dbStatic->insert("sent_messages",array("Sender_Email"=>$sender_email,"Message"=>$message,
+    "Type"=>$message_type),'ssd');       
+    self::setReceievers($message_type,$sender->getMessageMediator(),$sender_email);
+    $sender->sendMessage(array("data"=>$message,"type"=>$message_type,"sent_id"=>self::getLatestSentMessage($sender_email)));
 }
 
 

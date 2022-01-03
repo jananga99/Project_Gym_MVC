@@ -47,4 +47,18 @@ static function isEmailunique($email){
 }
 
 
+//Mediator
+
+//Returns Message mediator for this function
+function getMessageMediator(){
+    return $this->messageMediator;
+}
+
+
+//Sends message using mediator
+function sendMessage($message){      
+    $this->messageMediator->sendMessage($message,$this);
+}
+
+
 }

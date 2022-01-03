@@ -24,6 +24,19 @@ static function getAllCoachData($sort_arr=0,$orderField=0,$reverse=0){
 }
 
 
+//Returns all customer data
+static function getAllCoaches($sort_arr=0,$orderField=0,$reverse=0){
+    if($sort_arr==0)
+        $sort_arr = array();
+    $sort_arr['Delected'] = 0;
+    $coach_arr = array();
+    foreach(self::$dbStatic->select("Coach",array("Email"),$sort_arr,0,$orderField,$reverse) as $row){
+        $coach_arr[] = $row['Email'];
+    }
+    return $coach_arr;
+}
+
+
 //Returns all registered customer data 
 function getRegisteredCustomersData(){
     $coach_Registration = new Coach_Registration();
@@ -42,10 +55,11 @@ public function update($data){
 
 
 //Mediator
-//Sends message using mediator
-function sendMessage($message){      
-    $this->messageMediator->sendMessage($message,$this);
+//Receieves the sent message
+function receieveMessage($data){      
+    
 }
+
 
 
 }

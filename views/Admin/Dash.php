@@ -15,25 +15,16 @@
 
 <body>
 
-
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-        <div class="container-fluid">
-            <a href="#" class="navbar-brand">VirtualGYM</a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a href="#" class="nav-item nav-link ">Dashboard</a>
-                    <a href=<?php echo BASE_DIR . "Admin/view/{$_SESSION['logged_user']['email']}" ?> class="nav-item nav-link">Profile</a>
-                    <a href=<?php echo BASE_DIR . "Notification" ?> class="nav-item nav-link">Notifications</a>
-                    <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
-
-                    <a href=<?= BASE_DIR . "Auth/logout" ?> class="nav-item nav-link">Log Out</a>
-
-                </div>
-            </div>
-    </nav>
+    <?php
+    $menu_arr = array(
+        "Profile" => BASE_DIR . "Admin/view/{$_SESSION['logged_user']['email']}",
+        "Reports" => "#",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
 
 
@@ -43,6 +34,7 @@
         <h1 class="mb-4">Welcome</h1>
 
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Admin/view/{$_SESSION['logged_user']['email']}" ?>>edit profile</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Message/viewSend" ?>>Send Messages</a>
 
     </div>
 </body>

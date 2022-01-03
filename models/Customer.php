@@ -24,6 +24,19 @@ static function getAllCustomerData($sort_arr=0,$orderField=0,$reverse=0){
 }
 
 
+//Returns all customer data
+static function getAllCustomers($sort_arr=0,$orderField=0,$reverse=0){
+    if($sort_arr==0)
+        $sort_arr = array();
+    $sort_arr['Delected'] = 0;
+    $customer_arr = array();
+    foreach(self::$dbStatic->select("Customer",array("Email"),$sort_arr,0,$orderField,$reverse) as $row){
+        $customer_arr[] = $row['Email'];
+    }
+    return $customer_arr;
+}
+
+
 //Returns all registered customer data 
 function getRegisteredCoachesData(){
     $coach_Registration = new Coach_Registration();

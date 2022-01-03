@@ -130,7 +130,6 @@ function registeredCustomers(){
 
 
 //Get the latest created session by logged in coach
-//TODO
 static function getLatestCreatedSession($coach){
     return self::$dbStatic->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
 }

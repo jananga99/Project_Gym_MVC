@@ -32,6 +32,14 @@
 
         <form class="m-3" action=<?= BASE_DIR . "Message/send" ?> method="post">
 
+            <label for="message_type">TO</label>
+            <select name="message_type">
+                <?php
+                    foreach ($_SESSION['data'] as $value => $text)
+                        echo "<option value=".$value.">".$text."</option>";
+                ?>
+            </select><br>
+
             <input type="text" name="message">
             <input type="submit" value="SEND">
 
