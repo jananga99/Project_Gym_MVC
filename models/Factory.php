@@ -75,6 +75,7 @@ class Factory extends Model{
                     require "models/Admin.php";
                     require 'models/Coach_Registration.php';
                     require 'models/Notification.php';
+                    require 'models/Payment.php';
                     if(self::_getFirstParametre())
                         $model = new Session(self::_getFirstParametre());
                     else

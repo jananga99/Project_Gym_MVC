@@ -95,4 +95,36 @@ class Payment_Controller extends Controller
         }
     }
     
+
+    //Displaying set prices interface
+    function viewSetPrice(){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+            $_SESSION['data'] = $this->model->getPrices();
+            $this->view->render('payment/prices');
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Payment/viewSetPrice";
+            header("Location:".BASE_DIR);
+            die();            
+        }
+    }
+
+
+    //Sets Prices
+    function setPrice($action){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){  
+            if($action==="create"){
+                $this->model->addPrice(array("Price_Type"=>$_POST['price_type'],"Price"=>$_POST['price'],"Details"=>$_POST['price_details']));
+            }elseif($action==="edit"){
+                $this->model->editPrice($_POST['price_id'],array("Price_Type"=>$_POST['price_type'],"Price"=>$_POST['price'],"Details"=>$_POST['price_details']));
+            }elseif($action==="delete"){
+                $this->model->deletePrice($_POST['price_id']);
+            }
+            header("Location:".BASE_DIR."Payment/viewSetPrice");
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Payment/setPrice";
+            header("Location:".BASE_DIR);           
+        }
+        die();
+    }
+
 }

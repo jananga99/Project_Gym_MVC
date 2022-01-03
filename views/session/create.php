@@ -1,5 +1,4 @@
 <?php
-$creating_price = 100;
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 ?>
@@ -91,8 +90,14 @@ unset($_SESSION['msg']);
                 </div>
 
                 <div class="row">
+                    <label for="details">Price for Session Starting</label>
+                    <div class="mb-3 form-group">
+                        <input type="text" class="form-control" name='createPrice' value=<?=$_SESSION['data']?> readonly>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="d-grid gap-2">
-                        <input type="text" class="btn btn-block btn-login" name='createPrice' value=<?= $creating_price; ?> style="display:none">
                         <input type="submit" class="btn btn-primary" name='submit' value='Create Session'>
                     </div>
                 </div>

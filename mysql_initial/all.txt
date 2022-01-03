@@ -124,3 +124,15 @@ CREATE TABLE Plan_Details (
     Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Plan_id)
 );
+
+
+CREATE TABLE Price (
+    Price_id INT(10) AUTO_INCREMENT,
+    Price_Type varchar(255) NOT NULL,
+    Price DOUBLE NOT NULL,
+    Details MEDIUMTEXT NULL,
+    Delected INT(1) DEFAULT 0,
+    PRIMARY KEY (Price_id)
+);
+
+INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Create_Session','1000','Price for a coach to create a sesssion')

@@ -14,6 +14,7 @@ class Session_Controller extends Controller{
     //Providing display to create sessiosn
     function viewCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
+            $_SESSION['data'] = Payment::getPrice("Create_Session");
             $this->view->render('Session/create');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
@@ -31,8 +32,8 @@ class Session_Controller extends Controller{
             $_POST["endTime"].=":00";
             $_SESSION['payment_request_data'] =  array("Coach_Email"=>$_SESSION['logged_user']['email'],
             "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
-            "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["price"],
-            "Details"=>$_POST["details"]) ;          
+            "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["createPrice"],
+            "Details"=>$_POST["details"],"registerPrice"=>$_POST['price']) ;          
             header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_CREATE);
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/checkCreate";
@@ -45,7 +46,16 @@ class Session_Controller extends Controller{
     //Creating Virtual Gym Sessions 
     function create(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            Session::create($_SESSION['payment_request_data']);
+            Session::create(array(
+                "Coach_Email"=>$_SESSION['payment_request_data']["Coach_Email"],
+                "Session_Name"=>$_SESSION['payment_request_data']["Session_Name"],
+                "Date"=>$_SESSION['payment_request_data']["Date"],
+                "Start_Time"=>$_SESSION['payment_request_data']["Start_Time"],
+                "End_Time"=>$_SESSION['payment_request_data']["End_Time"],
+                "Num_Participants"=>$_SESSION['payment_request_data']["Num_Participants"],
+                "price"=>$_SESSION['payment_request_data']["registerPrice"],
+                "Details"=>$_SESSION['payment_request_data']["Details"]
+            ));
             unset($_SESSION['payment_data']);
             header("Location:".BASE_DIR."Session/createdByMe");
             die();
