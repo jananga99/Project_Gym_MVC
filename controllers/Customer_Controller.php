@@ -60,7 +60,8 @@ function edit($email){
 
 //Displaying customer details
 function view($email){
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer" && $_SESSION['logged_user']['email']===$email){
+    if(isset($_SESSION['logged_user']) && (($_SESSION['logged_user']['type']==="Customer" 
+    && $_SESSION['logged_user']['email']===$email) || $_SESSION['logged_user']['type']==="Admin")){
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Customer/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
@@ -69,6 +70,22 @@ function view($email){
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Customer/view/".$email;
         header("Location:".BASE_DIR."Auth/login/Customer");
+        die();
+    }  
+}
+
+
+//Displaying All Customers
+function viewAll(){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+        $sort_arr=isset($_POST["by"]) && isset($_POST["sort_by_gender"]) ? array("gender"=>$_POST["sort_radio_gender"]) : 0;
+        $orderField=isset($_POST["by"]) && isset($_POST["order_by"])  && $_POST["order_by"] != "none" ? "CONCAT(FirstName,LastName)" : 0;
+        $reverse=isset($_POST["by"]) && isset($_POST['order_radio_name']) && $_POST['order_radio_name'] == 'z_to_a' ? 1 : 0;        
+        $_SESSION['data'] = Customer::getAllCustomerData($sort_arr,$orderField,$reverse);
+        $this->view->render('Customer/view/all');
+    }else{
+        $_SESSION['requested_address'] = BASE_DIR."Customer/viewAll";
+        header("Location:".BASE_DIR);
         die();
     }  
 }

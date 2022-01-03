@@ -93,6 +93,9 @@ class Session_Controller extends Controller{
             $_SESSION['data'] = $this->model->getData();
             $_SESSION['data']['isRegistered'] = Session::isCustomerRegistered($_SESSION['logged_user']['email'],$session_id);
             $this->view->render("Session/view/customer");
+        }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+            $_SESSION['data'] = $this->model->getData();
+            $this->view->render("Session/view/admin");
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/view/".$session_id;
             header("Location:".BASE_DIR."Auth/login/Coach");

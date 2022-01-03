@@ -107,28 +107,7 @@ echo $navbar->get();
                     <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".$arr["Details"]; ?> readonly>
                 </div>
             </div>
-
-
-            <?php
-            if ($arr['isRegistered'])
-                echo "<form action=" . BASE_DIR . "Session/unregister/" . $arr["Session_id"] . " method='POST'>";
-            else
-                echo "<form action=" . BASE_DIR . "Session/register/" . $arr['Session_id'] . " method='POST'>";
-            ?>
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <?php
-                    echo "<input type='text' class='form-control' name='price' readonly style='display:none' value=" . $arr['Price'] . ">";
-                    if ($arr['isRegistered']) {
-                        echo "<input type='submit' class='btn btn-block btn-login' value='Unregister From Session' >";
-                        echo "<input type='text' value=" . $arr['isRegistered'] . " name='Session_Registration_id' readonly style='display:none'>";
-                    } else
-                        echo "<input type='submit' class='btn btn-block btn-login' value='Register For Session' >";
-                    ?>
-                </div>
-            </div>
-            </form>
-
+        
         </div>
     </div>
 

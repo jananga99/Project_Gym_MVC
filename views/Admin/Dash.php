@@ -36,6 +36,9 @@
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Admin/view/{$_SESSION['logged_user']['email']}" ?>>edit profile</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Message/viewSend" ?>>Send Messages</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Payment/viewSetPrice" ?>>Set Prices</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/viewAll" ?>>All Customers</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/viewAll" ?>>All Coaches</a>
 
     </div>
 </body>
