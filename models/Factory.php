@@ -1,122 +1,109 @@
 <?php
 
-class Factory extends Model{
-
-    private static $instance;
-
-    private function __construct(){
-        parent::__construct();
-    }
-
-    //Singleton is applied for factory
-    private function getInstance(){
-        if(self::$instance==NULL)
-            self::$instance = new Factory();
-        return self::$instance;
-    }
+class Factory{
 
     //Creates model objects checking conditions
-    static function getModel($modelName){
-        if($modelName==="Factory")
-            return self::getInstance();
+    function getModel($modelName,$id=0){
+        
         $path = 'models/'.$modelName.'.php';
+        
         if(file_exists($path)){
             
-                require 'models/User.php';
-                require $path;
+                
+                
+                
                 $model=0;
-                $first_para = self::_getFirstParametre();
-
+                $function = $this->_getFunction();
+                $para_to_function = $this->_getFirstParametre();
+                
                 if($modelName==="Auth"){
+                    require_once $path;
                     $model = new Auth();
                 }
 
                 elseif($modelName==="Customer"){
-                    require 'models/Coach_Registration.php';
-                    require 'models/Coach.php';
-                    if(!(self::_getFunction()==="create") && isset($_SESSION['logged_user']) &&
-                    $_SESSION['logged_user']['type']==="Customer")
+                    if($id){
+                        require_once $path;
+                        $model = new Customer($id);
+                    }
+                    if($this->_getFirstParametre()){
+                        require_once $path;
                         $model = new Customer($_SESSION['logged_user']['email']);
-                    else
-                        Customer::setDatabase();
+                    }
                 }
                 
                 elseif($modelName==="Coach"){
-                    require 'models/Coach_Registration.php';
-                    require 'models/Customer.php';
-                    if(!(self::_getFunction()==="create") && isset($_SESSION['logged_user']) &&
-                    $_SESSION['logged_user']['type']==="Coach")
+                    if($id){
+                        require_once $path;
+                        $model = new Coach($id);
+                    }                        
+                    elseif($this->_getFirstParametre()){
+                        require_once $path;
                         $model = new Coach($_SESSION['logged_user']['email']);
-                    else    //For static access
-                        Coach::setDatabase();
+                    }                        
                 }
 
                 elseif($modelName==="Admin"){
-                    require 'models/Coach_Registration.php';
-                    if(!(self::_getFunction()==="create") && isset($_SESSION['logged_user']) &&
-                    $_SESSION['logged_user']['type']==="Admin")
+                    if($id){
+                        require_once $path;
+                        $model = new Admin($id);
+                    }
+                    if($this->_getFirstParametre()){
+                        require_once $path;
                         $model = new Admin($_SESSION['logged_user']['email']);
-                    else
-                        Admin::setDatabase();
+                    }
                 }
 
                 elseif($modelName==="Coach_Registration"){
+                    require_once $path;
                     $model = new Coach_Registration();
                 }
 
                 elseif($modelName==="Payment"){
+                    require_once $path;
                     $model = new Payment();
                 }
 
 
                 elseif($modelName==="Session"){
-                    require "models/Coach.php";
-                    require "models/Customer.php";
-                    require "models/Admin.php";
-                    require 'models/Coach_Registration.php';
-                    require 'models/Notification.php';
-                    require 'models/Payment.php';
-                    if(self::_getFirstParametre())
-                        $model = new Session(self::_getFirstParametre());
-                    else
-                        Session::setDatabase();
-                
+                    if($id){
+                        require_once $path;
+                        $model = new Session($id);
+                    }  
+                    if($this->_getFirstParametre()){
+                        require_once $path;
+                        $model = new Session($this->_getFirstParametre());
+                    }
                 }
 
                 elseif($modelName==="Notification"){
-                    if(self::_getFirstParametre())
-                        $model = new Notification(self::_getFirstParametre());
-                    else
-                        Notification::setDatabase();                    
+                    if($this->_getFirstParametre()){
+                        require_once $path;
+                        $model = new Notification($this->_getFirstParametre());
+                    }                    
                 }
 
                 elseif($modelName==="Message"){
-                    require "models/Coach.php";
-                    require "models/Customer.php";
-                    require "models/Admin.php";
-                    require 'models/Coach_Registration.php';
-                    require 'models/MessageMediator.php';
-                    if(self::_getFirstParametre())    
-                        $model = new Message(self::_getFirstParametre());
-                    else
-                        Message::setDatabase();                
+                    if($this->_getFirstParametre()){
+                        require_once $path; 
+                        $model = new Message($this->_getFirstParametre());  
+                    }   
                 }
                 
 
                 elseif($modelName==="FitnessTip"){
-                    if(self::_getFirstParametre())    
-                        $model = new FitnessTip(self::_getFirstParametre());
-                    else
-                        FitnessTip::setDatabase();
+                    if($this->_getFirstParametre()){   
+                        require_once $path; 
+                        $model = new FitnessTip($this->_getFirstParametre());
+                    }
                 }
 
 
                 elseif($modelName==="WorkoutPlan"){
-                    require 'models/Coach_Registration.php';
-                    if(self::_getFirstParametre())    
-                        $model = new WorkoutPlan(self::_getFirstParametre());
-                    else
-                        WorkoutPlan::setDatabase();
+                    if($this->_getFirstParametre()){
+                        require_once $path;    
+                        $model = new WorkoutPlan($this->_getFirstParametre());
+                    } 
                 }
 
                 return $model;
@@ -125,7 +112,7 @@ class Factory extends Model{
     }
 
     //returns the function part of the url
-    private static function _getFunction(){
+    private function _getFunction(){
         $url = isset($_GET['url']) ? $_GET['url'] : null;  
         $url = rtrim($url, '/'); 
         $url = filter_var($url, FILTER_SANITIZE_URL);
@@ -137,7 +124,7 @@ class Factory extends Model{
 
 
     //returns the function part of the url
-    private static function _getFirstParametre(){
+    private function _getFirstParametre(){
         $url = isset($_GET['url']) ? $_GET['url'] : null;  
         $url = rtrim($url, '/'); 
         $url = filter_var($url, FILTER_SANITIZE_URL);

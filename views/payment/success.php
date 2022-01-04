@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
-    require 'public/html/boostraplinks.html';
+    require_once 'public/html/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/payment.css" ?>>
     <title>Payment Success</title>
@@ -38,7 +38,7 @@
         </div>
 
         <?php
-        require 'public/html/footer.html';
+        require_once 'public/html/footer.html';
         ?>
 
 

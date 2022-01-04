@@ -15,7 +15,7 @@ unset($_SESSION['msg']);
 
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
@@ -37,7 +37,7 @@ echo $navbar->get();
 <body>
 
     <?php
-    // require_once("../../../build/HTML/navbar.php");
+    // require_once_once("../../../build/HTML/navbar.php");
     ?>
 
 
@@ -140,7 +140,7 @@ echo $navbar->get();
     </div>
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 </body>

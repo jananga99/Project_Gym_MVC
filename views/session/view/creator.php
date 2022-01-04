@@ -15,7 +15,7 @@ unset($_SESSION['msg']);
 
 
     <?php
-    require 'public/html/boostraplinks.html';
+    require_once 'public/html/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
@@ -92,7 +92,7 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Details</label>
-                        <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".arr["Details"]; ?>>
+                        <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".$arr["Details"]; ?>>
                     </div>
                 </div>
                 <div class="row">
@@ -129,7 +129,7 @@ unset($_SESSION['msg']);
     </div>
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 </body>

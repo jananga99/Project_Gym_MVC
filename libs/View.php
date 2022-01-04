@@ -6,9 +6,9 @@ class View{
         
     }
 
-    //Requires view page
+    //require_onces view page
     public function render($viewName){
-        require 'views/'.$viewName.'.php';
+        require_once 'views/'.$viewName.'.php';
     }
 
 

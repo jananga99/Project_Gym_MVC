@@ -12,7 +12,7 @@ function __construct($id){
 //Returns all plans created by a coach
 static function getAllPlansForACoach($coach_email){
     $plan_arr = array();
-    foreach(self::$dbStatic->select("Plan_details",array("Plan_id","Plan_Name","Plan"),array("Coach_Email"=>$coach_email,"Delected"=>'0')) as $row)
+    foreach($this->db->select("Plan_details",array("Plan_id","Plan_Name","Plan"),array("Coach_Email"=>$coach_email,"Delected"=>'0')) as $row)
        $plan_arr[] = array('Plan_Name'=>$row['Plan_Name'],'Plan_id'=>$row['Plan_id'],
        'Plan'=>unserialize( $row['Plan'] ));
     return $plan_arr;
@@ -21,7 +21,7 @@ static function getAllPlansForACoach($coach_email){
 
 //Returns all plans for a customer
 static function getAllPlansForACustomer($customer_email){
-    $plan_reg_arr = self::$dbStatic->select("Plan_Registration",array("Plan_id"),array("Customer"=>$customer_email));
+    $plan_reg_arr = $this->db->select("Plan_Registration",array("Plan_id"),array("Customer"=>$customer_email));
     $plan_arr = array();
     foreach($plan_reg_arr as $p)
         $plan_arr[] = self::getPlan($p['Plan_id']);
@@ -31,7 +31,7 @@ static function getAllPlansForACustomer($customer_email){
 
 //Returns data of given plan
 static function getPlan($plan_id){
-    $row = self::$dbStatic->select("Plan_details",array("Plan_id","Plan_Name","Plan","Coach_Email"),array("Plan_id"=>$plan_id),1);
+    $row = $this->db->select("Plan_details",array("Plan_id","Plan_Name","Plan","Coach_Email"),array("Plan_id"=>$plan_id),1);
     return array('Plan_Name'=>$row['Plan_Name'],'Plan_id'=>$row['Plan_id'],'Plan'=>unserialize( $row['Plan'] ));
 }
 
@@ -60,7 +60,7 @@ function getCustomersForPlan(){
 
 //Creates a workout plan
 static function create($coach_email,$data){
-    self::$dbStatic->insert("Plan_details",array("Plan"=>serialize($data['plan']),"Plan_Name"=>$data['plan_name'],
+    $this->db->insert("Plan_details",array("Plan"=>serialize($data['plan']),"Plan_Name"=>$data['plan_name'],
     "Coach_email"=>$coach_email),"sss");
 }
 
@@ -82,7 +82,7 @@ function addCustomer($customer){
 
 //Get the latest created session by givem coach
 static function getLatestCreatedPlan($coach){
-    return self::$dbStatic->select("Plan_details",array("Plan_id"),array("Coach_Email"=>$coach),1,"Plan_id",1)['Plan_id'];
+    return $this->db->select("Plan_details",array("Plan_id"),array("Coach_Email"=>$coach),1,"Plan_id",1)['Plan_id'];
 }
 
 }

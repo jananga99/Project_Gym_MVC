@@ -13,7 +13,7 @@ else    $flag = 1;
 
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/notification.css" ?>>
     <title>Notification</title>
@@ -86,7 +86,7 @@ echo $navbar->get();
 
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 

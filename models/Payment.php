@@ -25,12 +25,6 @@ function getPrices(){
 }
 
 
-//Gets price for given name
-static function getPrice($type){
-    return self::$dbStatic->select("price",array("price"),array("Price_Type"=>$type,"Delected"=>0),1)['price'];
-}
-
-
 //Edits prices
 function editPrice($id,$data){
     $this->db->update("price",$data,array("Price_id"=>$id),'sss');

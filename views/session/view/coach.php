@@ -13,7 +13,7 @@ $arr = $_SESSION['data'];
 
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
@@ -108,7 +108,7 @@ $arr = $_SESSION['data'];
 
     </div>
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 </body>

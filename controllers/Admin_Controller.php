@@ -45,7 +45,7 @@ function create($submitted=0){
 //Editing Admin details
 function edit($email){
     //Do validations TODO
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin" && $_SESSION['logged_user']['type']===$email){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin" && $_SESSION['logged_user']['email']===$email){
         $this->model->edit(array("LastName"=>$_POST['lname'],"FirstName"=>$_POST['fname'],
         "Age"=>$_POST['age'],"Gender"=>$_POST['gender'],"City"=>$_POST['city'],"Telephone"=>$_POST['tel']),'ssdsss');
         header("Location:".BASE_DIR."Admin/view/".$email);

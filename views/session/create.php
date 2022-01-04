@@ -11,7 +11,7 @@ unset($_SESSION['msg']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/sessions.css" ?>>
 
@@ -42,21 +42,21 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <label for="sessionName">Session Name</label>
                     <div class="mb-3 form-group">
-                        <input type="text" class="form-control" name='sessionName' placeholder="Session Name" required>
+                        <input type="text" class="form-control" name='sessionName' placeholder="Session Name" require_onced>
                     </div>
                 </div>
 
                 <div class="row">
                     <label for="date">Date (MM/DD/YYYY)</label>
                     <div class="mb-3 form-group">
-                        <input type="date" class="form-control" name='date' required>
+                        <input type="date" class="form-control" name='date' require_onced>
                     </div>
                 </div>
 
                 <div class="row">
                     <label for="startTime">Start Time (00:00 AM)</label>
                     <div class="mb-3 form-group">
-                        <input type="time" class="form-control" name='startTime' required>
+                        <input type="time" class="form-control" name='startTime' require_onced>
                     </div>
                 </div>
 
@@ -64,21 +64,21 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <label for="EndTime">End Time (00:00 AM)</label>
                     <div class="mb-3 form-group">
-                        <input type="time" class="form-control" name='endTime' required>
+                        <input type="time" class="form-control" name='endTime' require_onced>
                     </div>
                 </div>
 
                 <div class="row">
                     <label for="maxParticipants">Expected number of participants</label>
                     <div class="mb-3 form-group">
-                        <input type="number" class="form-control" name='maxParticipants' placeholder="Number of expected participants" required>
+                        <input type="number" class="form-control" name='maxParticipants' placeholder="Number of expected participants" require_onced>
                     </div>
                 </div>
 
                 <div class="row">
                     <label for="price">Price($)</label>
                     <div class="mb-3 form-group">
-                        <input type="text" class="form-control" name='price' placeholder="00.00" required>
+                        <input type="text" class="form-control" name='price' placeholder="00.00" require_onced>
                     </div>
                 </div>
 
@@ -110,7 +110,7 @@ unset($_SESSION['msg']);
     </div>
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 </body>

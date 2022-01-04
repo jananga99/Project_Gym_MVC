@@ -15,22 +15,6 @@ function init(){
 }
 
 
-//Inserts given user details to database
-static function create($data){
-    self::$dbStatic->insert("session_details",$data,'ssssssds');
-    $created_Session = new Session(self::getLatestCreatedSession($data['Coach_Email']));
-    $created_Session->init();
-}
-
-
-//Returns created sessions for given coach_email
-static function createdSessions($email){
-    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",
-    "Num_Participants","Price","Details");
-    return self::$dbStatic->select("session_details",$fields,array("Coach_Email"=>$email,"Delected"=>'0'));
-}
-
-
 //Returns the coach who created the session 
 function getCreatedCoach(){
     return $this->db->select("session_details",array("Coach_Email"),
@@ -41,12 +25,6 @@ function getCreatedCoach(){
 //Get the Session data
 function getData(){
     return $this->db->select("session_details",0,array("Session_id"=>$this->id,"Delected"=>'0'),1);
-}
-
-
-//Get the Session data for given session_id
-static function getSessionData($session_id){
-    return self::$dbStatic->select("session_details",0,array("Session_id"=>$session_id,"Delected"=>'0'),1);
 }
 
 
@@ -65,14 +43,7 @@ function edit($data,$dataTypes){
 }
 
 
-//Returns all the sessions
-function getAllSessions(){
-    $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",
-    "Num_Participants","Price","Details");
-    $sort_arr=array();
-    $sort_arr['Delected'] = '0';
-    return self::$dbStatic->select("session_details",$fields,$sort_arr,0,"Date");    
-}
+
 
 
 //Registers given customer for the session
@@ -90,33 +61,7 @@ function unregister($customer){
 }
 
 
-//Returns Sessions id if given customer registered for session
-static function isCustomerRegistered($customer,$session_id){
-    return self::$dbStatic->select("Session_registration",array("Session_id"),array("Customer"=>$customer,
-    "Session_id"=>$session_id,"Delected"=>'0'),1)['Session_id'] ;  
-}
 
-
-//Returns al registered sessions by given customer email
-static function registeredSessions($email){
-    $session_arr = array();
-    foreach( self::$dbStatic->select("Session_Registration",array("Session_id"),
-    array("Customer"=>$email,"Delected"=>'0')) as $row ) 
-        $session_arr[] = self::getSessionData($row['Session_id']);
-    return $session_arr;
-}
-
-
-//Returns all unregistered sessions by given customer email
-static function unregisteredSessions($email){
-    $session_arr = array();
-    foreach( self::getAllSessions() as $row ){
-        if(!self::isCustomerRegistered($email,$row['Session_id'])){
-            $session_arr[] = self::getSessionData($row['Session_id']);
-        }
-    }  
-    return $session_arr;   
-}
 
 
 //Returns all customers registered for the sesssion
@@ -129,27 +74,23 @@ function registeredCustomers(){
 }
 
 
-//Get the latest created session by logged in coach
-static function getLatestCreatedSession($coach){
-    return self::$dbStatic->select("Session_details",array("Session_id"),array("Coach_Email"=>$coach),1,"Session_id",1)['Session_id'];
-}
-
-
 //Sets Customer observers for the session
 function setCustomerObservers($notificationType){
-    $coach_Registration = new Coach_Registration();
+    $factory = new Factory();
+    $coach_Registration = $factory->getModel("Coach_Registration");
     if($notificationType===NOTIFICATION_SESSION_CREATE)
         foreach( $coach_Registration->registeredCustomers($this->getCreatedCoach()) as $row ) 
-            $this->observers[] = new Customer($row['Customer']);
+            $this->observers[] = $factory->getModel("Customer",$row['Customer']);
     elseif($notificationType===NOTIFICATION_SESSION_DELETE || $notificationType===NOTIFICATION_SESSION_EDIT)
         foreach( $this->registeredCustomers() as $customer ) 
-            $this->observers[] = new Customer($customer);        
+            $this->observers[] = $factory->getModel("Customer",$customer);   
 }
 
 
 //Sets Coach observers for the session
 function setCoachObservers($notificationType){ 
-    $this->observers[] = new Coach($this->getCreatedCoach());
+    $factory = new Factory();
+    $this->observers[] = $factory->getModel("Coach",$this->getCreatedCoach());
 }
 
 
@@ -174,8 +115,9 @@ function notifyObservers($type,$data=0){
             $rec_email = $observer->getEmail();
             $notification_data['coach_email'] = $this->getCreatedCoach();
         }
+        $notification_helper = new Notification_Helper();
         $observer->update(array('rec_email'=>$rec_email,
-        'details'=>Notification::createNotificationDetails($type,$notification_data),'type'=>$type)); 
+        'details'=>$notification_helper->createNotificationDetails($type,$notification_data),'type'=>$type)); 
     }
    
 }

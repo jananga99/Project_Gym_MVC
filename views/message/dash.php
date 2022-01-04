@@ -15,7 +15,7 @@ else    $receieved_flag = 1;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/notification.css" ?>>
     <title>Messages</title>
@@ -126,7 +126,7 @@ else    $receieved_flag = 1;
 
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 

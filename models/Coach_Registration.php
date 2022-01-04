@@ -37,6 +37,28 @@ function registeredCoaches($email){
 }
 
 
+//Returns all registered coaches data 
+function getRegisteredCoachesData($customer_email){
+    $coach_arr = array();
+    $coach_helper = new Coach_Helper();
+    foreach( $this->registeredCoaches($customer_email) as $coach ) 
+        $coach_arr[] = $coach_helper->getCoachData($coach);
+    return $coach_arr;    
+}
+
+
+//Returns all registered customer data 
+function getRegisteredCustomersData($email){
+    $factory = new Factory();
+    $coach_Registration = $factory->getModel("Coach_Registration");
+    $customer_helper = new Customer_Helper();
+    $customer_arr = array();
+    foreach( $coach_Registration->registeredCustomers($email) as $row ) 
+        $customer_arr[] = $customer_helper->getCustomerData($row['Customer']);
+    return $customer_arr;    
+}
+
+
 //Returns the registered customers for the given coach email
 function registeredCustomers($email){
     return $this->db->select("coach_registration",array("Customer"),array("Coach"=>$email,"Delected"=>'0')) ;

@@ -8,9 +8,10 @@ class Controller{
 
     //Loads the Model using Factroy object
     public function loadModel($modelName){
-        require 'models/Factory.php';
+        require_once 'models/Factory.php';
         $path = 'models/'.$modelName.'.php';
-        $model = Factory::getModel($modelName);
+        $factory = new Factory();
+        $model = $factory->getModel($modelName);
         if($model)
             $this->model = $model;
     }

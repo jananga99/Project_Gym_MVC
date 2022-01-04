@@ -11,7 +11,7 @@ unset($_SESSION['msg']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <?php
-    require 'public/html/boostraplinks.html';
+    require_once 'public/html/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
@@ -111,7 +111,7 @@ unset($_SESSION['msg']);
     </div>
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 </body>
 

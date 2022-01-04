@@ -82,7 +82,8 @@ class WorkoutPlan_Controller extends Controller{
     //Displying creating workout plan interface
     function viewCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $coach_Registration = new Coach_Registration();
+            $factory = new Factory();
+            $coach_Registration = $factory->getModel("Coach_Registration");
             $_SESSION['customer_arr'] = $coach_Registration->registeredCustomers($_SESSION['logged_user']['email']);
             $this->view->render('workoutPlan/create');
         }else{

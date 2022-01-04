@@ -7,14 +7,16 @@ class Session_Controller extends Controller{
     }
 
     function index(){
-       
+        header("Location:".BASE_DIR."Session/viewAll");
+        die();      
     }
 
 
     //Providing display to create sessiosn
     function viewCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $_SESSION['data'] = Payment::getPrice("Create_Session");
+            $payment_helper = new Payment_Helper();
+            $_SESSION['data'] =  $payment_helper->getPrice("Create_Session");
             $this->view->render('Session/create');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
@@ -45,8 +47,10 @@ class Session_Controller extends Controller{
 
     //Creating Virtual Gym Sessions 
     function create(){
+        
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            Session::create(array(
+            $session_helper = new Session_Helper(); 
+            $session_helper->create(array(
                 "Coach_Email"=>$_SESSION['payment_request_data']["Coach_Email"],
                 "Session_Name"=>$_SESSION['payment_request_data']["Session_Name"],
                 "Date"=>$_SESSION['payment_request_data']["Date"],
@@ -70,7 +74,8 @@ class Session_Controller extends Controller{
     //Displaying Gym Sessons created by himself
     function createdByMe(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $_SESSION['data'] = Session::createdSessions($_SESSION['logged_user']['email']);
+            $session_helper = new Session_Helper();
+            $_SESSION['data'] = $session_helper->createdSessions($_SESSION['logged_user']['email']);
             $this->view->render('Session/createdSessionsByACoach');  
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/createdByMe";
@@ -91,7 +96,8 @@ class Session_Controller extends Controller{
             }
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){  //view by a customer
             $_SESSION['data'] = $this->model->getData();
-            $_SESSION['data']['isRegistered'] = Session::isCustomerRegistered($_SESSION['logged_user']['email'],$session_id);
+            $session_helper = new Session_Helper();
+            $_SESSION['data']['isRegistered'] = $session_helper->isCustomerRegistered($_SESSION['logged_user']['email'],$session_id);
             $this->view->render("Session/view/customer");
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
             $_SESSION['data'] = $this->model->getData();
@@ -108,15 +114,17 @@ class Session_Controller extends Controller{
     function viewAll(){
         $session_arr = array();
         $arr = array();
+        $session_helper = new Session_Helper();
         if(isset($_POST['by_registered']) && $_POST['by_registered']==="registered")
-            $arr =  Session:: registeredSessions($_SESSION['logged_user']['email']);
+            $arr =  $session_helper-> registeredSessions($_SESSION['logged_user']['email']);
         elseif(isset($_POST['by_registered']) && $_POST['by_registered']==="unregistered")
-            $arr =  Session::unregisteredSessions($_SESSION['logged_user']['email']);
+            $arr =  $session_helper->unregisteredSessions($_SESSION['logged_user']['email']);
         else
-            $arr = Session::getAllSessions();
+            $arr = $session_helper->getAllSessions();
         if(isset($_POST["order_by_date"]) && $_POST["order_by_date"]==="decending")
             $arr = array_reverse($arr);
-        $c = new Coach_Registration();
+        $factory = new Factory();
+        $c = $factory->getModel("Coach_Registration");
         $coach_arr = $c->registeredCoaches($_SESSION['logged_user']['email']);
         foreach($arr as $row){
             if(isset($_POST["only_registered_coaches"]) && $_POST["only_registered_coaches"]==="on")    
@@ -209,7 +217,8 @@ class Session_Controller extends Controller{
     //Displaying registered sessions by a customer
     function registeredByMe(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){ 
-            $_SESSION['data'] = Session::registeredSessions($_SESSION['logged_user']['email']);
+            $session_helper = new Session_Helper();
+            $_SESSION['data'] = $session_helper->registeredSessions($_SESSION['logged_user']['email']);
             $this->view->render('session/registeredSessionsByACustomer');  
         }else{
             header("Location:".BASE_DIR."Auth/login/Customer");
