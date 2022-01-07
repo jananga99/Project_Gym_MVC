@@ -81,7 +81,9 @@
     </div>
 
 
-
+    <?php
+    require_once 'public/html/footer.html';
+    ?>
 </body>
 
 </html>
