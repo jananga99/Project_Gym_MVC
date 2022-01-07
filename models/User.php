@@ -6,17 +6,23 @@ protected $email;
 protected $messageMediator;
 protected $type;
 
-function __construct($type,$email,$mediator=0){
+function __construct($type,$data){
     parent::__construct();
-    $this->messageMediator = $mediator;   
-    $this->email=$email ; 
     $this->type = $type;
+    if(!is_null($data['id'])){
+        $this->email=$data['id'];
+    }else{
+        $this->create($data['create_data'],$data['create_data_types']);
+        $this->email = $data['create_data']['Email'];   
+    }
+    if(isset($data['mediator']))
+        $this->messageMediator = $data['mediator'];   
 }
 
 
 //Inserts given user details to database
-static function create($user_type,$data,$data_types){
-    $this->db->insert($user_type,$data,$data_types);
+function create($data,$data_types){
+    $this->db->insert($this->type,$data,$data_types);
 }
 
 //Edits User data in database

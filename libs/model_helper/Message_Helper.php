@@ -39,51 +39,9 @@ function getLatestSentMessage($sender){
 }
 
 
-//Set receievers for Mediator according to sendeing type
-function setReceievers($message_type,$mediator,$coach_email=0){
-    //echo $message_type;
-    if($message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS){
-        $factory = new Factory();
-        $coach_Registration = new Coach_Registration_Helper();
-        foreach( $coach_Registration->registeredCustomers($coach_email) as $row ) {
-            $factory = new Factory();
-            $customer = $factory->getModel("Customer",$row['Customer'],$mediator);
-            if(!$mediator->isUserAdded($customer))
-                $mediator->addUser($customer);
-        }
-    }elseif($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_ADMIN_TO_ALL_CUSTOMERS){
-        $customer_helper = new Customer_Helper();
-        foreach($customer_helper->getAllCustomers() as $customer_email){
-            $factory = new Factory();
-            $customer = $factory->getModel("Customer",$customer_email,$mediator);
-            if(!$mediator->isUserAdded($customer))
-                $mediator->addUser($customer);            
-        }
-    }elseif($message_type==MESSAGE_ADMIN_TO_ALL_COACHES){
-        $coach_helper = new Coach_Helper();
-        foreach($coach_helper->getAllCoaches() as $email){
-            $factory = new Factory();
-            $coach = $factory->getModel("Coach",$email,$mediator);
-            if(!$mediator->isUserAdded($coach))
-                $mediator->addUser($coach);            
-        }
-    }
-} 
+
     
-//Mediator Design Pattrns
-//Sends (broadcasts) messages
-function send($sender_email,$message_type,$message){
-    if($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS)
-        $sender_type = "Coach";
-    elseif ($message_type==MESSAGE_ADMIN_TO_ALL_CUSTOMERS || $message_type==MESSAGE_ADMIN_TO_ALL_COACHES)
-        $sender_type = "Admin";
-    $factory = new Factory();
-    $sender = $factory->getModel($sender_type,$sender_email,new MessageMediator());
-    $this->db->insert("sent_messages",array("Sender_Email"=>$sender_email,"Message"=>$message,
-    "Type"=>$message_type),'ssd');       
-    $this->setReceievers($message_type,$sender->getMessageMediator(),$sender_email);
-    $sender->sendMessage(array("data"=>$message,"type"=>$message_type,"sent_id"=>$this->getLatestSentMessage($sender_email)));
-}
+
 
 
 

@@ -29,9 +29,12 @@ function create($submitted=0){
     //Do validations TODO
     $success = Admin::isEmailUnique($_POST['email']);
     if($success){
-        Admin::create("Admin",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        $data = array();
+        $data['create_data'] = array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
         "Gender"=>$_POST['gender'],"City"=>$_POST['city'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], 
-        "password"=>sha1($_POST['password'])),"ssdsssss");
+        "password"=>sha1($_POST['password']));
+        $data['create_data_types'] = "ssdsssss";
+        $this->factory->getModel("Admin",$data);  
         header("Location:".BASE_DIR.'Auth');
         die();    
     }else{

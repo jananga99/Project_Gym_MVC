@@ -7,10 +7,11 @@ function __construct(){
 }
 
 
-//Inserts given user details to database
-function register($customer_email,$coach_email){
-    $this->db->insert("coach_registration",array("Customer"=>$customer_email, "Coach"=>$coach_email),"ss");
+//Get the latest sent message
+function getRegistrationId($customer,$coach){
+    return $this->db->select("Coach_Registration",array("Registration_id"),array("Customer"=>$customer,"Coach"=>$coach,"Delected"=>'0'),1)['Registration_id'];
 }
+
 
 //Returns True if given customer is registered for coach
 function isCoachRegistered($customer,$coach){

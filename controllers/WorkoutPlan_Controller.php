@@ -67,11 +67,9 @@ class WorkoutPlan_Controller extends Controller{
                     $customer_count+=1;
                 }
             }      
-            $workout_helper = new WorkoutPlan_Helper();
-            $workout_helper->create($_SESSION['logged_user']['email'],
-                array('plan_name'=>$_POST['plan_name'],'plan'=>$plan));
-            $factory = new Factory();
-            $new_plan = $factory->getModel("WorkoutPlan",$workout_helper->getLatestCreatedPlan($_SESSION['logged_user']['email']));
+            $data = array();
+            $data['create_data'] = array('plan_name'=>$_POST['plan_name'],'plan'=>serialize($plan),"Coach_Email"=>$_SESSION['logged_user']['email']);
+            $new_plan = $this->factory->getModel("WorkoutPlan",$data);
             $new_plan->addCustomers($customers);
             header("Location:".BASE_DIR."WorkoutPlan/viewCreate");
             die();

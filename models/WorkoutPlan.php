@@ -3,10 +3,22 @@
 class WorkoutPlan extends Model{
 
 
-function __construct($id){
+function __construct($data){
     parent::__construct();
-    $this->id = $id;
+    if(isset($data['id']) && !(is_null($data['id'])) ){
+        $this->id=$data['id'];
+    }else{
+        $this->create($data['create_data']);
+        $plan_helper =  new WorkoutPlan_Helper();
+        $this->id = $plan_helper->getLatestPlanId($data['create_data']['Coach_Email']);   
+    }
 }   
+
+
+//Creates a workout plan
+function create($data){
+    $this->db->insert("Plan_details",$data,"sss");
+}
 
 
 //Returns data of this plan

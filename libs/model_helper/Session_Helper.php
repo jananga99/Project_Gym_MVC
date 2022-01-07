@@ -49,13 +49,7 @@ function getSessionData($session_id){
 }
 
 
-//Inserts given user details to database
-function create($data){
-    $this->db->insert("session_details",$data,'ssssssds');
-    $factory = new Factory();
-    $created_Session = $factory->getModel("Session",$this->getLatestCreatedSession($data['Coach_Email']));
-    $created_Session->init();
-}
+
 
 
 //Returns created sessions for given coach_email

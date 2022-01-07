@@ -2,8 +2,15 @@
 
 class Payment extends Model{
 
-function __construct(){
+function __construct($data){
     parent::__construct();
+    if(isset($data['id']) && !(is_null($data['id'])) ){
+        $this->id=$data['id'];
+    }else{
+        $this->addPayment($data['create_data']);
+        $reg_helper =  new Payment_Helper();
+        $this->id = $reg_helper->getLatestPaymentId($data['create_data']['Payer_Email']);   
+    }
 }
 
 

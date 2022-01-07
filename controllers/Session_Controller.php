@@ -49,8 +49,8 @@ class Session_Controller extends Controller{
     function create(){
         
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $session_helper = new Session_Helper(); 
-            $session_helper->create(array(
+            $data = array();
+            $data['create_data'] = array(
                 "Coach_Email"=>$_SESSION['payment_request_data']["Coach_Email"],
                 "Session_Name"=>$_SESSION['payment_request_data']["Session_Name"],
                 "Date"=>$_SESSION['payment_request_data']["Date"],
@@ -59,7 +59,8 @@ class Session_Controller extends Controller{
                 "Num_Participants"=>$_SESSION['payment_request_data']["Num_Participants"],
                 "price"=>$_SESSION['payment_request_data']["registerPrice"],
                 "Details"=>$_SESSION['payment_request_data']["Details"]
-            ));
+            );
+            $this->factory->getModel("Session",$data);
             unset($_SESSION['payment_data']);
             header("Location:".BASE_DIR."Session/createdByMe");
             die();

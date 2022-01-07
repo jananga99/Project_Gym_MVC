@@ -18,7 +18,8 @@ class Auth_Controller extends Controller{
 
     //Redirects to dashboard if login credentials are valid
     function checklogin(){
-        $type=$this->model->validateLogIn($_POST['email'],$_POST["password"]);
+        $auth_helper = new Auth_Helper();
+        $type=$auth_helper->validateLogIn($_POST['email'],$_POST["password"]);
         if($type){
             $_SESSION['logged_user'] = array("email"=>$_POST['email'],"type"=>$type);
             if(isset($_SESSION['requested_address'])){
@@ -44,21 +45,6 @@ class Auth_Controller extends Controller{
         unset($_SESSION['payment_request_data']); 
         header("Location:".BASE_DIR);
         die();
-    }
-
-
-
-    function addsignup($type){
-        if($this->model->validateSignup($_POST['email'])){
-            $this->model->signup($type,$_POST);
-            header("Location:".BASE_DIR.'Auth/login/'.$type);
-            die(); 
-        }else{
-            $_SESSION['msg'] = "This email is already registered.";
-            header("Location:".BASE_DIR.'Auth/signup/'.$type);
-            die();                 
-        }
-       
     }
 
 }

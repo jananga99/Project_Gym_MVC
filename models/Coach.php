@@ -2,8 +2,8 @@
 require_once 'models/User.php';
 class Coach extends User implements Observer{
 
-function __construct($email,$mediator=0){
-    parent::__construct("Coach",$email,$mediator);
+function __construct($data){
+    parent::__construct("Coach",$data);
 }
 
 
@@ -11,7 +11,11 @@ function __construct($email,$mediator=0){
 
 //Observer
 public function update($data){
-    $this->db->insert("notifications",array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Coach","Notification_Type"=>$data['type'],"Details"=>$data['details']),'ssss');
+    $factory = new Factory();
+    $data1=array();
+    $data1['create_data'] = array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Coach","Notification_Type"=>$data['type'],"Details"=>$data['details']);
+    $data1['create_data_types'] = 'ssss';
+    $factory->getModel("Notification",$data1);
 }
 
 

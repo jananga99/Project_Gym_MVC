@@ -12,6 +12,11 @@ function getPrice($type){
 }
 
 
+//Get the latest sent message
+function getLatestPaymentId($payer_email){
+    return $this->db->select("payment",array("Payment_id"),array("Payer_Email"=>$payer_email),1,"Payment_id",1)['Payment_id'];
+}
+
 
 }
 

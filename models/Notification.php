@@ -2,9 +2,21 @@
 
 class Notification extends Model{
 
-function __construct($id){
+function __construct($data){
     parent::__construct();
-    $this->id = $id;
+    if(isset($data['id']) && !(is_null($data['id'])) ){
+        $this->id=$data['id'];
+    }else{
+        $this->create($data['create_data'],$data['create_data_types']);
+        $not_helper =  new Notification_Helper();
+        $this->id = $not_helper->getLatestNotificationId();   
+    }
+}
+
+
+//Inserts a notification to database
+function create($data,$types){    
+    $this->db->insert("notifications",$data,$types);
 }
 
 

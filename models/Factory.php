@@ -3,15 +3,23 @@
 class Factory{
 
     //Creates model objects checking conditions
-    function getModel($modelName,$id=0,$med=0){
+    function getModel($modelName,$data){
         
-        $path = 'models/'.$modelName.'.php';
-        
+        $path = 'models/'.$modelName.'.php';    
+        $model=0;
         if(file_exists($path)){
                 
-                $model=0;
-                $function = $this->_getFunction();
-                $para_to_function = $this->_getFirstParametre();
+                
+               // $function = $this->_getFunction();
+                //$para_to_function = $this->_getFirstParametre();
+
+                if(  (isset($data['id'])     && !(is_null($data['id'])) )          || isset($data['create_data'])){
+                    require_once $path;
+                    $model = new $modelName($data);
+
+                }
+                
+                /*
                 
                 if($modelName==="Auth"){
                     require_once $path;
@@ -19,7 +27,7 @@ class Factory{
                 }
 
                 elseif($modelName==="Customer"){
-                    if($id){
+                    if(isset($data['id'])){
                         require_once $path;
                         $model = new Customer($id);
                     }
@@ -110,11 +118,11 @@ class Factory{
                         require_once $path;    
                         $model = new WorkoutPlan($this->_getFirstParametre());
                     } 
-                }
+                }*/
 
-                return $model;
+                
         }       
-        return 0;
+        return $model;
     }
 
     //returns the function part of the url
@@ -129,16 +137,7 @@ class Factory{
     }
 
 
-    //returns the function part of the url
-    private function _getFirstParametre(){
-        $url = isset($_GET['url']) ? $_GET['url'] : null;  
-        $url = rtrim($url, '/'); 
-        $url = filter_var($url, FILTER_SANITIZE_URL);
-        $url = explode('/',$url);
-        if(isset($url[2]))
-            return $url[2];
-        return NULL; 
-    }    
+ 
 
 
 
