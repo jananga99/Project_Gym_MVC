@@ -20,6 +20,12 @@ function getNotifications($email,$type_read){
 }
 
 
+//Get the latest created session by logged in coach
+function getLatestNotificationId(){
+    return $this->db->select("notifications",array("Notification_id"),array("Delected"=>'0'),1,"Notification_id",1)['Notification_id'];
+}
+
+
 //Creating a notification details according to given data and notification type
 function createNotificationDetails($type,$data){
     if($type===NOTIFICATION_SESSION_REGISTER || $type===NOTIFICATION_SESSION_UNREGISTER){

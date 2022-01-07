@@ -29,9 +29,12 @@ function create($submitted=0){
     $coach_helper = new Coach_Helper();
     $success = $coach_helper->isEmailUnique($_POST['email']);
     if($success){
-        $coach_helper->create("Coach",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
-        "Gender"=>$_POST['gender'],"City"=>$_POST['city'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'],
-         "password"=>sha1($_POST['password'])),"ssdsssss");
+        $data = array();
+        $data['create_data'] = array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        "Gender"=>$_POST['gender'],"City"=>$_POST['city'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], 
+        "password"=>sha1($_POST['password']));
+        $data['create_data_types'] = "ssdsssss";
+        $this->factory->getModel("Coach",$data);  
         header("Location:".BASE_DIR.'Auth');
         die();    
     }else{

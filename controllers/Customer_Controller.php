@@ -27,17 +27,21 @@ function viewCreate(){
 //Creating/signing up Customers
 function create(){
     //Do validations TODO
+    //print_r($_POST);
+   // die();
     $customer_helper = new Customer_Helper();
     $success = $customer_helper->isEmailUnique($_POST['email']);
     if($success){
-        $customer_helper->create("Customer",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
-        "Gender"=>$_POST['gender'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], "password"=>sha1($_POST['password'])),
-        "ssdssss");
+        $data = array();
+        $data['create_data'] = array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        "Gender"=>$_POST['gender'], "Telephone"=>$_POST['tel'], "Email"=>$_POST['email'], "password"=>sha1($_POST['password']));
+        $data['create_data_types'] = "ssdssss";
+        $this->factory->getModel("Customer",$data);    
         header("Location:".BASE_DIR.'Auth');
         die();    
     }else{
         $_SESSION['msg'] = "This email is already registered.";
-        header("Location:".BASE_DIR."Customer/create");
+        header("Location:".BASE_DIR."Customer/viewCreate");
         die();    
     }                 
 }

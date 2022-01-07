@@ -55,7 +55,8 @@ class Payment_Controller extends Controller
     function pay(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
                 //Check for payments
-                $this->model->addPayment($_SESSION['payment_data']);
+                $data=array('create_data'=>$_SESSION['payment_data']);
+                $this->factory->getModel("Payment",$data);
                 header("Location:".BASE_DIR."Payment/viewSuccess");
                 die();
         }else{

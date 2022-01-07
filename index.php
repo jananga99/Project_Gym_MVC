@@ -16,6 +16,7 @@ require_once 'libs/mediator/Mediator.php';
 require_once 'libs/flyweight/lib_flyweight.php';
 
 require_once 'libs/model_helper/Helper.php';
+require_once 'libs/model_helper/Auth_Helper.php';
 require_once 'libs/model_helper/User_Helper.php';
 require_once 'libs/model_helper/Customer_Helper.php';
 require_once 'libs/model_helper/Coach_Helper.php';

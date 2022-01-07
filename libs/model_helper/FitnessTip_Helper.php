@@ -13,11 +13,10 @@ function getAllFitnessTips($sort_arr=0){
 }
 
 
-//Creates the fitness tip
-function create($data){
-    $this->db->insert("Fitness_Tips",$data,"ss");
+//Get the latest sent message
+function getTipId($tip){
+    return $this->db->select("fitness_tips",array("Tip_id"),array("Tip"=>$tip),1,"Tip_id",1)['Tip_id'];
 }
-
 
 }
 ?>

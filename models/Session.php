@@ -3,15 +3,28 @@
 
 class Session extends Model implements Observable{
 
-function __construct($id){
+function __construct($data){
     parent::__construct();
-    $this->id = $id;
+    if(isset($data['id']) && !(is_null($data['id'])) ){
+        $this->id=$data['id'];
+    }else{
+        $this->create($data['create_data']);
+        $session_helper =  new Session_Helper();
+        $this->id = $session_helper->getLatestCreatedSession($_POST['create_data']['Coach_Email']);   
+        $this->init();
+    }
     $this->observers = array();
 }
 
 
 function init(){
     $this->notifyObservers(NOTIFICATION_SESSION_CREATE);
+}
+
+
+//Inserts given session details to database
+function create($data){
+    $this->db->insert("session_details",$data,'ssssssds');
 }
 
 
@@ -80,17 +93,17 @@ function setCustomerObservers($notificationType){
     $coach_Registration = new Coach_Registration_Helper();
     if($notificationType===NOTIFICATION_SESSION_CREATE)
         foreach( $coach_Registration->registeredCustomers($this->getCreatedCoach()) as $row ) 
-            $this->observers[] = $factory->getModel("Customer",$row['Customer']);
+            $this->observers[] = $factory->getModel("Customer",array('id'=>$row['Customer']));
     elseif($notificationType===NOTIFICATION_SESSION_DELETE || $notificationType===NOTIFICATION_SESSION_EDIT)
         foreach( $this->registeredCustomers() as $customer ) 
-            $this->observers[] = $factory->getModel("Customer",$customer);   
+            $this->observers[] = $factory->getModel("Customer",array('id'=>$customer));   
 }
 
 
 //Sets Coach observers for the session
 function setCoachObservers($notificationType){ 
     $factory = new Factory();
-    $this->observers[] = $factory->getModel("Coach",$this->getCreatedCoach());
+    $this->observers[] = $factory->getModel("Coach",array('id'=>$this->getCreatedCoach()));
 }
 
 

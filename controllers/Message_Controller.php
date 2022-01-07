@@ -51,8 +51,10 @@ class Message_Controller extends Controller{
     //Sending a message
     function send(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Admin")  ){
-            $message_helper = new Message_Helper();
-            $message_helper->send($_SESSION['logged_user']['email'],$_POST['message_type'],$_POST['message']);
+            $data = array();
+            $data['create_data'] = array('sender_email'=>$_SESSION['logged_user']['email'],'message_type'=>$_POST['message_type'],
+                'message'=> $_POST['message']    );
+            $this->factory->getModel("Message",$data);
             header("Location:".BASE_DIR."Message/viewSend");
             die();            
         }else{

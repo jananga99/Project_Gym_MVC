@@ -2,14 +2,18 @@
 require_once 'models/User.php';
 class Customer extends User{
 
-function __construct($email,$mediator=0){
-    parent::__construct("Customer",$email,$mediator);
+function __construct($data){
+    parent::__construct("Customer",$data);
 }
 
 
 //Observer
 function update($data){
-    $this->db->insert("notifications",array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Customer","Notification_Type"=>$data['type'],"Details"=>$data['details']),'ssss');
+    $factory = new Factory();
+    $data1=array();
+    $data1['create_data'] = array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>"Customer","Notification_Type"=>$data['type'],"Details"=>$data['details']);
+    $data1['create_data_types'] = 'ssss';
+    $factory->getModel("Notification",$data1);
 }
 
 

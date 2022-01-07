@@ -15,8 +15,10 @@ function index(){
 //Registering a Customer for a coach
 function register($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
-        $coach_registration_helper = new Coach_Registration_Helper();
-        $coach_registration_helper->register($_SESSION['logged_user']['email'],$email);
+        $factory = new Factory();
+        $data = array();
+        $data['create_data'] = array('customer_email'=>$_SESSION['logged_user']['email'],'coach_email'=>$email);
+        $factory->getModel("Coach_Registration",$data);
         header("Location:".BASE_DIR."Coach/viewAll");
         die();   
     }else{
