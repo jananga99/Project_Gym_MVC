@@ -15,7 +15,7 @@ unset($_SESSION['msg']);
 
 
     <?php
-    require 'public/html/boostraplinks.html';
+    require_once 'public/html/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/login.css" ?>>
 
@@ -92,10 +92,9 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Details</label>
-                        <input type="text" class="form-control" name='details' value=<?php echo $arr["Details"] ?>>
+                        <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".$arr["Details"]; ?>>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <input type="submit" class="btn btn-block btn-login" value='Edit Session' name='edit_session_btn'>
@@ -104,15 +103,15 @@ unset($_SESSION['msg']);
 
 
             </form>
-
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <form action=<?= BASE_DIR . "Session/delete/" . $arr["Session_id"] ?> method="POST">
-                        <input type="submit" class="btn btn-block btn-login" value='Delete Session' name='delete_session_btn'>
-                    </form>
+            <br>
+            <form action=<?= BASE_DIR . "Session/delete/" . $arr["Session_id"] ?> method="POST">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                            <input type="submit" class="btn btn-block btn-login" value='Delete Session' name='delete_session_btn'>
+                        
+                    </div>
                 </div>
-            </div>
-
+            </form>
 
 
 
@@ -130,7 +129,7 @@ unset($_SESSION['msg']);
     </div>
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 </body>

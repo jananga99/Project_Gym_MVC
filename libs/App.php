@@ -33,7 +33,7 @@ class App{
     }
 
     private function _loadDefaultController(){
-        require 'controllers/Index_Controller.php';
+        require_once 'controllers/Index_Controller.php';
         $this->_controller = new Index_Controller();
         $this->_controller->index();
     }
@@ -43,7 +43,7 @@ class App{
         $controllerName = $this->_url[0].'_Controller';
         $file = 'controllers/'.$controllerName.'.php';
         if(file_exists($file)){
-            require $file;
+            require_once $file;
             $this->_controller = new $controllerName;
             $this->_controller->loadModel($this->_url[0]);
             return TRUE;

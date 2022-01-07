@@ -26,9 +26,10 @@ function viewCreate(){
 //Creating/signing up Coaches
 function create($submitted=0){
       //Do validations TODO
-    $success = Coach::isEmailUnique($_POST['email']);
+    $coach_helper = new Coach_Helper();
+    $success = $coach_helper->isEmailUnique($_POST['email']);
     if($success){
-        Coach::create("Coach",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        $coach_helper->create("Coach",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
         "Gender"=>$_POST['gender'],"City"=>$_POST['city'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'],
          "password"=>sha1($_POST['password'])),"ssdsssss");
         header("Location:".BASE_DIR.'Auth');
@@ -63,8 +64,10 @@ function view($email){
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Coach/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){    //For a customer
-        $_SESSION['data'] = Coach::getCoachData($email);
-        $coach_registration = new Coach_Registration();
+        $coach_helper = new Coach_Helper();
+        $_SESSION['data'] = $coach_helper->getCoachData($email);
+        $factory = new Factory();
+        $coach_registration =  new Coach_Registration_Helper();
         $_SESSION['data']['isRegistered'] = $coach_registration->isCoachRegistered($_SESSION['logged_user']['email'],
             $email);
         $this->view->render('Coach/view/customer');
@@ -81,15 +84,18 @@ function viewAll(){
     $sort_arr=isset($_POST["by"]) && isset($_POST["sort_by_gender"]) ? array("gender"=>$_POST["sort_radio_gender"]) : 0;
     $orderField=isset($_POST["by"]) && isset($_POST["order_by"])  && $_POST["order_by"] != "none" ? "CONCAT(FirstName,LastName)" : 0;
     $reverse=isset($_POST["by"]) && isset($_POST['order_radio_name']) && $_POST['order_radio_name'] == 'z_to_a' ? 1 : 0;
-    $_SESSION['data'] =  Coach::getAllCoachData($sort_arr,$orderField,$reverse);
+    $coach_helper = new Coach_Helper();
+    $_SESSION['data'] =  $coach_helper->getAllCoachData($sort_arr,$orderField,$reverse);
     $this->view->render('coach/view/all');
 }
 
 
 //Displaying registered customers
-function registeredCustomers(){
+function registeredCustomers($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-        $_SESSION['data'] = $this->model->getRegisteredCustomersData();
+        $factory = new Factory();
+        $cr = new Coach_Registration_Helper();
+        $_SESSION['data'] = $cr->getRegisteredCustomersData($email);
         $this->view->render('Coach_registration/registeredCustomers');
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Customer/registeredCustomers";

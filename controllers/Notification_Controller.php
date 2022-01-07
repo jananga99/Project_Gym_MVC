@@ -8,7 +8,11 @@ class Notification_Controller extends Controller{
 
     function index(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
-            $_SESSION['data'] =  Notification::getNotifications($_SESSION['logged_user']['email']);
+            $type_read = "unread";
+            if(isset($_POST['select']))
+                $type_read = $_POST['select'];
+            $notification_helper = new Notification_Helper();            
+            $_SESSION['data'] =  $notification_helper->getNotifications($_SESSION['logged_user']['email'],$type_read);
             $this->view->render('notification/notification');
         }else{
             header("Location:".BASE_DIR);

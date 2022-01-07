@@ -13,7 +13,7 @@ $arr = $_SESSION['data'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <?php
-    require 'public/HTML/boostraplinks.html';
+    require_once 'public/HTML/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/signup.css" ?>>
 
@@ -38,7 +38,7 @@ $arr = $_SESSION['data'];
     <div class="simple-login-container">
         <h2>My Details</h2>
         <div>
-            <form action=<?= BASE_DIR . 'Coach/edit' ?> method="POST">
+            <form action=<?= BASE_DIR . 'Coach/edit/'.$arr['Email'] ?> method="POST">
                 <div class="row">
                     <div class="mb-3 form-group">
                         <label>First Name</label>
@@ -114,7 +114,7 @@ $arr = $_SESSION['data'];
     </div>
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 </body>

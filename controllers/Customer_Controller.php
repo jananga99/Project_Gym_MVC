@@ -27,9 +27,10 @@ function viewCreate(){
 //Creating/signing up Customers
 function create(){
     //Do validations TODO
-    $success = Customer::isEmailUnique($_POST['email']);
+    $customer_helper = new Customer_Helper();
+    $success = $customer_helper->isEmailUnique($_POST['email']);
     if($success){
-        Customer::create("Customer",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
+        $customer_helper->create("Customer",array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
         "Gender"=>$_POST['gender'], "Telephone"=>$_POST['tel'], "email"=>$_POST['email'], "password"=>sha1($_POST['password'])),
         "ssdssss");
         header("Location:".BASE_DIR.'Auth');
@@ -60,12 +61,18 @@ function edit($email){
 
 //Displaying customer details
 function view($email){
-    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer" && $_SESSION['logged_user']['email']===$email){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer" 
+    && $_SESSION['logged_user']['email']===$email){
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Customer/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-        $_SESSION['data'] = Customer::getCustomerData($email);
+        $customer_helper = new Customer_Helper();
+        $_SESSION['data'] = $customer_helper->getCustomerData($email);
         $this->view->render('Customer/view/coach');        
+    }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+        $customer_helper = new Customer_Helper();
+        $_SESSION['data'] = $customer_helper->getCustomerData($email);
+        $this->view->render('Customer/view/admin');            
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Customer/view/".$email;
         header("Location:".BASE_DIR."Auth/login/Customer");
@@ -74,10 +81,29 @@ function view($email){
 }
 
 
+//Displaying All Customers
+function viewAll(){
+    if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
+        $sort_arr=isset($_POST["by"]) && isset($_POST["sort_by_gender"]) ? array("gender"=>$_POST["sort_radio_gender"]) : 0;
+        $orderField=isset($_POST["by"]) && isset($_POST["order_by"])  && $_POST["order_by"] != "none" ? "CONCAT(FirstName,LastName)" : 0;
+        $reverse=isset($_POST["by"]) && isset($_POST['order_radio_name']) && $_POST['order_radio_name'] == 'z_to_a' ? 1 : 0;        
+        $customer_helper = new Customer_Helper();
+        $_SESSION['data'] = $customer_helper->getAllCustomerData($sort_arr,$orderField,$reverse);
+        $this->view->render('Customer/view/all');
+    }else{
+        $_SESSION['requested_address'] = BASE_DIR."Customer/viewAll";
+        header("Location:".BASE_DIR);
+        die();
+    }  
+}
+
+
 //Displaying registered coaches
-function registeredCoaches(){
+function registeredCoaches($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
-        $_SESSION['data'] = $this->model->getRegisteredCoachesData();
+        $factory = new Factory();
+        $cr =  new Coach_Registration_Helper();
+        $_SESSION['data'] = $cr->getRegisteredCoachesData($email);
         $this->view->render('Coach_registration/registeredCoaches');
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Customer/registeredCoaches";

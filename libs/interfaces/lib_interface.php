@@ -1,7 +1,7 @@
 <?php
 
-require 'Observable.php';
-require 'Observer.php';
+require_once 'Observable.php';
+require_once 'Observer.php';
 
 
 ?>

@@ -13,7 +13,7 @@ unset($_SESSION['msg']);
 
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/workout.css" ?>>
 
@@ -95,7 +95,7 @@ unset($_SESSION['msg']);
 
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 </body>
 

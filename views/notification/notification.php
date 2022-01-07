@@ -13,7 +13,7 @@ else    $flag = 1;
 
 
     <?php
-    require("public/HTML/boostraplinks.html");
+    require_once("public/HTML/boostraplinks.html");
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/CSS/notification.css" ?>>
     <title>Notification</title>
@@ -37,12 +37,15 @@ echo $navbar->get();
         <h1 class="m-4">Notifications</h1>
 
         <div class="m-4">
-            <label for="Gender">Gender</label>
-            <select name="gender">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Both">Both</option>
-            </select>
+            <form action=<?=BASE_DIR."Notification"?> method='post'>
+                <label >Show</label>
+                <select name='select'>
+                    <option value='unread' checked>Only unread notifications</option>
+                    <option value='all'>All notifications</option>
+                    <option value='read'>Only read notifications</option>
+                </select><br>
+                <button>Show Notifications</button>
+            </form>
         </div>
 
         <?php
@@ -58,10 +61,14 @@ echo $navbar->get();
             foreach ($notification_arr as $row) {
                 echo "<tr>
                 <td>" . $row['Details'] . "</td>
-                <td><form action=" . BASE_DIR . "Notification/markAsRead/".$row['Notification_id']." method='POST'>
-                    <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
-                    </form>
-                </td>
+                <td>";
+                if($row['Mark_As_Read']==0)
+                    echo "
+                        <form action=" . BASE_DIR . "Notification/markAsRead/".$row['Notification_id']." method='POST'>
+                            <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
+                        </form>
+                    ";
+                echo "</td>
                 <td><form action=" . BASE_DIR . "Notification/delete/".$row['Notification_id']." method='POST'>
                     <button  class='btn btn-danger' name='delete'>Delete</button>
                     </form>
@@ -79,7 +86,7 @@ echo $navbar->get();
 
 
     <?php
-    require 'public/html/footer.html';
+    require_once 'public/html/footer.html';
     ?>
 
 

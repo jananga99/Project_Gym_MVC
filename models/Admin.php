@@ -1,5 +1,5 @@
 <?php
-
+require_once 'models/User.php';
 class Admin extends User{
 
 function __construct($email,$mediator=0){

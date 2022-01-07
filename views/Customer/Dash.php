@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
-    require 'public/html/boostraplinks.html';
+    require_once 'public/html/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/dash.css" ?>>
     <title>Dashboard</title>
@@ -34,7 +34,7 @@
 
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/viewAll" ?>>add coach</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "/Customer/view/{$_SESSION['logged_user']['email']}" ?>>edit profile</a>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/registeredCoaches" ?>>Registered Coaches</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/registeredCoaches/".$_SESSION['logged_user']['email'] ?>>Registered Coaches</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/registeredByMe" ?>>My Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "FitnessTip/viewAll" ?>>Get Finess Tips</a>
@@ -49,7 +49,7 @@
 </body>
 
 <?php
-require 'public/html/footer.html';
+require_once 'public/html/footer.html';
 ?>
 
 </html>

@@ -1,8 +1,8 @@
 <?php
 
-require 'NavbarFlyweight.php';
-require 'NavbarFlyweightImp.php';
-require 'Navbar.php';
+require_once 'NavbarFlyweight.php';
+require_once 'NavbarFlyweightImp.php';
+require_once 'Navbar.php';
 
 
 ?>

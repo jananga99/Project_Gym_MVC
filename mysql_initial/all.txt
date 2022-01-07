@@ -79,13 +79,26 @@ CREATE TABLE Notifications (
 );
 
 
+CREATE TABLE Sent_Messages (
+    Message_Sent_id INT(10) AUTO_INCREMENT,
+    Type INT(4) NOT NULL,
+    Message varchar(255) NOT NULL,
+    Sender_Email varchar(255) NOT NULL,
+    Sender_Delected INT(1) DEFAULT 0,
+    PRIMARY KEY (Message_Sent_id)
+);
+
+
+
 CREATE TABLE Messages (
     Message_id INT(10) AUTO_INCREMENT,
+    Message_Sent_id INT(10) NOT NULL,
+    Type INT(4) NOT NULL,
+    Message varchar(255) NOT NULL,
     Receiver_Email varchar(255) NOT NULL,
     Sender_Email varchar(255) NOT NULL,
     Mark_As_Read INT(1) DEFAULT 0,
-    Delected INT(1) DEFAULT 0,
-    Details varchar(255) NOT NULL,
+    Receiver_Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Message_id)
 );
 
@@ -111,3 +124,15 @@ CREATE TABLE Plan_Details (
     Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Plan_id)
 );
+
+
+CREATE TABLE Price (
+    Price_id INT(10) AUTO_INCREMENT,
+    Price_Type varchar(255) NOT NULL,
+    Price DOUBLE NOT NULL,
+    Details MEDIUMTEXT NULL,
+    Delected INT(1) DEFAULT 0,
+    PRIMARY KEY (Price_id)
+);
+
+INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Create_Session','1000','Price for a coach to create a sesssion')
