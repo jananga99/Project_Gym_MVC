@@ -8,8 +8,7 @@ function __construct($data){
         $this->id=$data['id'];
     }else{
         $this->addPayment($data['create_data']);
-        $reg_helper =  new Payment_Helper();
-        $this->id = $reg_helper->getLatestPaymentId($data['create_data']['Payer_Email']);   
+        $this->id = $this->helper_factory->getHelper("Payment")->getLatestPaymentId($data['create_data']['Payer_Email']);   
     }
 }
 

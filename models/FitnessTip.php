@@ -8,8 +8,7 @@ function __construct($data){
         $this->id=$data['id'];
     }else{
         $this->create($data['create_data']);
-        $tip_helper =  new FitnessTip_Helper();
-        $this->id = $tip_helper->getTipId($data['create_data']['Tip']);   
+        $this->id =  $this->helper_factory->getHelper("FitnessTip")->getTipId($data['create_data']['Tip']);   
     }
 }
 

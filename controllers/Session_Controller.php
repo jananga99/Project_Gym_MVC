@@ -15,8 +15,7 @@ class Session_Controller extends Controller{
     //Providing display to create sessiosn
     function viewCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $payment_helper = new Payment_Helper();
-            $_SESSION['data'] =  $payment_helper->getPrice("Create_Session");
+            $_SESSION['data'] =  $this->helper_factory->getHelper("Payment")->getPrice("Create_Session");
             $this->view->render('Session/create');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
@@ -75,8 +74,7 @@ class Session_Controller extends Controller{
     //Displaying Gym Sessons created by himself
     function createdByMe(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $session_helper = new Session_Helper();
-            $_SESSION['data'] = $session_helper->createdSessions($_SESSION['logged_user']['email']);
+            $_SESSION['data'] = $this->helper_factory->getHelper("Session")->createdSessions($_SESSION['logged_user']['email']);
             $this->view->render('Session/createdSessionsByACoach');  
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/createdByMe";
@@ -97,8 +95,7 @@ class Session_Controller extends Controller{
             }
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){  //view by a customer
             $_SESSION['data'] = $this->model->getData();
-            $session_helper = new Session_Helper();
-            $_SESSION['data']['isRegistered'] = $session_helper->isCustomerRegistered($_SESSION['logged_user']['email'],$session_id);
+            $_SESSION['data']['isRegistered'] = $this->helper_factory->getHelper("Session")->isCustomerRegistered($_SESSION['logged_user']['email'],$session_id);
             $this->view->render("Session/view/customer");
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){
             $_SESSION['data'] = $this->model->getData();
@@ -115,18 +112,16 @@ class Session_Controller extends Controller{
     function viewAll(){
         $session_arr = array();
         $arr = array();
-        $session_helper = new Session_Helper();
         if(isset($_POST['by_registered']) && $_POST['by_registered']==="registered")
-            $arr =  $session_helper-> registeredSessions($_SESSION['logged_user']['email']);
+            $arr =  $this->helper_factory->getHelper("Session")-> registeredSessions($_SESSION['logged_user']['email']);
         elseif(isset($_POST['by_registered']) && $_POST['by_registered']==="unregistered")
-            $arr =  $session_helper->unregisteredSessions($_SESSION['logged_user']['email']);
+            $arr =  $this->helper_factory->getHelper("Session")->unregisteredSessions($_SESSION['logged_user']['email']);
         else
-            $arr = $session_helper->getAllSessions();
+            $arr = $this->helper_factory->getHelper("Session")->getAllSessions();
         if(isset($_POST["order_by_date"]) && $_POST["order_by_date"]==="decending")
             $arr = array_reverse($arr);
         $factory = new Factory();
-        $c = new Coach_Registration_Helper();
-        $coach_arr = $c->registeredCoaches($_SESSION['logged_user']['email']);
+        $coach_arr = $this->helper_factory->getHelper("Coach_Registration")->registeredCoaches($_SESSION['logged_user']['email']);
         foreach($arr as $row){
             if(isset($_POST["only_registered_coaches"]) && $_POST["only_registered_coaches"]==="on")    
                 if(!in_array($row['Coach_Email'],$coach_arr))   continue;
@@ -218,8 +213,7 @@ class Session_Controller extends Controller{
     //Displaying registered sessions by a customer
     function registeredByMe(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){ 
-            $session_helper = new Session_Helper();
-            $_SESSION['data'] = $session_helper->registeredSessions($_SESSION['logged_user']['email']);
+            $_SESSION['data'] = $this->helper_factory->getHelper("Session")->registeredSessions($_SESSION['logged_user']['email']);
             $this->view->render('session/registeredSessionsByACustomer');  
         }else{
             header("Location:".BASE_DIR."Auth/login/Customer");

@@ -1,12 +1,13 @@
 <?php
 
 
-class MessageMediator extends Helper implements Mediator{
+class MessageMediator implements Mediator{
 
 private $users=0;
 
 function __construct(){
-    parent::__construct();
+    $this->db = Database::getInstance();
+    $this->db->create(DB_TYPE, DB_HOST, DB_NAME, DB_USER, DB_PASSWORD);
     $this->users = array();
 }
 

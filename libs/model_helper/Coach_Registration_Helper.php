@@ -33,9 +33,8 @@ function registeredCoaches($email){
 //Returns all registered coaches data 
 function getRegisteredCoachesData($customer_email){
     $coach_arr = array();
-    $coach_helper = new Coach_Helper();
     foreach( $this->registeredCoaches($customer_email) as $coach ) 
-        $coach_arr[] = $coach_helper->getCoachData($coach);
+        $coach_arr[] = $this->helper_factory->getHelper("Coach")->getCoachData($coach);
     return $coach_arr;    
 }
 
@@ -43,11 +42,9 @@ function getRegisteredCoachesData($customer_email){
 //Returns all registered customer data 
 function getRegisteredCustomersData($email){
     $factory = new Factory();
-    $coach_Registration = new Coach_Registration_Helper();
-    $customer_helper = new Customer_Helper();
     $customer_arr = array();
-    foreach( $coach_Registration->registeredCustomers($email) as $row ) 
-        $customer_arr[] = $customer_helper->getCustomerData($row['Customer']);
+    foreach(  $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($email) as $row ) 
+        $customer_arr[] =  $this->helper_factory->getHelper("Customer")->getCustomerData($row['Customer']);
     return $customer_arr;    
 }
 

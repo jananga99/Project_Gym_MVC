@@ -8,8 +8,7 @@ function __construct($data){
         $this->id=$data['id'];
     }else{
         $this->create($data['create_data'],$data['create_data_types']);
-        $not_helper =  new Notification_Helper();
-        $this->id = $not_helper->getLatestNotificationId();   
+        $this->id = $this->helper_factory->getHelper("Notification")->getLatestNotificationId();   
     }
 }
 

@@ -9,8 +9,7 @@ function __construct($data){
         $this->id=$data['id'];
     }else{
         $this->create($data['create_data']);
-        $session_helper =  new Session_Helper();
-        $this->id = $session_helper->getLatestCreatedSession($_POST['create_data']['Coach_Email']);   
+        $this->id = $this->helper_factory->getHelper("Session")->getLatestCreatedSession($_POST['create_data']['Coach_Email']);   
         $this->init();
     }
     $this->observers = array();
@@ -90,9 +89,8 @@ function registeredCustomers(){
 //Sets Customer observers for the session
 function setCustomerObservers($notificationType){
     $factory = new Factory();
-    $coach_Registration = new Coach_Registration_Helper();
     if($notificationType===NOTIFICATION_SESSION_CREATE)
-        foreach( $coach_Registration->registeredCustomers($this->getCreatedCoach()) as $row ) 
+        foreach( $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($this->getCreatedCoach()) as $row ) 
             $this->observers[] = $factory->getModel("Customer",array('id'=>$row['Customer']));
     elseif($notificationType===NOTIFICATION_SESSION_DELETE || $notificationType===NOTIFICATION_SESSION_EDIT)
         foreach( $this->registeredCustomers() as $customer ) 
@@ -128,9 +126,8 @@ function notifyObservers($type,$data=0){
             $rec_email = $observer->getEmail();
             $notification_data['coach_email'] = $this->getCreatedCoach();
         }
-        $notification_helper = new Notification_Helper();
         $observer->update(array('rec_email'=>$rec_email,
-        'details'=>$notification_helper->createNotificationDetails($type,$notification_data),'type'=>$type)); 
+        'details'=>$this->helper_factory->getHelper("Notification")->createNotificationDetails($type,$notification_data),'type'=>$type)); 
     }
    
 }

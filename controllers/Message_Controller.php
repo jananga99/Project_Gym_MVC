@@ -11,12 +11,11 @@ class Message_Controller extends Controller{
     //Displaying the message dashbboard
     function index(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
-            $message_helper = new Message_Helper();
-            $_SESSION['sent_messages'] =   $message_helper->getSentMessages($_SESSION['logged_user']['email']);
+            $_SESSION['sent_messages'] =   $this->helper_factory->getHelper("Message")->getSentMessages($_SESSION['logged_user']['email']);
             $type_read = "unread";
             if(isset($_POST['sent_select']))
                 $type_read = $_POST['sent_select'];
-            $_SESSION['receieved_messages'] =   $message_helper->getReceievedMessages($_SESSION['logged_user']['email'],$type_read);   
+            $_SESSION['receieved_messages'] =   $this->helper_factory->getHelper("Message")->getReceievedMessages($_SESSION['logged_user']['email'],$type_read);   
             $this->view->render('message/dash');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message"; 

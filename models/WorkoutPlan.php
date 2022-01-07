@@ -9,8 +9,7 @@ function __construct($data){
         $this->id=$data['id'];
     }else{
         $this->create($data['create_data']);
-        $plan_helper =  new WorkoutPlan_Helper();
-        $this->id = $plan_helper->getLatestPlanId($data['create_data']['Coach_Email']);   
+        $this->id = $this->helper_factory->getHelper("WorkoutPlan")->getLatestPlanId($data['create_data']['Coach_Email']);   
     }
 }   
 
@@ -23,8 +22,7 @@ function create($data){
 
 //Returns data of this plan
 function getData(){
-    $workoutPlan_helper = new WorkoutPlan_Helper();
-    return $workoutPlan_helper->getPlan($this->id);
+    return  $this->helper_factory->getHelper("WorkoutPlan")->getPlan($this->id);
 }
 
 

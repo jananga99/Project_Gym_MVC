@@ -7,6 +7,7 @@ class Helper{
     function __construct(){
         $this->db = Database::getInstance();
         $this->db->create(DB_TYPE, DB_HOST, DB_NAME, DB_USER, DB_PASSWORD);
+        $this->helper_factory = new Helper_Factory();
     }
 
 }

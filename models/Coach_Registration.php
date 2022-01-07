@@ -8,8 +8,7 @@ function __construct($data){
         $this->id=$data['id'];
     }else{
         $this->register($data['create_data']['customer_email'],$data['create_data']['coach_email']);
-        $reg_helper =  new Coach_Registration_Helper();
-        $this->id = $reg_helper->getRegistrationId($data['create_data']['customer_email'],$data['create_data']['coach_email']);   
+        $this->id =  $this->helper_factory->getHelper("Coach_Registration")->getRegistrationId($data['create_data']['customer_email'],$data['create_data']['coach_email']);   
     }
 }
 
