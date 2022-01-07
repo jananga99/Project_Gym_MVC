@@ -18,25 +18,20 @@ unset($_SESSION['msg']);
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-        <div class="container-fluid">
-            <a href="#" class="navbar-brand">VirtualGYM</a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a href=<?= BASE_DIR ?> class="nav-item nav-link">Home</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php
+    $menu_arr = array(
+
+        "Home" => BASE_DIR . ""
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
 
 
     <div class="simple-login-container">
         <h2 class="m-5">Login Form</h2>
-        <form action=<?php echo BASE_DIR . "Auth/checklogin" ; ?> method="post">
+        <form action=<?php echo BASE_DIR . "Auth/checklogin"; ?> method="post">
             <div class="row">
                 <div class="mb-3 form-group">
                     <input type="text" class="form-control" placeholder="Email" name='email'>
@@ -59,6 +54,10 @@ unset($_SESSION['msg']);
     <div class="d-flex justify-content-center" style="color:crimson">
         <p><?= $msg ?></p>
     </div>
+
+    <?php
+    require_once 'public/html/footer.html';
+    ?>
 </body>
 
 </html>

@@ -18,24 +18,14 @@ unset($_SESSION['msg']);
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#053657;">
-        <div class="container-fluid">
-            <a href="#" class="navbar-brand">VirtualGYM</a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a href="#" class="nav-item nav-link ">Dashboard</a>
-                    <a href="#" class="nav-item nav-link">Profile</a>
-                    <a href="#" class="nav-item nav-link">Messages</a>
-                    <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
+    <?php
+    $menu_arr = array(
 
-                    >
-                </div>
-            </div>
-        </div>
-    </nav>
+        "Home" => BASE_DIR . ""
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
     <div class="simple-login-container">
         <h2>SIGNUP ADMIN</h2>
@@ -71,13 +61,13 @@ unset($_SESSION['msg']);
 
                 <div class="row">
                     <div class="mb-3  form-group">
-                        <label for="gender">Gender</label>
-                        <select name="gender" >
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Other">Other</option>
-                        </select> 
-                        
+
+                        <select class="form-select" name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+
                     </div>
                 </div>
 
