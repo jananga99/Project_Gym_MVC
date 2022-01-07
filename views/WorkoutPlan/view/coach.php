@@ -22,7 +22,7 @@ $customer_sarr = $_SESSION['customer_arr'];
 
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer/",
+        "Dashboard" => BASE_DIR . "Coach/",
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"

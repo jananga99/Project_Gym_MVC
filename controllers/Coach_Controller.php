@@ -67,7 +67,7 @@ function view($email){
         $coach_helper = new Coach_Helper();
         $_SESSION['data'] = $coach_helper->getCoachData($email);
         $factory = new Factory();
-        $coach_registration =  $factory->getModel("Coach_Registration");
+        $coach_registration =  new Coach_Registration_Helper();
         $_SESSION['data']['isRegistered'] = $coach_registration->isCoachRegistered($_SESSION['logged_user']['email'],
             $email);
         $this->view->render('Coach/view/customer');
@@ -94,7 +94,7 @@ function viewAll(){
 function registeredCustomers($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
         $factory = new Factory();
-        $cr = $factory->getModel("Coach_Registration");
+        $cr = new Coach_Registration_Helper();
         $_SESSION['data'] = $cr->getRegisteredCustomersData($email);
         $this->view->render('Coach_registration/registeredCustomers');
     }else{

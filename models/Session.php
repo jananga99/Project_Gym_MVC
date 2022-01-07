@@ -77,7 +77,7 @@ function registeredCustomers(){
 //Sets Customer observers for the session
 function setCustomerObservers($notificationType){
     $factory = new Factory();
-    $coach_Registration = $factory->getModel("Coach_Registration");
+    $coach_Registration = new Coach_Registration_Helper();
     if($notificationType===NOTIFICATION_SESSION_CREATE)
         foreach( $coach_Registration->registeredCustomers($this->getCreatedCoach()) as $row ) 
             $this->observers[] = $factory->getModel("Customer",$row['Customer']);

@@ -124,7 +124,7 @@ class Session_Controller extends Controller{
         if(isset($_POST["order_by_date"]) && $_POST["order_by_date"]==="decending")
             $arr = array_reverse($arr);
         $factory = new Factory();
-        $c = $factory->getModel("Coach_Registration");
+        $c = new Coach_Registration_Helper();
         $coach_arr = $c->registeredCoaches($_SESSION['logged_user']['email']);
         foreach($arr as $row){
             if(isset($_POST["only_registered_coaches"]) && $_POST["only_registered_coaches"]==="on")    

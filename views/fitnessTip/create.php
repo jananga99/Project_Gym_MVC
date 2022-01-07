@@ -38,7 +38,7 @@ unset($_SESSION['msg']);
 
         <h2 class="m-5">Add a fitness tip</h2>
         <div>
-            <form action=<?=BASE_DIR."FitnessTip/create1"?> method="POST">
+            <form action=<?=BASE_DIR."FitnessTip/create"?> method="POST">
 
                 <div class="row">
                     <div class="mb-3 form-group">

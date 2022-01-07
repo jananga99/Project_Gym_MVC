@@ -17,7 +17,8 @@ class FitnessTip_Controller extends Controller{
         $arr=0;
         if(isset($_POST['gender']))
             $arr = array('for_which_gender'=>$_POST['gender']);
-        $_SESSION['data'] =  FitnessTip::getAllFitnessTips($arr);
+        $fitnesstip_helper = new FitnessTip_Helper();
+        $_SESSION['data'] =  $fitnesstip_helper->getAllFitnessTips($arr);
         $this->view->render('fitnessTip/viewAll');        
     }
 
@@ -35,9 +36,11 @@ class FitnessTip_Controller extends Controller{
 
 
     //Creating the fitness tip
-    function create1(){   //TODO
+    function create(){   
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){        
-            FitnessTip::create(array("Tip"=>$_POST['tip'],"for_which_gender"=>$_POST['gender']));
+            $fitnesstip_helper = new FitnessTip_Helper();
+            $fitnesstip_helper->create(array("Tip"=>$_POST['tip'],
+            "for_which_gender"=>$_POST['gender']));
             header("Location:".BASE_DIR."FitnessTip/viewCreate");
             die();
         }else{

@@ -102,8 +102,8 @@ function viewAll(){
 function registeredCoaches($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
         $factory = new Factory();
-        $cr =  $factory->getModel("Coach_Registration");
-        $_SESSION['data'] = $cr->getRegisteredCoachesData($emai);
+        $cr =  new Coach_Registration_Helper();
+        $_SESSION['data'] = $cr->getRegisteredCoachesData($email);
         $this->view->render('Coach_registration/registeredCoaches');
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Customer/registeredCoaches";

@@ -3,14 +3,11 @@
 class Factory{
 
     //Creates model objects checking conditions
-    function getModel($modelName,$id=0){
+    function getModel($modelName,$id=0,$med=0){
         
         $path = 'models/'.$modelName.'.php';
         
         if(file_exists($path)){
-            
-                
-                
                 
                 $model=0;
                 $function = $this->_getFunction();
@@ -35,7 +32,7 @@ class Factory{
                 elseif($modelName==="Coach"){
                     if($id){
                         require_once $path;
-                        $model = new Coach($id);
+                        $model = new Coach($id,$med);
                     }                        
                     elseif($this->_getFirstParametre()){
                         require_once $path;
@@ -55,8 +52,14 @@ class Factory{
                 }
 
                 elseif($modelName==="Coach_Registration"){
-                    require_once $path;
-                    $model = new Coach_Registration();
+                    if($id){
+                        require_once $path;
+                        $model = new Coach_Registration($id);    
+                    }
+                    elseif($this->_getFirstParametre()){
+                        require_once $path;
+                        $model = new Coach_Registration($this->_getFirstParametre());    
+                    }
                 }
 
                 elseif($modelName==="Payment"){
@@ -100,7 +103,10 @@ class Factory{
 
 
                 elseif($modelName==="WorkoutPlan"){
-                    if($this->_getFirstParametre()){
+                    if($id){
+                        require_once $path;
+                        $model = new WorkoutPlan($id);
+                    }elseif($this->_getFirstParametre()){
                         require_once $path;    
                         $model = new WorkoutPlan($this->_getFirstParametre());
                     } 

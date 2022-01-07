@@ -22,7 +22,11 @@ require_once 'libs/model_helper/Coach_Helper.php';
 require_once 'libs/model_helper/Session_Helper.php';
 require_once 'libs/model_helper/Notification_Helper.php';
 require_once 'libs/model_helper/Payment_Helper.php';
-
+require_once 'libs/model_helper/Coach_Registration_Helper.php';
+require_once 'libs/model_helper/WorkoutPlan_Helper.php';
+require_once 'libs/model_helper/FitnessTip_Helper.php';
+require_once 'libs/model_helper/Message_Helper.php';
+require_once 'libs/model_helper/MessageMediator.php';
 
 
 //require_once "models/Coach.php";

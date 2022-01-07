@@ -11,12 +11,12 @@ class Message_Controller extends Controller{
     //Displaying the message dashbboard
     function index(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
-            $_SESSION['sent_messages'] =  Message::getSentMessages($_SESSION['logged_user']['email']);
+            $message_helper = new Message_Helper();
+            $_SESSION['sent_messages'] =   $message_helper->getSentMessages($_SESSION['logged_user']['email']);
             $type_read = "unread";
             if(isset($_POST['sent_select']))
                 $type_read = $_POST['sent_select'];
-            $_SESSION['receieved_messages'] =  Message::getReceievedMessages($_SESSION['logged_user']['email'],$type_read);
-            
+            $_SESSION['receieved_messages'] =   $message_helper->getReceievedMessages($_SESSION['logged_user']['email'],$type_read);   
             $this->view->render('message/dash');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message"; 
@@ -51,7 +51,8 @@ class Message_Controller extends Controller{
     //Sending a message
     function send(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Admin")  ){
-            Message::send($_SESSION['logged_user']['email'],$_POST['message_type'],$_POST['message']);
+            $message_helper = new Message_Helper();
+            $message_helper->send($_SESSION['logged_user']['email'],$_POST['message_type'],$_POST['message']);
             header("Location:".BASE_DIR."Message/viewSend");
             die();            
         }else{
