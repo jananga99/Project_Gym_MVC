@@ -1,5 +1,6 @@
 <?php
 $plan_arr = $_SESSION['plan_arr'];
+
 ?>
 
 
@@ -54,6 +55,7 @@ $plan_arr = $_SESSION['plan_arr'];
              </tr>            
             ";
             }
+
 
             ?>
 
