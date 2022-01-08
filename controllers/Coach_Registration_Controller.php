@@ -22,7 +22,7 @@ function register($email){
         die();   
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/register/".$email;
-        header("Location:".BASE_DIR."Auth/login/Customer");
+        header("Location:".BASE_DIR."Auth/login");
         die();
     }
 }
@@ -35,7 +35,7 @@ function checkRegister($email){
         header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_COACH_REGISTER);
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/checkRegister/".$email;
-        header("Location:".BASE_DIR."Auth/login/Customer");
+        header("Location:".BASE_DIR."Auth/login");
     }        
     die();
 }
@@ -49,7 +49,7 @@ function unregister($id){
         die();   
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/unregister/".$id;
-        header("Location:".BASE_DIR."Auth/login/Customer");
+        header("Location:".BASE_DIR."Auth/login");
         die();
     }  
 }

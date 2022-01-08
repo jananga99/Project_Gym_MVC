@@ -38,4 +38,10 @@ function isCoachRegisteredForCustomer($customer,$coach){
 }
 
 
+//Gets price for given name
+function getRegistrationPrice(){
+    return $this->helper_factory->getHelper("Payment")->getPrice("Coach_Registration");
+}
+
+
 }

@@ -11,7 +11,7 @@ cn =2;
      var y=  x.insertCell(c);
     //  y.innerHTML="Row-"+r+" Column-"+c; 
     if(c==0){
-        y.innerHTML='<input type="text" class="form-control" name="planTime'+ r  +  '"placeholder="Time"></input>';
+        y.innerHTML='<input type="time" class="form-control" name="planTime'+ r  +  '"placeholder="Time"></input>';
     }
     else{
     

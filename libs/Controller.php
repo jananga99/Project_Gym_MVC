@@ -4,6 +4,7 @@ class Controller{
 
     function __construct(){
         $this->view = new View();
+        $this->validator = new Validator();
     }
 
     //Loads the Model using Factroy object

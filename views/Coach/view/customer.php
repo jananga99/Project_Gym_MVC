@@ -1,6 +1,5 @@
 <?php
 $arr = $_SESSION['data'];
-$register_price = 1000;
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 unset($_SESSION['msg']);
 ?>
@@ -90,7 +89,7 @@ unset($_SESSION['msg']);
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Registration Price</label>
-                    <input type="text" class="form-control" name='price' value=<?php echo $register_price ?> readonly>
+                    <input type="text" class="form-control" name='price' value=<?php echo $arr['registration_price'] ?> readonly>
                 </div>
             </div>
 

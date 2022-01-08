@@ -7,8 +7,14 @@ class Session_Controller extends Controller{
     }
 
     function index(){
-        header("Location:".BASE_DIR."Session/viewAll");
-        die();      
+        if(isset($_SESSION['logged_user'])){
+            header("Location:".BASE_DIR."Session/viewAll");
+            die();
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Session";
+            header("Location:".BASE_DIR."Auth/login");
+            die();
+        }      
     }
 
 
@@ -19,7 +25,7 @@ class Session_Controller extends Controller{
             $this->view->render('Session/create');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/viewCreate";
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }            
     }    
@@ -28,17 +34,35 @@ class Session_Controller extends Controller{
     //Validating and redirects to payments
     function checkCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            //do validations TODO
             $_POST["startTime"].=":00";
             $_POST["endTime"].=":00";
-            $_SESSION['payment_request_data'] =  array("Coach_Email"=>$_SESSION['logged_user']['email'],
-            "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
-            "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["createPrice"],
-            "Details"=>$_POST["details"],"registerPrice"=>$_POST['price']) ;          
-            header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_CREATE);
+            if(!$this->validator->validateText($_POST['sessionName'])){
+                $_SESSION['msg'] = "Session name cannot be empty";
+            }elseif(!$this->validator->validatePositiveNumber($_POST['maxParticipants'])){
+                $_SESSION['msg'] = "Number of participants is not valid";
+            }elseif(!$this->validator->validatePrice($_POST['price'])){
+                $_SESSION['msg'] = "Register price is not valid";
+            }elseif(!$this->validator->validate24Time($_POST['startTime'])){
+                $_SESSION['msg'] = "Start Time is not valid";
+            }elseif(!$this->validator->validate24Time($_POST['endTime'])){
+                $_SESSION['msg'] = "End Time is not valid";
+            }elseif(!$this->validator->validate24TimeDuration($_POST['startTime'],$_POST['endTime'])){
+                $_SESSION['msg'] = "End time must be after start time";
+            }elseif(!$this->validator->validateUpcomingDate($_POST['date'])){
+                $_SESSION['msg'] = "Date is not valid. (Must be a date after or on tomorrow.)";
+            }else{
+                $_SESSION['payment_request_data'] =  array("Coach_Email"=>$_SESSION['logged_user']['email'],
+                "Session_Name"=>$_POST['sessionName'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
+                "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["maxParticipants"],"price"=>$_POST["createPrice"],
+                "Details"=>$_POST["details"],"registerPrice"=>$_POST['price']) ;          
+                header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_SESSION_CREATE);
+                die();
+            }
+            header("Location:".BASE_DIR."Session/viewCreate");
+            die();
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/checkCreate";
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            header("Location:".BASE_DIR."Auth/login");
         }
         die();
     }
@@ -46,7 +70,6 @@ class Session_Controller extends Controller{
 
     //Creating Virtual Gym Sessions 
     function create(){
-        
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
             $data = array();
             $data['create_data'] = array(
@@ -65,7 +88,7 @@ class Session_Controller extends Controller{
             die();
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/create";
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }
     }
@@ -78,7 +101,7 @@ class Session_Controller extends Controller{
             $this->view->render('Session/createdSessionsByACoach');  
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/createdByMe";
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }  
     }
@@ -102,7 +125,7 @@ class Session_Controller extends Controller{
             $this->view->render("Session/view/admin");
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/view/".$session_id;
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }
@@ -110,35 +133,41 @@ class Session_Controller extends Controller{
 
     //Displaying all available sessions
     function viewAll(){
-        $session_arr = array();
-        $arr = array();
-        if(isset($_POST['by_registered']) && $_POST['by_registered']==="registered")
-            $arr =  $this->model-> registeredSessions($_SESSION['logged_user']['email']);
-        elseif(isset($_POST['by_registered']) && $_POST['by_registered']==="unregistered")
-            $arr =  $this->model->unregisteredSessions($_SESSION['logged_user']['email']);
-        else
-            $arr = $this->model->getAllSessions();
-        if(isset($_POST["order_by_date"]) && $_POST["order_by_date"]==="decending")
-            $arr = array_reverse($arr);
-        $coach_arr = array();
-        if($_SESSION['logged_user']['type']==="Customer")
-            $coach_arr = $this->model->registeredCoachesForCustomer($_SESSION['logged_user']['email']);
-        foreach($arr as $row){
-            if(isset($_POST["only_registered_coaches"]) && $_POST["only_registered_coaches"]==="on")    
-                if(!in_array($row['Coach_Email'],$coach_arr))   continue;
-            if(isset($_POST['by_time'])){
-                if($_POST['by_time']==="all")
-                    $session_arr[] = $row;
-                elseif($_POST['by_time']==="upcoming" && date('Y-m-d')<=$row['Date'])
-                    $session_arr[] = $row;
-                elseif($_POST['by_time']==="previous" && date('Y-m-d')>$row['Date'])
-                    $session_arr[] = $row;
-            }else
-                if(date('Y-m-d')<=$row['Date'])
-                    $session_arr[] = $row;
+        if(isset($_SESSION['logged_user'])){
+            $session_arr = array();
+            $arr = array();
+            if(isset($_POST['by_registered']) && $_POST['by_registered']==="registered")
+                $arr =  $this->model-> registeredSessions($_SESSION['logged_user']['email']);
+            elseif(isset($_POST['by_registered']) && $_POST['by_registered']==="unregistered")
+                $arr =  $this->model->unregisteredSessions($_SESSION['logged_user']['email']);
+            else
+                $arr = $this->model->getAllSessions();
+            if(isset($_POST["order_by_date"]) && $_POST["order_by_date"]==="decending")
+                $arr = array_reverse($arr);
+            $coach_arr = array();
+            if($_SESSION['logged_user']['type']==="Customer")
+                $coach_arr = $this->model->registeredCoachesForCustomer($_SESSION['logged_user']['email']);
+            foreach($arr as $row){
+                if(isset($_POST["only_registered_coaches"]) && $_POST["only_registered_coaches"]==="on")    
+                    if(!in_array($row['Coach_Email'],$coach_arr))   continue;
+                if(isset($_POST['by_time'])){
+                    if($_POST['by_time']==="all")
+                        $session_arr[] = $row;
+                    elseif($_POST['by_time']==="upcoming" && date('Y-m-d')<=$row['Date'])
+                        $session_arr[] = $row;
+                    elseif($_POST['by_time']==="previous" && date('Y-m-d')>$row['Date'])
+                        $session_arr[] = $row;
+                }else
+                    if(date('Y-m-d')<=$row['Date'])
+                        $session_arr[] = $row;
+            }  
+            $_SESSION['data'] = $session_arr;
+            $this->view->render("Session/viewAll");  
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Session/viewAll";
+            header("Location:".BASE_DIR."Auth/login");
+            die();            
         }  
-        $_SESSION['data'] = $session_arr;
-        $this->view->render("Session/viewAll");    
     }
 
 
@@ -150,7 +179,7 @@ class Session_Controller extends Controller{
             die();     
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/delete/".$session_id;
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            header("Location:".BASE_DIR."Auth/login");
             die();              
         }
     }
@@ -159,15 +188,32 @@ class Session_Controller extends Controller{
     //Editing the seesiosn
     function edit($session_id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" && $_SESSION['logged_user']['email']===$this->model->getCreatedCoach()){
-            $this->model->edit(array("Coach_Email"=>$_SESSION['logged_user']['email'],
-            "Session_Name"=>$_POST['session_name'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
-            "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["num_participants"],
-            "Price"=>$_POST["price"],"Details"=>$_POST["details"]),"ssssssds");         
+            if(!$this->validator->validateText($_POST['session_name'])){
+                $_SESSION['msg'] = "Session name cannot be empty";
+            }elseif(!$this->validator->validatePositiveNumber($_POST['num_participants'])){
+                $_SESSION['msg'] = "Number of participants is not valid";
+            }elseif(!$this->validator->validatePrice($_POST['price'])){
+                $_SESSION['msg'] = "Register price is not valid";
+            }elseif(!$this->validator->validate24Time($_POST['startTime'])){
+                $_SESSION['msg'] = "Start Time is not valid";
+            }elseif(!$this->validator->validate24Time($_POST['endTime'])){
+                $_SESSION['msg'] = "End Time is not valid";
+            }elseif(!$this->validator->validate24TimeDuration($_POST['startTime'],$_POST['endTime'])){
+                $_SESSION['msg'] = "End time must be after start time";
+            }elseif(!$this->validator->validateUpcomingDate($_POST['date'])){
+                $_SESSION['msg'] = "Date is not valid. (Must be a date after or on tomorrow.)";
+            }else{            
+                $this->model->edit(array("Coach_Email"=>$_SESSION['logged_user']['email'],
+                "Session_Name"=>$_POST['session_name'],"Date"=>$_POST["date"],"Start_Time"=>$_POST["startTime"],
+                "End_Time"=>$_POST["endTime"],"Num_Participants"=>$_POST["num_participants"],
+                "Price"=>$_POST["price"],"Details"=>$_POST["details"]),"ssssssds");  
+                $_SESSION['msg'] = "Session edited successfully";
+            }       
             header("Location:".BASE_DIR."Session/view/".$session_id);
             die();
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Session/delete/".$session_id;
-            header("Location:".BASE_DIR."Auth/login/Coach");
+            $_SESSION['requested_address'] = BASE_DIR."Session/edit/".$session_id;
+            header("Location:".BASE_DIR."Auth/login");
             die();              
         }        
     }    
@@ -190,7 +236,7 @@ class Session_Controller extends Controller{
             die();    
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/register/".$session_id;
-            header("Location:".BASE_DIR."Auth/login/Customer");
+            header("Location:".BASE_DIR."Auth/login");
             die();            
         }
     }
@@ -205,7 +251,7 @@ class Session_Controller extends Controller{
             die();    
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Session/unregister/".$session_id;
-            header("Location:".BASE_DIR."Auth/login/Customer");
+            header("Location:".BASE_DIR."Auth/login");
             die();  
         }       
     }
@@ -217,7 +263,8 @@ class Session_Controller extends Controller{
             $_SESSION['data'] = $this->model->registeredSessions($_SESSION['logged_user']['email']);
             $this->view->render('session/registeredSessionsByACustomer');  
         }else{
-            header("Location:".BASE_DIR."Auth/login/Customer");
+            $_SESSION['requested_address'] = BASE_DIR."Session/registeredByMe";
+            header("Location:".BASE_DIR."Auth/login");
             die();  
         }       
     }

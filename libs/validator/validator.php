@@ -19,7 +19,7 @@ function validateAge($age){
         return FALSE;
 }
 
-function validateCiTY($city){
+function validateCity($city){
     if(preg_match("/^[a-z]*$/i", $city))
         return TRUE;
     else
@@ -66,6 +66,50 @@ function validateDate($date){
         return TRUE;
     else
         return FALSE;
+}
+
+
+function validateGender($gender){
+    if($gender==="Male" || $gender==="Female")
+        return TRUE;
+    else
+        return FALSE;
+}
+
+
+
+/////////////////////////////////////////////////////////////////
+function validateTelNum($tel){
+    return TRUE;
+}
+
+function validatePositiveNumber($num){
+    return TRUE;
+ }
+
+function validatePrice($price){           //a floating number
+    return TRUE;
+}
+
+
+function validateText($text){             
+    if(strlen($text)>0)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+function validateUpcomingDate($date){               //return TRUE if the data is in future ( today < $date )
+    return TRUE;
+} 
+
+
+function validate24Time($time){            //format - HH:MM:SS    e.g. 15:04:00
+    return TRUE;
+}
+
+function validate24TimeDuration($startTime,$endTime){    //return TRUE id stratTime < endTime
+    return TRUE;
 }
 
 }

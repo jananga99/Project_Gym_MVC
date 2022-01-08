@@ -13,6 +13,10 @@ class Auth_Controller extends Controller{
 
     //Renders login page
     function login(){
+        if(isset($_SESSION['logged_user'])){
+            header("Location:".BASE_DIR."Auth/logout");
+            die();
+        }
         $this->view->render('Auth/login');
     }
 
