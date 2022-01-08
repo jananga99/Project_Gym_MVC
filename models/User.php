@@ -45,6 +45,16 @@ function getEmail(){
 }
 
 
+//Observer
+function update($data){
+    $data1=array();
+    $data1['create_data'] = array("Receiver_Email"=>$data['rec_email'],"Receiver_Type"=>$this->type,"Notification_Type"=>$data['type'],"Details"=>$data['details']);
+    $data1['create_data_types'] = 'ssss';
+    $this->factory->getModel("Notification",$data1);
+}
+
+
+
 //Mediator
 
 //Returns Message mediator for this function
