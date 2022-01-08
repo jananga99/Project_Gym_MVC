@@ -11,7 +11,6 @@ class Controller{
         require_once 'models/Factory.php';
         $path = 'models/'.$modelName.'.php';
         $this->factory = new Factory();
-        $this->helper_factory = new Helper_Factory();
         $model = $this->factory->getModel($modelName,array('id'=>$this->_getFirstParametre()));
         if($model)
             $this->model = $model;

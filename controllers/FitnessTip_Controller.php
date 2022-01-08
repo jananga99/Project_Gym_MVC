@@ -17,7 +17,7 @@ class FitnessTip_Controller extends Controller{
         $arr=0;
         if(isset($_POST['gender']))
             $arr = array('for_which_gender'=>$_POST['gender']);
-        $_SESSION['data'] =  $this->helper_factory->getHelper("FitnessTip")->getAllFitnessTips($arr);
+        $_SESSION['data'] =  $this->model->getAllFitnessTips($arr);
         $this->view->render('fitnessTip/viewAll');        
     }
 

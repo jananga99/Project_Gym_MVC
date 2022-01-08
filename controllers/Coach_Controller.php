@@ -26,7 +26,7 @@ function viewCreate(){
 //Creating/signing up Coaches
 function create($submitted=0){
       //Do validations TODO
-    $success = $this->helper_factory->getHelper("Coach")->isEmailUnique($_POST['email']);
+    $success = $this->model->isEmailUnique($_POST['email']);
     if($success){
         $data = array();
         $data['create_data'] = array("LastName"=>$_POST['lname'], "FirstName"=>$_POST['fname'], "Age"=>$_POST['age'], 
@@ -66,9 +66,8 @@ function view($email){
         $_SESSION['data'] = $this->model->getData();
         $this->view->render('Coach/view/my');
     }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){    //For a customer
-        $_SESSION['data'] = $this->helper_factory->getHelper("Coach")->getCoachData($email);
-        $_SESSION['data']['isRegistered'] = $this->helper_factory->getHelper("Coach_Registration")->isCoachRegistered($_SESSION['logged_user']['email'],
-            $email);
+        $_SESSION['data'] = $this->model->getCoachData($email);
+        $_SESSION['data']['isRegistered'] = $this->model->isCoachRegisteredForCustomer($_SESSION['logged_user']['email'],$email);
         $this->view->render('Coach/view/customer');
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach/view/".$email;
@@ -83,7 +82,7 @@ function viewAll(){
     $sort_arr=isset($_POST["by"]) && isset($_POST["sort_by_gender"]) ? array("gender"=>$_POST["sort_radio_gender"]) : 0;
     $orderField=isset($_POST["by"]) && isset($_POST["order_by"])  && $_POST["order_by"] != "none" ? "CONCAT(FirstName,LastName)" : 0;
     $reverse=isset($_POST["by"]) && isset($_POST['order_radio_name']) && $_POST['order_radio_name'] == 'z_to_a' ? 1 : 0;
-    $_SESSION['data'] =  $this->helper_factory->getHelper("Coach")->getAllCoachData($sort_arr,$orderField,$reverse);
+    $_SESSION['data'] =  $this->model->getAllCoachData($sort_arr,$orderField,$reverse);
     $this->view->render('coach/view/all');
 }
 
@@ -91,7 +90,7 @@ function viewAll(){
 //Displaying registered customers
 function registeredCustomers($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-        $_SESSION['data'] = $this->helper_factory->getHelper("Coach_Registration")->getRegisteredCustomersData($email);
+        $_SESSION['data'] = $this->model->getRegisteredCustomersData($email);
         $this->view->render('Coach_registration/registeredCustomers');
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Customer/registeredCustomers";

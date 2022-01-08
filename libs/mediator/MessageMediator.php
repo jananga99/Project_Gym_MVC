@@ -32,10 +32,7 @@ function isUserAdded($user){
 function sendMessage($message,$sender){
     foreach($this->users as $u){
         if(!($u->getEmail()===$sender->getEmail())){
-            $u->receieveMessage($message);
-            $this->db->insert("messages",array("Receiver_Email"=>$u->getEmail(),
-            "Sender_Email"=>$sender->getEmail(),"Message"=>$message['data'],
-            "Type"=>$message['type'],"message_sent_id"=>$message['sent_id']),'sssdd');    
+            $u->receieveMessage($message);    
         }
     }
 }

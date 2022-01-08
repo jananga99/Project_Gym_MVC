@@ -11,7 +11,7 @@ class Notification_Controller extends Controller{
             $type_read = "unread";
             if(isset($_POST['select']))
                 $type_read = $_POST['select'];           
-            $_SESSION['data'] =  $this->helper_factory->getHelper("Notification")->getNotifications($_SESSION['logged_user']['email'],$type_read);
+            $_SESSION['data'] =  $this->model->getNotifications($_SESSION['logged_user']['email'],$type_read);
             $this->view->render('notification/notification');
         }else{
             header("Location:".BASE_DIR);

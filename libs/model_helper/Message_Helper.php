@@ -33,9 +33,22 @@ function getMessageType($id){
 }
 
 
+//Returns the data of given message id
+function getSentMessageData($id){
+    return $this->db->select("Sent_Messages",0,array("Message_Sent_id"=>$id),1);
+}
+
+
 //Get the latest sent message
 function getLatestSentMessage($sender){
     return $this->db->select("Sent_messages",array("Message_sent_id"),array("Sender_Email"=>$sender),1,"Message_sent_id",1)['Message_sent_id'];
+}
+
+
+//Get the latest receieved  message
+function getLatestReceievedMessage($send_id,$receiever){
+    return $this->db->select("messages",array("Message_id"),array("Receiver_Email"=>$receiever,"Message_Sent_id"=>$send_id),1,
+    "Message_id",1)['Message_id'];
 }
 
 
