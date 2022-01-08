@@ -59,6 +59,17 @@ function sendMessage($message){
 }
 
 
+//Receieves the sent message
+function receieveMessage($message){      
+    $data = array();
+    $data['action']="receive";
+    $message_data = $message->getSentMessageData();    
+    $data['create_data'] = array('receiver_email'=>$this->getEmail(),'sender_email'=>$message_data['Sender_Email'],
+        'message'=>$message_data['Message'],'message_type'=>$message_data['Type'],'sent_id'=>$message_data['Message_Sent_id']);
+    return $this->factory->getModel("Message",$data);  
+}
+
+
 ///////////////////Helper Functions///////////////////
 
 //Returns true if email is unique from all previous users, false otherwise

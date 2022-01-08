@@ -53,6 +53,7 @@ class Message_Controller extends Controller{
             $data = array();
             $data['create_data'] = array('sender_email'=>$_SESSION['logged_user']['email'],'message_type'=>$_POST['message_type'],
                 'message'=> $_POST['message']    );
+            $data['action'] = "send";
             $this->factory->getModel("Message",$data);
             header("Location:".BASE_DIR."Message/viewSend");
             die();            
