@@ -148,4 +148,12 @@ CREATE TABLE Price (
     PRIMARY KEY (Price_id)
 );
 
-INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Create_Session','1000','Price for a coach to create a sesssion')
+
+
+///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+Below sql data can be added manually by logging as an admin and going to set prices or just run belowe on db.
+Consider that below price type data must be in price table, otherwise there may some issues.
+
+INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Create_Session','1000','Price for a coach to create a sesssion');
+INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Coach_Registration','5000','Price for registering a coach');
