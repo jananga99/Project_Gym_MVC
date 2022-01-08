@@ -43,6 +43,17 @@ CREATE TABLE Admin (
     PRIMARY KEY (Email)
 );
 
+
+CREATE TABLE Coach_Registration (
+    Registration_id INT(10) AUTO_INCREMENT,
+    Customer varchar(255) NOT NULL,
+    Coach varchar(255) NOT NULL,
+    Delected INT(1) DEFAULT 0,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Registration_id)
+);
+
+
 CREATE TABLE Session_Registration (
     Session_Registration_id INT(15) AUTO_INCREMENT,
     Customer varchar(255) NOT NULL,
@@ -100,13 +111,6 @@ CREATE TABLE Messages (
     Mark_As_Read INT(1) DEFAULT 0,
     Receiver_Delected INT(1) DEFAULT 0,
     PRIMARY KEY (Message_id)
-);
-
-
-CREATE TABLE Plan_Registration (
-    Customer varchar(255) NOT NULL,
-    Plan_id varchar(255) NOT NULL,
-    Details MEDIUMTEXT
 );
 
 CREATE TABLE Plan_Registration (
