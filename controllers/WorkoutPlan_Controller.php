@@ -21,10 +21,10 @@ class WorkoutPlan_Controller extends Controller{
     //Displaying all available orkout plans
     function viewAll(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" ){
-            $_SESSION['plan_arr'] = $this->helper_factory->getHelper("WorkoutPlan")->getAllPlansForACoach($_SESSION['logged_user']['email']);
+            $_SESSION['plan_arr'] = $this->model->getAllPlansForACoach($_SESSION['logged_user']['email']);
             $this->view->render('workoutPlan/viewAll');
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer" ){
-            $_SESSION['plan_arr'] = $this->helper_factory->getHelper("WorkoutPlan")->getAllPlansForACustomer($_SESSION['logged_user']['email']);
+            $_SESSION['plan_arr'] = $this->model->getAllPlansForACustomer($_SESSION['logged_user']['email']);
             $this->view->render('workoutPlan/viewAll');
         }
     }
@@ -33,11 +33,11 @@ class WorkoutPlan_Controller extends Controller{
     //Displaying the plan details according to logged in user
     function view($id){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-                $_SESSION['data'] = $this->model->getData();
+                $_SESSION['data'] = $this->model->getPlan($id);
                 $_SESSION['customer_arr'] = $this->model->getCustomersForPlan();
                 $this->view->render('workoutPlan/view/coach');
         }elseif(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
-                $_SESSION['data'] = $this->model->getData();
+                $_SESSION['data'] = $this->model->getPlan($id);
                 $this->view->render('workoutPlan/view/customer');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."WorkoutPlan/view/".$id;
@@ -82,8 +82,7 @@ class WorkoutPlan_Controller extends Controller{
     //Displying creating workout plan interface
     function viewCreate(){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
-            $factory = new Factory();
-            $_SESSION['customer_arr'] = $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($_SESSION['logged_user']['email']);
+            $_SESSION['customer_arr'] = $this->model->registeredCustomersForCoach($_SESSION['logged_user']['email']);
             $this->view->render('workoutPlan/create');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."WorkoutPlan/viewCreate".$id;

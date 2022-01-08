@@ -18,7 +18,7 @@ class Auth_Controller extends Controller{
 
     //Redirects to dashboard if login credentials are valid
     function checklogin(){
-        $type=$this->helper_factory->getHelper("Auth")->validateLogIn($_POST['email'],$_POST["password"]);
+        $type=$this->model->validateLogIn($_POST['email'],$_POST["password"]);
         if($type){
             $_SESSION['logged_user'] = array("email"=>$_POST['email'],"type"=>$type);
             if(isset($_SESSION['requested_address'])){

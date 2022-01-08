@@ -2,13 +2,15 @@
 
 class Message extends Model{
 
-function __construct($data){
+function __construct($data=-1){
     parent::__construct();
-    if(isset($data['id']) && !(is_null($data['id'])) ){
-        $this->id=$data['id'];
-    }else{
-        $this->send($data['create_data']['sender_email'],$data['create_data']['message_type'],$data['create_data']['message']);
-        $this->id =  $this->helper_factory->getHelper("Message")->getLatestSentMessage($data['create_data']['sender_email']);   
+    if($data!=-1){
+        if(isset($data['id']) && !(is_null($data['id'])) ){
+            $this->id=$data['id'];
+        }else{
+            $this->send($data['create_data']['sender_email'],$data['create_data']['message_type'],$data['create_data']['message']);
+            $this->id =  $this->helper_factory->getHelper("Message")->getLatestSentMessage($data['create_data']['sender_email']);   
+        }
     }
 }
 
@@ -73,6 +75,37 @@ function setReceievers($message_type,$mediator,$coach_email=0){
         }
     }
 } 
+
+
+///////////Helper Functions///////////////
+
+//Returns received messages for given email
+function getReceievedMessages($email,$type_read="all"){ 
+    return $this->helper_factory->getHelper("Message")->getReceievedMessages($email,$type_read);
+}
+
+
+//Returns sent messages for given email
+function getSentMessages($email){
+    return $this->helper_factory->getHelper("Message")->getSentMessages($email);
+}
+
+
+//Returns the type of given message id
+function getMessageType($id){
+    return $this->helper_factory->getHelper("Message")->getMessageType($id);
+}
+
+
+//Get the latest sent message
+function getLatestSentMessage($sender){
+    return $this->helper_factory->getHelper("Message")->getLatestSentMessage($sender);
+}
+
+
+
+
+
 
 
 }

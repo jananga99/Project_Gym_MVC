@@ -9,14 +9,16 @@ protected $type;
 function __construct($type,$data){
     parent::__construct();
     $this->type = $type;
-    if(!is_null($data['id'])){
-        $this->email=$data['id'];
-    }else{
-        $this->create($data['create_data'],$data['create_data_types']);
-        $this->email = $data['create_data']['Email'];   
-    }
-    if(isset($data['mediator']))
-        $this->messageMediator = $data['mediator'];   
+    if($data!=-1){
+        if(!is_null($data['id'])){
+            $this->email=$data['id'];
+        }else{
+            $this->create($data['create_data'],$data['create_data_types']);
+            $this->email = $data['create_data']['Email'];   
+        }
+        if(isset($data['mediator']))
+            $this->messageMediator = $data['mediator'];  
+    } 
 }
 
 
@@ -43,16 +45,6 @@ function getEmail(){
 }
 
 
-//Returns true if email is unique from all previous users, false otherwise
-static function isEmailunique($email){
-    foreach(array("Customer","Coach","Admin") as $type){
-        if($this->db->select($type,array("Email"),array("Email"=>$email),1,0,0,"s"))
-            return FALSE;
-    }
-    return TRUE;        
-}
-
-
 //Mediator
 
 //Returns Message mediator for this function
@@ -64,6 +56,14 @@ function getMessageMediator(){
 //Sends message using mediator
 function sendMessage($message){      
     $this->messageMediator->sendMessage($message,$this);
+}
+
+
+///////////////////Helper Functions///////////////////
+
+//Returns true if email is unique from all previous users, false otherwise
+function isEmailunique($email){
+    return $this->helper_factory->getHelper($this->type)->isEmailunique($email);      
 }
 
 

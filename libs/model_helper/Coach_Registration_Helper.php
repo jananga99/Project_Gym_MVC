@@ -52,6 +52,9 @@ function getRegisteredCustomersData($email){
 //Returns the registered customers for the given coach email
 function registeredCustomers($email){
     return $this->db->select("coach_registration",array("Customer"),array("Coach"=>$email,"Delected"=>'0')) ;
- }
+}
+
+
+
 }
 ?>
