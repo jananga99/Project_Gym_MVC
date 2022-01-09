@@ -13,6 +13,10 @@ class Auth_Controller extends Controller{
 
     //Renders login page
     function login(){
+        if(isset($_SESSION['logged_user'])){
+            header("Location:".BASE_DIR."Auth/logout");
+            die();
+        }
         $this->view->render('Auth/login');
     }
 
@@ -44,21 +48,6 @@ class Auth_Controller extends Controller{
         unset($_SESSION['payment_request_data']); 
         header("Location:".BASE_DIR);
         die();
-    }
-
-
-
-    function addsignup($type){
-        if($this->model->validateSignup($_POST['email'])){
-            $this->model->signup($type,$_POST);
-            header("Location:".BASE_DIR.'Auth/login/'.$type);
-            die(); 
-        }else{
-            $_SESSION['msg'] = "This email is already registered.";
-            header("Location:".BASE_DIR.'Auth/signup/'.$type);
-            die();                 
-        }
-       
     }
 
 }

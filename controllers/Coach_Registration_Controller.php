@@ -15,13 +15,14 @@ function index(){
 //Registering a Customer for a coach
 function register($email){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Customer"){
-        $coach_registration_helper = new Coach_Registration_Helper();
-        $coach_registration_helper->register($_SESSION['logged_user']['email'],$email);
+        $data = array();
+        $data['create_data'] = array('customer_email'=>$_SESSION['logged_user']['email'],'coach_email'=>$email);
+        $this->factory->getModel("Coach_Registration",$data);
         header("Location:".BASE_DIR."Coach/viewAll");
         die();   
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/register/".$email;
-        header("Location:".BASE_DIR."Auth/login/Customer");
+        header("Location:".BASE_DIR."Auth/login");
         die();
     }
 }
@@ -34,7 +35,7 @@ function checkRegister($email){
         header("Location:".BASE_DIR."Payment/viewPayment/".PAYMENT_COACH_REGISTER);
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/checkRegister/".$email;
-        header("Location:".BASE_DIR."Auth/login/Customer");
+        header("Location:".BASE_DIR."Auth/login");
     }        
     die();
 }
@@ -48,7 +49,7 @@ function unregister($id){
         die();   
     }else{
         $_SESSION['requested_address'] = BASE_DIR."Coach_Registration/unregister/".$id;
-        header("Location:".BASE_DIR."Auth/login/Customer");
+        header("Location:".BASE_DIR."Auth/login");
         die();
     }  
 }

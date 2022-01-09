@@ -1,3 +1,7 @@
+<?php
+$msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
+unset($_SESSION['msg']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,22 +36,41 @@
 
         <form class="m-3" action=<?= BASE_DIR . "Message/send" ?> method="post">
 
-            <label for="message_type">TO</label>
-            <select name="message_type">
-                <?php
-                    foreach ($_SESSION['data'] as $value => $text)
-                        echo "<option value=".$value.">".$text."</option>";
-                ?>
-            </select><br>
 
-            <input type="text" name="message">
-            <input type="submit" value="SEND">
+            <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
+                <!-- <label for="message_type">TO</label> -->
+                <div class="d-flex flex-column m-1 bd-highlight ">
+
+                    <select class="form-select form-select-sm" name="message_type">
+                        <?php
+                        foreach ($_SESSION['data'] as $value => $text)
+                            echo "<option value=" . $value . ">" . $text . "</option>";
+                        ?>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
+
+                <input class="form-control" placeholder="type your msg here" type="text" name="message">
+                <input class='btn btn-outline-light m-2 ' type="submit" value="SEND">
+            </div>
+
+
 
 
 
         </form>
     </div>
-    <?php
+   
+    <div class="d-flex justify-content-center" style="color:crimson">
+        <p><?= $msg ?></p>
+    </div>
+   
+   
+   <?php
     require_once 'public/html/footer.html';
     ?>
 

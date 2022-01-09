@@ -7,10 +7,11 @@ function __construct(){
 }
 
 
-//Inserts given user details to database
-function register($customer_email,$coach_email){
-    $this->db->insert("coach_registration",array("Customer"=>$customer_email, "Coach"=>$coach_email),"ss");
+//Get the latest sent message
+function getRegistrationId($customer,$coach){
+    return $this->db->select("Coach_Registration",array("Registration_id"),array("Customer"=>$customer,"Coach"=>$coach,"Delected"=>'0'),1)['Registration_id'];
 }
+
 
 //Returns True if given customer is registered for coach
 function isCoachRegistered($customer,$coach){
@@ -32,9 +33,8 @@ function registeredCoaches($email){
 //Returns all registered coaches data 
 function getRegisteredCoachesData($customer_email){
     $coach_arr = array();
-    $coach_helper = new Coach_Helper();
     foreach( $this->registeredCoaches($customer_email) as $coach ) 
-        $coach_arr[] = $coach_helper->getCoachData($coach);
+        $coach_arr[] = $this->helper_factory->getHelper("Coach")->getCoachData($coach);
     return $coach_arr;    
 }
 
@@ -42,11 +42,9 @@ function getRegisteredCoachesData($customer_email){
 //Returns all registered customer data 
 function getRegisteredCustomersData($email){
     $factory = new Factory();
-    $coach_Registration = new Coach_Registration_Helper();
-    $customer_helper = new Customer_Helper();
     $customer_arr = array();
-    foreach( $coach_Registration->registeredCustomers($email) as $row ) 
-        $customer_arr[] = $customer_helper->getCustomerData($row['Customer']);
+    foreach(  $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($email) as $row ) 
+        $customer_arr[] =  $this->helper_factory->getHelper("Customer")->getCustomerData($row['Customer']);
     return $customer_arr;    
 }
 
@@ -54,6 +52,9 @@ function getRegisteredCustomersData($email){
 //Returns the registered customers for the given coach email
 function registeredCustomers($email){
     return $this->db->select("coach_registration",array("Customer"),array("Coach"=>$email,"Delected"=>'0')) ;
- }
+}
+
+
+
 }
 ?>

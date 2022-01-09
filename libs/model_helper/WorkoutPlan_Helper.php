@@ -7,10 +7,9 @@ function __construct(){
 }
 
 
-//Creates a workout plan
-function create($coach_email,$data){
-    $this->db->insert("Plan_details",array("Plan"=>serialize($data['plan']),"Plan_Name"=>$data['plan_name'],
-    "Coach_email"=>$coach_email),"sss");
+//Get the latest sent message
+function getLatestPlanId($coach_email){
+    return $this->db->select("plan_details",array("Plan_id"),array("Coach_Email"=>$coach_email),1,"Plan_id",1)['Plan_id'];
 }
 
 

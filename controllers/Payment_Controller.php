@@ -35,7 +35,7 @@ class Payment_Controller extends Controller
             $this->view->render('payment/temp'); 
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/viewPayment/".$type;
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
         }
     }
 
@@ -46,7 +46,8 @@ class Payment_Controller extends Controller
             $this->view->render('payment/dash');   
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/viewpay";
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
+            die();
         }
     }
 
@@ -54,13 +55,26 @@ class Payment_Controller extends Controller
     //Paying the amount
     function pay(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
+            if(!$this->validator->validateName($_POST["name"])){
+                $_SESSION['msg'] = "Person Name is not valid";
+            }elseif(!$this->validator->validateCardNumber($_POST["card_number"])){
+                $_SESSION['msg'] = "Credit Card number is not valid";
+            }elseif(!$this->validator->validateExpiry($_POST["expiry"])){
+                    $_SESSION['msg'] = "Expiry is not valid";
+            }elseif(!$this->validator->validateCVC($_POST["cvc"])){
+                    $_SESSION['msg'] = "CVC is not valid";
+            }else{
                 //Check for payments
-                $this->model->addPayment($_SESSION['payment_data']);
+                $data=array('create_data'=>$_SESSION['payment_data']);
+                $this->factory->getModel("Payment",$data);
                 header("Location:".BASE_DIR."Payment/viewSuccess");
                 die();
+            }
+            header("Location:".BASE_DIR."Payment/viewPay");
+            die();
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Session/register";
-            header("Location:".BASE_DIR);
+            $_SESSION['requested_address'] = BASE_DIR."Payment/pay";
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }
     }
@@ -72,7 +86,7 @@ class Payment_Controller extends Controller
             $this->view->render('payment/success');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/viewSuccess";
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }
     }
@@ -89,8 +103,8 @@ class Payment_Controller extends Controller
                 header("Location:".BASE_DIR."Coach_Registration/register/".$_SESSION['payment_data']["Item_id"]);
             die();
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Payment/success";
-            header("Location:".BASE_DIR);
+            $_SESSION['requested_address'] = BASE_DIR."Payment/finish";
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }
     }
@@ -103,7 +117,7 @@ class Payment_Controller extends Controller
             $this->view->render('payment/prices');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/viewSetPrice";
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();            
         }
     }
@@ -113,7 +127,15 @@ class Payment_Controller extends Controller
     function setPrice($action){
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Admin"){  
             if($action==="create"){
-                $this->model->addPrice(array("Price_Type"=>$_POST['price_type'],"Price"=>$_POST['price'],"Details"=>$_POST['price_details']));
+                if(!$this->validator->validateText($_POST['price_type'])){
+                    $_SESSION['msg'] = "Price Type cannot be empty";
+                }elseif(!$this->validator->validatePrice($_POST['price'])){
+                    $_SESSION['msg'] = "Price is not valid";
+                }
+                else{                
+                    $this->model->addPrice(array("Price_Type"=>$_POST['price_type'],"Price"=>$_POST['price'],"Details"=>$_POST['price_details']));
+                    $_SESSION['msg'] = "Price set successfully";
+                }
             }elseif($action==="edit"){
                 $this->model->editPrice($_POST['price_id'],array("Price_Type"=>$_POST['price_type'],"Price"=>$_POST['price'],"Details"=>$_POST['price_details']));
             }elseif($action==="delete"){
@@ -121,8 +143,8 @@ class Payment_Controller extends Controller
             }
             header("Location:".BASE_DIR."Payment/viewSetPrice");
         }else{
-            $_SESSION['requested_address'] = BASE_DIR."Payment/setPrice";
-            header("Location:".BASE_DIR);           
+            $_SESSION['requested_address'] = BASE_DIR."Payment/setPrice/".$action;
+            header("Location:".BASE_DIR."Auth/login");        
         }
         die();
     }

@@ -43,6 +43,17 @@ CREATE TABLE Admin (
     PRIMARY KEY (Email)
 );
 
+
+CREATE TABLE Coach_Registration (
+    Registration_id INT(10) AUTO_INCREMENT,
+    Customer varchar(255) NOT NULL,
+    Coach varchar(255) NOT NULL,
+    Delected INT(1) DEFAULT 0,
+    Details MEDIUMTEXT,
+    PRIMARY KEY (Registration_id)
+);
+
+
 CREATE TABLE Session_Registration (
     Session_Registration_id INT(15) AUTO_INCREMENT,
     Customer varchar(255) NOT NULL,
@@ -102,13 +113,6 @@ CREATE TABLE Messages (
     PRIMARY KEY (Message_id)
 );
 
-
-CREATE TABLE Plan_Registration (
-    Customer varchar(255) NOT NULL,
-    Plan_id varchar(255) NOT NULL,
-    Details MEDIUMTEXT
-);
-
 CREATE TABLE Plan_Registration (
     Customer varchar(255) NOT NULL,
     Plan_id varchar(255) NOT NULL,
@@ -125,6 +129,15 @@ CREATE TABLE Plan_Details (
     PRIMARY KEY (Plan_id)
 );
 
+CREATE TABLE Payment (
+    Payment_id INT(10) AUTO_INCREMENT,
+    Payer_Email varchar(255) NOT NULL,
+    Item_id INT(10) NOT NULL,
+    Amount DOUBLE NOT NULL,
+    Payment_Type INT(3) NOT NULL,
+    PRIMARY KEY (Payment_id)
+);
+
 
 CREATE TABLE Price (
     Price_id INT(10) AUTO_INCREMENT,
@@ -135,4 +148,12 @@ CREATE TABLE Price (
     PRIMARY KEY (Price_id)
 );
 
-INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Create_Session','1000','Price for a coach to create a sesssion')
+
+
+///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+Below sql data can be added manually by logging as an admin and going to set prices or just run belowe on db.
+Consider that below price type data must be in price table, otherwise there may some issues.
+
+INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Create_Session','1000','Price for a coach to create a sesssion');
+INSERT INTO `price`(`Price_Type`, `Price`, `Details`) VALUES ('Coach_Registration','5000','Price for registering a coach');

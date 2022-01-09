@@ -17,8 +17,7 @@ class FitnessTip_Controller extends Controller{
         $arr=0;
         if(isset($_POST['gender']))
             $arr = array('for_which_gender'=>$_POST['gender']);
-        $fitnesstip_helper = new FitnessTip_Helper();
-        $_SESSION['data'] =  $fitnesstip_helper->getAllFitnessTips($arr);
+        $_SESSION['data'] =  $this->model->getAllFitnessTips($arr);
         $this->view->render('fitnessTip/viewAll');        
     }
 
@@ -29,7 +28,7 @@ class FitnessTip_Controller extends Controller{
             $this->view->render('fitnessTip/create');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."FitnessTip/viewCreate";
-            header("Location:".BASE_DIR."Auth/login/Customer");
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }
     }
@@ -38,19 +37,22 @@ class FitnessTip_Controller extends Controller{
     //Creating the fitness tip
     function create(){   
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){        
-            $fitnesstip_helper = new FitnessTip_Helper();
-            $fitnesstip_helper->create(array("Tip"=>$_POST['tip'],
-            "for_which_gender"=>$_POST['gender']));
+            if(!$this->validator->validateGender($_POST['gender'])){
+                $_SESSION['msg'] = "Gender is not valid";
+            }else{
+                $data = array();
+                $data['create_data'] = array("Tip"=>$_POST['tip'],"for_which_gender"=>$_POST['gender']);
+                $this->factory->getModel("FitnessTip",$data);
+                $_SESSION['msg'] = "FitnessTip added successfully";
+            }
             header("Location:".BASE_DIR."FitnessTip/viewCreate");
             die();
         }else{
             $_SESSION['requested_address'] = BASE_DIR."FitnessTip/create";
-            header("Location:".BASE_DIR."Auth/login/Customer");
+            header("Location:".BASE_DIR."Auth/login");
             die();
         }            
     }
-
-
 }
 
 

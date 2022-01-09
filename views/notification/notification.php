@@ -36,17 +36,25 @@ echo $navbar->get();
 
         <h1 class="m-4">Notifications</h1>
 
-        <div class="m-4">
-            <form action=<?=BASE_DIR."Notification"?> method='post'>
-                <label >Show</label>
-                <select name='select'>
-                    <option value='unread' checked>Only unread notifications</option>
-                    <option value='all'>All notifications</option>
-                    <option value='read'>Only read notifications</option>
-                </select><br>
-                <button>Show Notifications</button>
-            </form>
-        </div>
+
+        <form action=<?= BASE_DIR . "Notification" ?> method='post'>
+            <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
+                <!-- <label >Show</label> -->
+                <div class="d-flex flex-column m-1 bd-highlight ">
+                    <select class="form-select" name='select'>
+                        <option value='unread' checked>Only unread notifications</option>
+                        <option value='all'>All notifications</option>
+                        <option value='read'>Only read notifications</option>
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column m-1  bd-highlight ">
+
+                    <button class='btn btn-outline-light '>Show </button>
+                </div>
+            </div>
+        </form>
+
 
         <?php
         if ($flag) {
@@ -62,14 +70,14 @@ echo $navbar->get();
                 echo "<tr>
                 <td>" . $row['Details'] . "</td>
                 <td>";
-                if($row['Mark_As_Read']==0)
+                if ($row['Mark_As_Read'] == 0)
                     echo "
-                        <form action=" . BASE_DIR . "Notification/markAsRead/".$row['Notification_id']." method='POST'>
+                        <form action=" . BASE_DIR . "Notification/markAsRead/" . $row['Notification_id'] . " method='POST'>
                             <button class='btn btn-primary' name='mark_as_read'>Mark as Read</button>
                         </form>
                     ";
                 echo "</td>
-                <td><form action=" . BASE_DIR . "Notification/delete/".$row['Notification_id']." method='POST'>
+                <td><form action=" . BASE_DIR . "Notification/delete/" . $row['Notification_id'] . " method='POST'>
                     <button  class='btn btn-danger' name='delete'>Delete</button>
                     </form>
                 </td>

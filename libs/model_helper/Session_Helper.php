@@ -49,13 +49,7 @@ function getSessionData($session_id){
 }
 
 
-//Inserts given user details to database
-function create($data){
-    $this->db->insert("session_details",$data,'ssssssds');
-    $factory = new Factory();
-    $created_Session = $factory->getModel("Session",$this->getLatestCreatedSession($data['Coach_Email']));
-    $created_Session->init();
-}
+
 
 
 //Returns created sessions for given coach_email
@@ -74,6 +68,30 @@ function getAllSessions(){
     $sort_arr['Delected'] = '0';
     return $this->db->select("session_details",$fields,$sort_arr,0,"Date");    
 }
+
+
+//Returns all customers registered for the sesssion
+function registeredCustomers($id){
+    $customer_arr = array();
+    foreach( $this->db->select("Session_Registration",array("Customer"),
+    array("Session_id"=>$id,"Delected"=>'0')) as $row ) 
+        $customer_arr[] = $row['Customer'];
+    return $customer_arr;
+}
+
+
+//Returns the coach who created the session 
+function getCreatedCoach($id){
+    return $this->db->select("session_details",array("Coach_Email"),
+    array("Session_id"=>$id),1)['Coach_Email'];    
+}
+
+
+//Get the Session data
+function getData($id){
+    return $this->db->select("session_details",0,array("Session_id"=>$id,"Delected"=>'0'),1);
+}
+
 
 
 }

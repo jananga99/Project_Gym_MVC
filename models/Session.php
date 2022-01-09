@@ -3,10 +3,18 @@
 
 class Session extends Model implements Observable{
 
-function __construct($id){
+function __construct($data=-1){
     parent::__construct();
-    $this->id = $id;
-    $this->observers = array();
+    if($data!=-1){
+        if(isset($data['id']) && !(is_null($data['id'])) ){
+            $this->id=$data['id'];
+        }else{
+            $this->create($data['create_data']);
+            $this->id = $this->helper_factory->getHelper("Session")->getLatestCreatedSession($_POST['create_data']['Coach_Email']);   
+            $this->init();
+        }
+        $this->observers = array();
+    }
 }
 
 
@@ -15,16 +23,9 @@ function init(){
 }
 
 
-//Returns the coach who created the session 
-function getCreatedCoach(){
-    return $this->db->select("session_details",array("Coach_Email"),
-    array("Session_id"=>$this->id),1)['Coach_Email'];    
-}
-
-
-//Get the Session data
-function getData(){
-    return $this->db->select("session_details",0,array("Session_id"=>$this->id,"Delected"=>'0'),1);
+//Inserts given session details to database
+function create($data){
+    $this->db->insert("session_details",$data,'ssssssds');
 }
 
 
@@ -43,9 +44,6 @@ function edit($data,$dataTypes){
 }
 
 
-
-
-
 //Registers given customer for the session
 function register($customer){
     $this->db->insert("Session_registration",array("Session_id"=>$this->id,"Customer"=>$customer),"ds");
@@ -61,36 +59,22 @@ function unregister($customer){
 }
 
 
-
-
-
-//Returns all customers registered for the sesssion
-function registeredCustomers(){
-    $customer_arr = array();
-    foreach( $this->db->select("Session_Registration",array("Customer"),
-    array("Session_id"=>$this->id,"Delected"=>'0')) as $row ) 
-        $customer_arr[] = $row['Customer'];
-    return $customer_arr;
-}
-
-
 //Sets Customer observers for the session
 function setCustomerObservers($notificationType){
     $factory = new Factory();
-    $coach_Registration = new Coach_Registration_Helper();
     if($notificationType===NOTIFICATION_SESSION_CREATE)
-        foreach( $coach_Registration->registeredCustomers($this->getCreatedCoach()) as $row ) 
-            $this->observers[] = $factory->getModel("Customer",$row['Customer']);
+        foreach( $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($this->getCreatedCoach()) as $row ) 
+            $this->observers[] = $factory->getModel("Customer",array('id'=>$row['Customer']));
     elseif($notificationType===NOTIFICATION_SESSION_DELETE || $notificationType===NOTIFICATION_SESSION_EDIT)
         foreach( $this->registeredCustomers() as $customer ) 
-            $this->observers[] = $factory->getModel("Customer",$customer);   
+            $this->observers[] = $factory->getModel("Customer",array('id'=>$customer));   
 }
 
 
 //Sets Coach observers for the session
 function setCoachObservers($notificationType){ 
     $factory = new Factory();
-    $this->observers[] = $factory->getModel("Coach",$this->getCreatedCoach());
+    $this->observers[] = $factory->getModel("Coach",array('id'=>$this->getCreatedCoach()));
 }
 
 
@@ -115,12 +99,87 @@ function notifyObservers($type,$data=0){
             $rec_email = $observer->getEmail();
             $notification_data['coach_email'] = $this->getCreatedCoach();
         }
-        $notification_helper = new Notification_Helper();
         $observer->update(array('rec_email'=>$rec_email,
-        'details'=>$notification_helper->createNotificationDetails($type,$notification_data),'type'=>$type)); 
+        'details'=>$this->helper_factory->getHelper("Notification")->createNotificationDetails($type,$notification_data),'type'=>$type)); 
     }
    
 }
+
+
+//////////////////Helper Functions///////////////////////
+
+//Returns the coach who created the session 
+function getCreatedCoach(){
+    return $this->helper_factory->getHelper("Session")->getCreatedCoach($this->id);    
+}
+
+
+//Get the Session data
+function getData(){
+    return $this->helper_factory->getHelper("Session")->getData($this->id);
+}
+
+
+//Returns all customers registered for the sesssion
+function registeredCustomers(){
+    return $this->helper_factory->getHelper("Session")->registeredCustomers($this->id);
+}
+
+
+
+//Get the latest created session by logged in coach
+function getLatestCreatedSession($coach){
+    return $this->helper_factory->getHelper("Session")->getLatestCreatedSession($coach);
+}
+
+
+//Returns Sessions id if given customer registered for session
+function isCustomerRegistered($customer,$session_id){
+    return $this->helper_factory->getHelper("Session")->isCustomerRegistered($customer,$session_id);
+}
+
+
+//Returns al registered sessions by given customer email
+function registeredSessions($email){
+    return $this->helper_factory->getHelper("Session")->registeredSessions($email);
+}
+
+
+//Returns all unregistered sessions by given customer email
+function unregisteredSessions($email){
+    return $this->helper_factory->getHelper("Session")->unregisteredSessions($email);  
+}
+
+
+//Get the Session data for given session_id
+function getSessionData($session_id){
+    return $this->helper_factory->getHelper("Session")->getSessionData($session_id);
+}
+
+
+//Returns created sessions for given coach_email
+function createdSessions($email){
+    return $this->helper_factory->getHelper("Session")->createdSessions($email);
+}
+
+
+//Returns all the sessions
+function getAllSessions(){
+    return $this->helper_factory->getHelper("Session")->getAllSessions();  
+}
+
+
+//Returns registered coaches for given customer eail
+function registeredCoachesForCustomer($email){
+    return $this->helper_factory->getHelper("Coach_Registration")->registeredCoaches($email);
+}
+
+
+//Gets price for given name
+function getPrice($type){
+    return $this->helper_factory->getHelper("Payment")->getPrice($type);
+}
+
 
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-
+require_once 'libs/model_helper/User_Helper.php';
 class Coach_Helper extends User_Helper{
 
 function __construct(){

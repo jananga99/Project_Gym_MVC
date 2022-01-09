@@ -10,12 +10,12 @@ class Notification_Controller extends Controller{
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
             $type_read = "unread";
             if(isset($_POST['select']))
-                $type_read = $_POST['select'];
-            $notification_helper = new Notification_Helper();            
-            $_SESSION['data'] =  $notification_helper->getNotifications($_SESSION['logged_user']['email'],$type_read);
+                $type_read = $_POST['select'];           
+            $_SESSION['data'] =  $this->model->getNotifications($_SESSION['logged_user']['email'],$type_read);
             $this->view->render('notification/notification');
         }else{
-            header("Location:".BASE_DIR);
+            $_SESSION['requested_address'] = BASE_DIR."Notification";
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }
@@ -27,7 +27,7 @@ class Notification_Controller extends Controller{
             die();            
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Notification/markAsRead/".$id;
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }
@@ -39,7 +39,7 @@ class Notification_Controller extends Controller{
             die();    
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Notification/delete/".$id;
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }
