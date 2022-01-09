@@ -106,6 +106,11 @@ function view_reports(){
     $this->view->render("Admin/view/report");
 }
 
+function remove_report($email){
+    $this->model->remove_report($email);
+    $this->view_reports();
+}
+
 
 }
 
