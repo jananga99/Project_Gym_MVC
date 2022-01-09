@@ -117,17 +117,8 @@ unset($_SESSION['msg']);
             </div>
 
 
-<<<<<<< HEAD
 
         </div>
-=======
-    <div class="report-button">
-    
-        <a href=<?= BASE_DIR . "Report/view_create/".$arr["Email"]?>>   
-            <button type="button" class="btn btn-primary">Report Coach</button>
-        </a>
-        
->>>>>>> a811cfc1deebd1f27ce969a8116182320410157e
     </div>
 
 
