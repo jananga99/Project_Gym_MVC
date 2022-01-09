@@ -82,11 +82,11 @@ unset($_SESSION['msg']);
                 </div>
             </div>
             <?php
-                if ($arr['isRegistered'])
-                    echo "<form action=" . BASE_DIR . "Coach_Registration/unregister/" . $arr['isRegistered'] . " method='POST'>";
-                else
-                    echo "<form action=" . BASE_DIR . "Coach_Registration/checkRegister/" . $arr["Email"] . " method='POST'>";
-                ?>
+            if ($arr['isRegistered'])
+                echo "<form action=" . BASE_DIR . "Coach_Registration/unregister/" . $arr['isRegistered'] . " method='POST'>";
+            else
+                echo "<form action=" . BASE_DIR . "Coach_Registration/checkRegister/" . $arr["Email"] . " method='POST'>";
+            ?>
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Registration Price</label>
@@ -107,15 +107,27 @@ unset($_SESSION['msg']);
             </div>
 
 
-        </div>
-    </div>
+            <div class="row m-3">
+                <div class="d-grid gap-2">
+                    <a href=<?= BASE_DIR . "Report/view_create/" . $arr["Email"] ?>>
+                        <button type="button" class='btn btn-block btn-login'>Report Coach</button>
+                        <!-- we must sent coaches email hidennly to report page -->
+                    </a>
+                </div>
+            </div>
 
+
+<<<<<<< HEAD
+
+        </div>
+=======
     <div class="report-button">
     
         <a href=<?= BASE_DIR . "Report/view_create/".$arr["Email"]?>>   
             <button type="button" class="btn btn-primary">Report Coach</button>
         </a>
         
+>>>>>>> a811cfc1deebd1f27ce969a8116182320410157e
     </div>
 
 

@@ -22,28 +22,37 @@ unset($_SESSION['msg']);
 
 <body>
 
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
 
-    <a href=<?= BASE_DIR . "Coach" ?>>Dashboard</a>
     <div class="container">
 
         <h2>Add a fitness tip</h2>
         <div>
             <form action=<?= BASE_DIR . "WorkoutPlan/create" ?> method="POST">
 
-                <div class="row">
+                <div class="row m-3">
                     <div class="mb-3 form-group">
                         <input type="text" class="form-control" name='plan_name' placeholder="Plan Name">
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row m-3">
                     <div class="d-grid gap-3 form-group">
                         <input class="btn btn-outline-light" type="button" onclick="createTable()" value="Create the schedule">
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row m-3">
                     <div class="mb-3  form-group">
                         <table id="myTable" class='table table-bordered table-hover' style='color:white'>
                         </table>

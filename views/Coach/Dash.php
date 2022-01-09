@@ -16,9 +16,10 @@
 
     <?php
     $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Profile" => BASE_DIR . "Coach/view/{$_SESSION['logged_user']['email']}",
         "Notifications" => BASE_DIR . "Notification",
-        "Reports" => "#",
+
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"
     );
@@ -29,7 +30,7 @@
     <div class="container">
 
         <h1 class="mb-4">Welcome</h1>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/RegisteredCustomers/".$_SESSION['logged_user']['email'] ?>>Registered Customers</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/RegisteredCustomers/" . $_SESSION['logged_user']['email'] ?>>Registered Customers</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewCreate" ?>>Create a session</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/createdByMe" ?>>My Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a>

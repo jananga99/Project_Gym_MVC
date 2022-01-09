@@ -40,7 +40,7 @@ else    $flag = 1;
         <?php
         if ($flag) {
             echo "<div>
-        <table border='2'>
+        <table class='table table-bordered table-hover' style='color:white'>
             <thead>
                 <tr>
                 <th>Session Id</th>
@@ -50,7 +50,7 @@ else    $flag = 1;
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Price</th>
-                <th>Details</th>
+                <th>View</th>
                 </tr>
             </thead>
             <tbody>";
@@ -63,7 +63,7 @@ else    $flag = 1;
             <td>" . $row['Start_Time'] . "</td>
             <td>" . $row['End_Time'] . "</td>
             <td>" . $row['Price'] . "</td>
-            <td>" . $row['Details'] . "</td>
+           
                 <td><form action=" . BASE_DIR . "Session/view/" . $row['Session_id'] . " method='POST'>
                     <button name='view_session'>View</button>
                     </form></td>

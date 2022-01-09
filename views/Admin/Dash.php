@@ -17,6 +17,7 @@
 
     <?php
     $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Profile" => BASE_DIR . "Admin/view/{$_SESSION['logged_user']['email']}",
         "Reports" => BASE_DIR . "Admin/view_reports",
         "Messages" => BASE_DIR . "Message",
@@ -39,6 +40,10 @@
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/viewAll" ?>>All Coaches</a>
 
     </div>
+
+    <?php
+    require_once 'public/html/footer.html';
+    ?>
 </body>
 
 </html>
