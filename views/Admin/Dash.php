@@ -17,6 +17,7 @@
 
     <?php
     $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Profile" => BASE_DIR . "Admin/view/{$_SESSION['logged_user']['email']}",
         "Reports" => "#",
         "Messages" => BASE_DIR . "Message",

@@ -17,9 +17,9 @@
 
     <?php
     $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "My Profile" => BASE_DIR . "Customer/view/{$_SESSION['logged_user']['email']}",
         "Notifications" => BASE_DIR . "Notification",
-        "Reports" => "#",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"
     );
@@ -34,7 +34,7 @@
 
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Coach/viewAll" ?>>add coach</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "/Customer/view/{$_SESSION['logged_user']['email']}" ?>>edit profile</a>
-        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/registeredCoaches/".$_SESSION['logged_user']['email'] ?>>Registered Coaches</a>
+        <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Customer/registeredCoaches/" . $_SESSION['logged_user']['email'] ?>>Registered Coaches</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/viewAll" ?>>All Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "Session/registeredByMe" ?>>My Sessions</a>
         <a class="btn btn-outline-light btn-lg mb-3" href=<?= BASE_DIR . "FitnessTip/viewAll" ?>>Get Finess Tips</a>
