@@ -114,7 +114,6 @@ unset($_SESSION['msg']);
     
         <a href=<?= BASE_DIR . "Report/view_create/".$arr["Email"]?>>   
             <button type="button" class="btn btn-primary">Report Coach</button>
-            <!-- we must sent coaches email hidennly to report page -->
         </a>
         
     </div>

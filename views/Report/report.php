@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer view page</title>
+        <title>Reporting Coach</title>
     </head>
 
 <body>

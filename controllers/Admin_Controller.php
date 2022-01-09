@@ -101,6 +101,10 @@ function view($email){
     }  
 }        
 
+function view_reports(){
+    $_SESSION['reports'] = $this->model->get_reports();
+    $this->view->render("Admin/view/report");
+}
 
 
 }

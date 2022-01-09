@@ -6,7 +6,9 @@ function __construct($data=-1){
     parent::__construct("Admin",$data);
 }
 
-
+function get_reports(){
+    return $this->db->select("report");
+}
 
 
 
