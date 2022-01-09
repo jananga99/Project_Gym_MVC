@@ -32,6 +32,7 @@ unset($_SESSION['msg']);
     $navbar =  new Navbar($menu_arr);
     echo $navbar->get();
     ?>
+
     <div class="simple-login-container">
         <h2>Coach Details</h2>
         <div>
@@ -109,6 +110,16 @@ unset($_SESSION['msg']);
 
         </div>
     </div>
+
+    <div class="report-button">
+    
+        <a href=<?= BASE_DIR . "Report/view_create/".$arr["Email"]?>>   
+            <button type="button" class="btn btn-primary">Report Coach</button>
+            <!-- we must sent coaches email hidennly to report page -->
+        </a>
+        
+    </div>
+
 
 
 
