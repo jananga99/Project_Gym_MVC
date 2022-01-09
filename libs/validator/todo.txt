@@ -1,9 +1,0 @@
-name
-age
-city
-email
-Card Number
-Expiry     (MM/YYYY)
-CVV/CVC
-Time      (HH:MM:AM/PM)
-Date       (DD/MM/YYYY)

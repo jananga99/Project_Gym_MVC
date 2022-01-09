@@ -11,15 +11,15 @@ class Message_Controller extends Controller{
     //Displaying the message dashbboard
     function index(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Admin" || $_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Customer")){
-            $_SESSION['sent_messages'] =   $this->helper_factory->getHelper("Message")->getSentMessages($_SESSION['logged_user']['email']);
+            $_SESSION['sent_messages'] =   $this->model->getSentMessages($_SESSION['logged_user']['email']);
             $type_read = "unread";
             if(isset($_POST['sent_select']))
                 $type_read = $_POST['sent_select'];
-            $_SESSION['receieved_messages'] =   $this->helper_factory->getHelper("Message")->getReceievedMessages($_SESSION['logged_user']['email'],$type_read);   
+            $_SESSION['receieved_messages'] =   $this->model->getReceievedMessages($_SESSION['logged_user']['email'],$type_read);   
             $this->view->render('message/dash');
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message"; 
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }
@@ -41,7 +41,7 @@ class Message_Controller extends Controller{
                 $this->view->render('message/send');         
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message/viewSend";
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }        
@@ -50,15 +50,21 @@ class Message_Controller extends Controller{
     //Sending a message
     function send(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Coach" || $_SESSION['logged_user']['type']==="Admin")  ){
-            $data = array();
-            $data['create_data'] = array('sender_email'=>$_SESSION['logged_user']['email'],'message_type'=>$_POST['message_type'],
-                'message'=> $_POST['message']    );
-            $this->factory->getModel("Message",$data);
+            if(!$this->validator->validateText($_POST['message'])){
+                $_SESSION['msg'] = "Cannot send empty messages";
+            }else{
+                $data = array();
+                $data['create_data'] = array('sender_email'=>$_SESSION['logged_user']['email'],'message_type'=>$_POST['message_type'],
+                    'message'=> $_POST['message']    );
+                $data['action'] = "send";
+                $this->factory->getModel("Message",$data);
+                $_SESSION['msg'] = "Message sent successfully";
+            }          
             header("Location:".BASE_DIR."Message/viewSend");
-            die();            
+            die();  
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message/send";
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }       
@@ -72,7 +78,7 @@ class Message_Controller extends Controller{
             die();            
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message/markAsRead/".$message_id;
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }
@@ -91,7 +97,7 @@ class Message_Controller extends Controller{
             die();    
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message/delete/".$id;
-            header("Location:".BASE_DIR);
+            header("Location:".BASE_DIR."Auth/login");
             die();
         } 
     }

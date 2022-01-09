@@ -10,11 +10,6 @@ function __construct($type){
 }
 
 
-//Inserts given user details to database
-function create($user_type,$data,$data_types){
-    $this->db->insert($user_type,$data,$data_types);
-}
-
 //Returns true if email is unique from all previous users, false otherwise
 function isEmailunique($email){
     foreach(array("Customer","Coach","Admin") as $type){

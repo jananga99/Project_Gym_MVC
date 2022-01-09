@@ -3,13 +3,15 @@
 class WorkoutPlan extends Model{
 
 
-function __construct($data){
+function __construct($data=-1){
     parent::__construct();
-    if(isset($data['id']) && !(is_null($data['id'])) ){
-        $this->id=$data['id'];
-    }else{
-        $this->create($data['create_data']);
-        $this->id = $this->helper_factory->getHelper("WorkoutPlan")->getLatestPlanId($data['create_data']['Coach_Email']);   
+    if($data!=-1){
+        if(isset($data['id']) && !(is_null($data['id'])) ){
+            $this->id=$data['id'];
+        }else{
+            $this->create($data['create_data']);
+            $this->id = $this->helper_factory->getHelper("WorkoutPlan")->getLatestPlanId($data['create_data']['Coach_Email']);   
+        }
     }
 }   
 
@@ -17,12 +19,6 @@ function __construct($data){
 //Creates a workout plan
 function create($data){
     $this->db->insert("Plan_details",$data,"sss");
-}
-
-
-//Returns data of this plan
-function getData(){
-    return  $this->helper_factory->getHelper("WorkoutPlan")->getPlan($this->id);
 }
 
 
@@ -52,6 +48,46 @@ function addCustomers($customer_array){
 function addCustomer($customer){
     $this->db->insert("plan_registration",array("Plan_id"=>$this->id,"Customer"=>$customer),'ds');
 }
+
+
+/////////////////////Helper Functions////////////////////////////
+
+//Get the latest sent message
+function getLatestPlanId($coach_email){
+    return $this->helper_factory->getHelper("WorkoutPlan")->getLatestPlanId($coach_email);
+}
+
+
+//Returns all plans created by a coach
+function getAllPlansForACoach($coach_email){
+    return $this->helper_factory->getHelper("WorkoutPlan")->getAllPlansForACoach($coach_email);
+}
+
+
+//Returns all plans for a customer
+function getAllPlansForACustomer($customer_email){
+    return $this->helper_factory->getHelper("WorkoutPlan")->getAllPlansForACustomer($customer_email);
+}
+
+
+//Returns data of given plan
+function getPlan($plan_id){
+    return $this->helper_factory->getHelper("WorkoutPlan")->getPlan($plan_id);
+}
+
+
+//Get the latest created session by givem coach
+function getLatestCreatedPlan($coach){
+    return $this->helper_factory->getHelper("WorkoutPlan")->getLatestCreatedPlan($coach);
+}
+
+
+//Returns the registered customers for the given coach email
+function registeredCustomersForCoach($email){
+    return $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($email);
+}
+
+
 
 
 }

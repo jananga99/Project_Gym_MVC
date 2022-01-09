@@ -8,10 +8,11 @@ class Factory{
         $path = 'models/'.$modelName.'.php';    
         $model=0;
         if(file_exists($path)){
-                if(  (isset($data['id']) && !(is_null($data['id'])) )  || isset($data['create_data'])){
-                    require_once $path;
-                    $model = new $modelName($data);
-                }
+            require_once $path;
+            if(  (isset($data['id']) && !(is_null($data['id'])) )  || isset($data['create_data']))   
+                $model = new $modelName($data);
+            else
+                $model = new $modelName();
         }       
         return $model;
     }

@@ -10,6 +10,7 @@ require_once 'libs/App.php';
 require_once 'libs/Controller.php';
 require_once 'libs/Model.php';
 require_once 'libs/View.php';
+require_once 'libs/validator/validator.php';
 require_once 'libs/database/lib_database.php';
 require_once 'libs/interfaces/lib_interface.php';
 require_once 'libs/mediator/Mediator.php';
