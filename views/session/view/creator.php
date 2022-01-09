@@ -92,23 +92,23 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Details</label>
-                        <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".$arr["Details"]; ?>>
+                        <input type="text" class="form-control" name='details' <?php if ($arr["Details"]) echo "value=" . $arr["Details"]; ?>>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 form-group">
+                <div class="row m-2">
+                    <div class="d-grid gap-2 ">
                         <input type="submit" class="btn btn-block btn-login" value='Edit Session' name='edit_session_btn'>
                     </div>
                 </div>
 
 
             </form>
-            <br>
+
             <form action=<?= BASE_DIR . "Session/delete/" . $arr["Session_id"] ?> method="POST">
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                            <input type="submit" class="btn btn-block btn-login" value='Delete Session' name='delete_session_btn'>
-                        
+                <div class="row m-2">
+                    <div class="d-grid gap-2 ">
+                        <input type="submit" class="btn btn-block btn-login" value='Delete Session' name='delete_session_btn'>
+
                     </div>
                 </div>
             </form>

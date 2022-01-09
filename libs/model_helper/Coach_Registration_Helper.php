@@ -15,8 +15,7 @@ function getRegistrationId($customer,$coach){
 
 //Returns True if given customer is registered for coach
 function isCoachRegistered($customer,$coach){
-    return $this->db->select("coach_registration",array("Registration_id"),array("Customer"=>$customer,"Coach"=>$coach,"Delected"=>0),
-    1)['Registration_id'];  
+    return $this->db->select("coach_registration",array("Registration_id"),array("Customer"=>$customer,"Coach"=>$coach,"Delected"=>0),1)['Registration_id'];  
 }
 
 
@@ -54,4 +53,3 @@ function registeredCustomers($email){
     return $this->db->select("coach_registration",array("Customer"),array("Coach"=>$email,"Delected"=>'0')) ;
  }
 }
-?>
