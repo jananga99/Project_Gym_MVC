@@ -6,7 +6,7 @@ class Report extends Model{
     }
     
     function submit_report($reason,$email){
-        $this->db->insert("report",array("Reason"=>$reason,"Email"=>$email));
+        $this->db->insert("report",array("Reason"=>$reason,"Email"=>$email),"ss");
     }
 
 }

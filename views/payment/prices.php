@@ -20,6 +20,16 @@ if (isset($_SESSION['data']))
 
 <body>
 
+    <?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
+
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
+
     <div class="container">
 
         <h3 class="mb-3">Add Price</h3>
@@ -30,13 +40,14 @@ if (isset($_SESSION['data']))
             <input type="text" name='price'>
             <label for="price_details">Price Details</label>
             <input type="text" name='price_details'>
-            <input type="submit" value="Add">
+            <input class="btn btn-primary btn-sm" type="submit" value="Add">
         </form>
 
         <h3 class="mb-3">Prices</h3>
         <?php
         foreach ($prices as $row) {
             echo "
+            <div class='mb-3'>
         <form action=" . BASE_DIR . "Payment/setPrice/edit method='post'>
             <input type='text' name='price_id' value={$row['Price_id']} readonly style='display:none'>
             <label for='price_type'>Price Type</label>
@@ -45,16 +56,21 @@ if (isset($_SESSION['data']))
             <input type='text' name='price' value={$row['Price']}>
             <label for='price_details'>Price Details</label>
             <input type='text' name='price_details' value={$row['Details']}>
-            <input type='submit' value='Edit'>
+            <input class='btn btn-primary btn-sm' type='submit' value='Edit'>
         </form>
         <form action=" . BASE_DIR . "Payment/setPrice/delete method='post'>
             <input type='text' name='price_id' value={$row['Price_id']} readonly style='display:none'>
-            <input type='submit' value='Delete'>
+            <input class='btn btn-danger btn-sm' type='submit' value='Delete'>
         </form>
+        </div>
         ";
         }
         ?>
     </div>
+
+    <?php
+    require_once 'public/html/footer.html';
+    ?>
 </body>
 
 </html>

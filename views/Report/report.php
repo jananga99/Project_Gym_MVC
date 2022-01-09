@@ -10,7 +10,7 @@
     require_once 'public/html/boostraplinks.html';
     ?>
     <link rel="stylesheet" href=<?= BASE_DIR . "public/css/payment.css" ?>>
-    <title>Customer view page</title>
+    <title>Report page</title>
 </head>
 
 <body>
