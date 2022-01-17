@@ -1,9 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
 body {
   /* background-color: #59adc2; */
   background-image: linear-gradient(185deg, rgb(0, 24, 90), rgb(3, 179, 182));
   background-attachment: fixed;
   font-size: 15px;
   color: #fff;
+  font-family: "Montserrat", sans-serif;
 }
 .simple-login-container {
   width: 300px;
@@ -22,5 +24,3 @@ body {
 a {
   color: #fff;
 }
-
-
