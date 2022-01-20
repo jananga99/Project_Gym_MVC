@@ -21,6 +21,7 @@ function getAllCoachData($sort_arr=0,$orderField=0,$reverse=0){
     if($sort_arr==0)
         $sort_arr = array();
     $sort_arr['Delected'] = 0;
+    $sort_arr['Suspended'] = 0;
     return $this->db->select("Coach",$fields,$sort_arr,0,$orderField,$reverse);
 }
 
