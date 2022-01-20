@@ -62,23 +62,21 @@ class Payment_Controller extends Controller
     //Paying the amount
     function pay(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
-        //    if(!$this->validator->validateName($_POST["name"])){
-        //        $_SESSION['msg'] = "Person Name is not valid";
-       //     }elseif(!$this->validator->validateCardNumber($_POST["card_number"])){
-       //         $_SESSION['msg'] = "Credit Card number is not valid";
-       //     }elseif(!$this->validator->validateExpiry($_POST["expiry"])){
+            if(!$this->validator->validateName($_POST["name"])){
+                $_SESSION['msg'] = "Person Name is not valid";
+            }elseif(!$this->validator->validateCardNumber($_POST["card_number"])){
+                $_SESSION['msg'] = "Credit Card number is not valid";
+            }elseif(!$this->validator->validateExpiry($_POST["expiry"])){
                     $_SESSION['msg'] = "Expiry is not valid";
-       //     }elseif(!$this->validator->validateCVC($_POST["cvc"])){
-        //            $_SESSION['msg'] = "CVC is not valid";
-       //     }else{
+            }elseif(!$this->validator->validateCVC($_POST["cvc"])){
+                    $_SESSION['msg'] = "CVC is not valid";
+            }else{
                 //Check for payments
                 $data=array('create_data'=>$_SESSION['payment_data']);
-               // print_r($data);
-                
                 $this->factory->getModel("Payment",$data);
                 header("Location:".BASE_DIR."Payment/viewSuccess");
                 die();
-        //    }
+            }
             header("Location:".BASE_DIR."Payment/viewPay");
             die();
         }else{
