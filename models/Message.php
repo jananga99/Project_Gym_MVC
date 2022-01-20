@@ -14,12 +14,15 @@ function __construct($data=-1){
                 $message = $data['create_data']['message'];
                 $this->send($data['create_data']);
                 $this->id =  $this->getLatestSentMessage($sender_email); 
-                if($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS)
+                if($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS || $message_type==MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS)
                     $sender_type = "Coach";
                 elseif ($message_type==MESSAGE_ADMIN_TO_ALL_CUSTOMERS || $message_type==MESSAGE_ADMIN_TO_ALL_COACHES)
                     $sender_type = "Admin";
-                $sender = $this->factory->getModel($sender_type,array('id'=>$sender_email,'mediator'=>new MessageMediator() ) );                
-                $this->setReceievers($message_type,$sender->getMessageMediator(),$sender_email);
+                $sender = $this->factory->getModel($sender_type,array('id'=>$sender_email,'mediator'=>new MessageMediator() ) );  
+                if($message_type==MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS)
+                    $this->setReceievers($message_type,$sender->getMessageMediator(),$data['create_data']['session_id']);
+                else
+                    $this->setReceievers($message_type,$sender->getMessageMediator(),$sender_email);
                 $sender->sendMessage($this);
             }elseif($data['action']==="receive"){
                 print_r($data['create_data']);
@@ -67,13 +70,20 @@ function receieve($message){
 
 
 //Set receievers for Mediator according to sendeing type
-function setReceievers($message_type,$mediator,$coach_email=0){
+function setReceievers($message_type,$mediator,$addtional=0){
     if($message_type==MESSAGE_COACH_TO_REGISTERED_CUSTOMERS){
         $factory = new Factory();
-        foreach( $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($coach_email) as $row ) {
+        foreach( $this->helper_factory->getHelper("Coach_Registration")->registeredCustomers($addtional) as $row ) {
             $customer = $factory->getModel("Customer",array('id'=>$row['Customer'],'mediator'=>$mediator));
             if(!$mediator->isUserAdded($customer))
                 $mediator->addUser($customer);
+        }
+    }elseif($message_type==MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS){
+        $factory = new Factory();
+        foreach($this->helper_factory->getHelper("Session")->registeredCustomers($addtional) as $customer_email){
+            $customer = $factory->getModel("Customer",array('id'=>$customer_email,'mediator'=>$mediator));
+            if(!$mediator->isUserAdded($customer))
+                $mediator->addUser($customer);            
         }
     }elseif($message_type==MESSAGE_COACH_TO_ALL_CUSTOMERS || $message_type==MESSAGE_ADMIN_TO_ALL_CUSTOMERS){
         $factory = new Factory();
