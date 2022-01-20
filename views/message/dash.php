@@ -115,7 +115,8 @@ else    $receieved_flag = 1;
                     MESSAGE_COACH_TO_ALL_CUSTOMERS => "To All Customers",
                     MESSAGE_COACH_TO_REGISTERED_CUSTOMERS => "To All Registered Customers",
                     MESSAGE_ADMIN_TO_ALL_CUSTOMERS => "To All Customers",
-                    MESSAGE_ADMIN_TO_ALL_COACHES => "To All Coaches"
+                    MESSAGE_ADMIN_TO_ALL_COACHES => "To All Coaches",
+                    MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS=>"To All Session Registered Customers"
                 );
                 echo "
                 <table class='table table-hover' style='color:white'>

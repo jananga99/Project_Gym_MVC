@@ -77,7 +77,10 @@ class Message_Controller extends Controller{
                 $this->factory->getModel("Message",$data);
                 $_SESSION['msg'] = "Message sent successfully";
             }          
-            header("Location:".BASE_DIR."Message/viewSend");
+            if($_POST['message_type']==MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS)
+                header("Location:".BASE_DIR."Session/view/".$_POST['session_id']);    
+            else
+                header("Location:".BASE_DIR."Message/viewSend");
             die();  
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message/send";
