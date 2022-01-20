@@ -20,7 +20,12 @@ $reports = $_SESSION['reports'];
 </thead>
 <tbody>
     <?php foreach($reports as $report): ?>
-        
+
+        <?php if($report['Deleted'] == 1){
+            continue;
+        }
+            ?>
+
         <tr>
             <td><?php echo $report['Reason'] ?> </td>
             <td><?php echo $report['Email'] ?> </td>

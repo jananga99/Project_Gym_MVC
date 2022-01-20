@@ -117,8 +117,9 @@ function ignore_report($email){
 }
 
 function ban_coach($email){
-    $this->model->ignore_report($email);
-    $this->model->view_reports();
+    $this->model->ban_coach($email);
+    $this->ignore_report($email);
+    $this->view_reports();
 }
 
 }
