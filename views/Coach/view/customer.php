@@ -108,9 +108,9 @@ unset($_SESSION['msg']);
 
 
             <div class="row m-3">
-                <div class="d-grid gap-2">
-                    <a href=<?= BASE_DIR . "Report/view_create/" . $arr["Email"] ?>>
-                        <button type="button" class='btn btn-block btn-login'>Report Coach</button>
+                <div class="d-grid gap-2 form-group">
+                    <a class='btn btn-block btn-login' href=<?= BASE_DIR . "Report/view_create/" . $arr["Email"] ?>>
+                        Report Coach
                         <!-- we must sent coaches email hidennly to report page -->
                     </a>
                 </div>

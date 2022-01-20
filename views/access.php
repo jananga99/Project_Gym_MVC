@@ -1,20 +1,3 @@
-<nav class="navbar navbar-expand-md navbar-dark" style="background-color:	(100,138,109)">
-    <div class="container-fluid">
-        <a href="#" class="navbar-brand">VirtualGYM</a>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto">
-                <a href="#" class="nav-item nav-link ">Contact</a>
-                <a href="#" class="nav-item nav-link">AboutUs</a>
-
-                <a href="#" class="nav-item nav-link">Home</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +13,22 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:	(100,138,109)">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">VirtualGYM</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a href="#" class="nav-item nav-link ">Contact</a>
+                    <a href="#" class="nav-item nav-link">AboutUs</a>
+
+                    <a href="#" class="nav-item nav-link">Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
 
 
