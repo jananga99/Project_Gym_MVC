@@ -20,7 +20,12 @@ $reports = $_SESSION['reports'];
 </thead>
 <tbody>
     <?php foreach($reports as $report): ?>
-        
+
+        <?php if($report['Deleted'] == 1){
+            continue;
+        }
+            ?>
+
         <tr>
             <td><?php echo $report['Reason'] ?> </td>
             <td><?php echo $report['Email'] ?> </td>
@@ -33,7 +38,9 @@ $reports = $_SESSION['reports'];
                 </td>
             
 
-            <td><button>Ban</button>
+            <td>
+            <a href=<?= BASE_DIR . "Admin/ban_coach/".$report['Email']?>>
+            <button>Ban</button> </a></td>
         </tr>
         
         <?php endforeach?>

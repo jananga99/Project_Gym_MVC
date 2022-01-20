@@ -17,5 +17,12 @@ function validateLogIn($email,$password){
     return NULL;
 }
 
+function isSuspended($email){
+    $arr = $this->db->select("Coach",array("Suspended"),array("Email"=>$email),1);
+    return ($arr["Suspended"]);
+    
+    
+}
+
 
 }

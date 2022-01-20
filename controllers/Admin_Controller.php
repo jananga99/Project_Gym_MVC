@@ -111,6 +111,16 @@ function remove_report($email){
     $this->view_reports();
 }
 
+function ignore_report($email){
+    $this->model->ignore_report($email);
+    $this->view_reports();
+}
+
+function ban_coach($email){
+    $this->model->ban_coach($email);
+    $this->ignore_report($email);
+    $this->view_reports();
+}
 
 }
 

@@ -11,9 +11,12 @@ function get_reports(){
 }
 
 function ignore_report($email){
-    $this->db->delete("report",$email); //should change
+     $this->db->update("report",array("Deleted"=>1),array("Email"=>$email),"d");
 }
 
+function ban_coach($email){
+    $this->db->update("coach",array("Suspended"=>1),array("Email"=>$email),"d");
+}
 
 
 

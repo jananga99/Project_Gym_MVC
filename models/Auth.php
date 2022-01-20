@@ -12,6 +12,9 @@ function validateLogIn($email,$password){
     return $this->helper_factory->getHelper("Auth")->validateLogIn($email,$password);
 }
 
+function isSuspended($email){
+    return $this->helper_factory->getHelper("Auth")->isSuspended($email);
+}
 
 
 

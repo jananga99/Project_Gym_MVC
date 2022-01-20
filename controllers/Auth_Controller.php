@@ -23,7 +23,18 @@ class Auth_Controller extends Controller{
     //Redirects to dashboard if login credentials are valid
     function checklogin(){
         $type=$this->model->validateLogIn($_POST['email'],$_POST["password"]);
-        if($type){
+
+        
+
+        if(($type == "Coach") && ($this->model->isSuspended($_POST['email']))){
+           
+
+            $_SESSION['msg'] = "You have been banned from site due reports from customers.To further action please contact site admins";
+            header("Location:".BASE_DIR.'Auth/login');
+            die(); 
+        }
+        
+        else if($type){
             $_SESSION['logged_user'] = array("email"=>$_POST['email'],"type"=>$type);
             if(isset($_SESSION['requested_address'])){
                 $requested_address = $_SESSION['requested_address'];
