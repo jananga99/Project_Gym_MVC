@@ -94,7 +94,7 @@ function validatePositiveNumber($num){
  }
 
 function validatePrice($price){           //a floating number
-    if ($price >= 0 and is_float(($price)))
+    if ($price >= 0)
         return TRUE;
     else
         return FALSE;
