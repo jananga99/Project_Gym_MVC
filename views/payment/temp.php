@@ -1,6 +1,4 @@
-<?php
-print_r($_SESSION['payment_data']);
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -19,10 +19,11 @@ class Coach_Registration_Helper extends Helper
     //Returns True if given customer is registered for coach
     function isCoachRegistered($customer, $coach)
     {
-        // echo $customer;
-        // echo $coach;
-        // die();
-        return $this->db->select("coach_registration", array("Registration_id"), array("Customer" => $customer, "Coach" => $coach, "Delected" => 0), 1)['Registration_id'];
+        $register_data = $this->db->select("coach_registration", array("Registration_id"), array("Customer" => $customer, "Coach" => $coach, "Delected" => 0), 1);
+        if($register_data)
+            return $register_data['Registration_id'];
+        else
+            return FALSE;
     }
 
 
