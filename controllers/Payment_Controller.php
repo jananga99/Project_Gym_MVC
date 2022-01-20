@@ -22,6 +22,8 @@ class Payment_Controller extends Controller
 
     //Handles payments requests
     function viewPayment($type){
+      //  echo $type;
+       
         if(isset($_SESSION['logged_user'])){
             $_SESSION['payment_data'] = array("Payer_Email"=>$_SESSION['logged_user']['email'],
             "Amount"=>$_SESSION['payment_request_data']['price'],"Payment_Type"=>$type);
@@ -31,7 +33,9 @@ class Payment_Controller extends Controller
                 $_SESSION['payment_data']["Item_id"]=-1;      //Denote it is item creating
             }elseif($type==PAYMENT_COACH_REGISTER){
                 $_SESSION['payment_data']["Item_id"]=$_SESSION['payment_request_data']['coach_email'];      
-            }  
+            } 
+          //  print_r($_SESSION['payment_data']); 
+            //die();
             $this->view->render('payment/temp'); 
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/viewPayment/".$type;
@@ -43,8 +47,11 @@ class Payment_Controller extends Controller
     //Displaying paying options menu
     function viewPay(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
+            $_SESSION['payment_data']['Payment_Type'] = $_POST['payment_type'];
+            $_SESSION['payment_data']['Item_id'] = $_POST['item_id'];
             $this->view->render('payment/dash');   
         }else{
+            die();
             $_SESSION['requested_address'] = BASE_DIR."Payment/viewpay";
             header("Location:".BASE_DIR."Auth/login");
             die();
@@ -55,23 +62,25 @@ class Payment_Controller extends Controller
     //Paying the amount
     function pay(){
         if(isset($_SESSION['logged_user']) && ($_SESSION['logged_user']['type']==="Customer" || $_SESSION['logged_user']['type']==="Coach")){        
-          //  if(!$this->validator->validateName($_POST["name"])){
-         //       $_SESSION['msg'] = "Person Name is not valid";
-        //    }elseif(!$this->validator->validateCardNumber($_POST["card_number"])){
-        //        $_SESSION['msg'] = "Credit Card number is not valid";
-        //    }elseif(!$this->validator->validateExpiry($_POST["expiry"])){
-        //            $_SESSION['msg'] = "Expiry is not valid";
+        //    if(!$this->validator->validateName($_POST["name"])){
+        //        $_SESSION['msg'] = "Person Name is not valid";
+       //     }elseif(!$this->validator->validateCardNumber($_POST["card_number"])){
+       //         $_SESSION['msg'] = "Credit Card number is not valid";
+       //     }elseif(!$this->validator->validateExpiry($_POST["expiry"])){
+                    $_SESSION['msg'] = "Expiry is not valid";
        //     }elseif(!$this->validator->validateCVC($_POST["cvc"])){
         //            $_SESSION['msg'] = "CVC is not valid";
-        //    }else{
+       //     }else{
                 //Check for payments
                 $data=array('create_data'=>$_SESSION['payment_data']);
+               // print_r($data);
+                
                 $this->factory->getModel("Payment",$data);
                 header("Location:".BASE_DIR."Payment/viewSuccess");
                 die();
-          //  }
-          //  header("Location:".BASE_DIR."Payment/viewPay");
-          //  die();
+        //    }
+            header("Location:".BASE_DIR."Payment/viewPay");
+            die();
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Payment/pay";
             header("Location:".BASE_DIR."Auth/login");

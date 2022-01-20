@@ -1,4 +1,7 @@
+<?php
 
+$msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
+unset($_SESSION['msg']);?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +68,9 @@
         </div>
 
     </div>
-
+    <div class="d-flex justify-content-center" style="color:crimson">
+        <p><?= $msg ?></p>
+    </div>
     <?php
     require_once 'public/html/footer.html';
     ?>
