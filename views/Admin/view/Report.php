@@ -19,7 +19,7 @@ $reports = $_SESSION['reports'];
 </head>
 
 <body>
-  
+
     <?php
     $menu_arr = array(
         "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
@@ -30,43 +30,50 @@ $reports = $_SESSION['reports'];
     $navbar =  new Navbar($menu_arr);
     echo $navbar->get();
     ?>
+    <div class="container">
+        <table class='table table-hover' style='color:white'>
+            <thead>
+                <tr>
+                    <th>Reason</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($reports as $report) : ?>
 
-<table>
-<thead>
-    <tr>
-        <th>Reason</th>
-        <th>Email</th>
-    </tr>
-</thead>
-<tbody>
-    <?php foreach($reports as $report): ?>
+                    <?php if ($report['Deleted'] == 1) {
+                        continue;
+                    }
+                    ?>
 
-        <?php if($report['Deleted'] == 1){
-            continue;
-        }
-            ?>
+                    <tr>
+                        <td><?php echo $report['Reason'] ?> </td>
+                        <td><?php echo $report['Email'] ?> </td>
 
-        <tr>
-            <td><?php echo $report['Reason'] ?> </td>
-            <td><?php echo $report['Email'] ?> </td>
 
-            
-                <td>
-                <a href=<?= BASE_DIR . "Admin/ignore_report/".$report['Email']?>>
-                <button>Ignore</button>
-                </a>
-                </td>
-            
+                        <td>
+                            <a href=<?= BASE_DIR . "Admin/ignore_report/" . $report['Email'] ?>>
+                                <button class="btn btn-primary">Ignore</button>
+                            </a>
+                        </td>
 
-            <td>
-            <a href=<?= BASE_DIR . "Admin/ban_coach/".$report['Email']?>>
-            <button>Ban</button> </a></td>
-        </tr>
-        
-        <?php endforeach?>
-</tbody>
-</table>
 
+                        <td>
+                            <a href=<?= BASE_DIR . "Admin/ban_coach/" . $report['Email'] ?>>
+                                <button class="btn btn-danger">Ban</button> </a>
+                        </td>
+                    </tr>
+
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+
+    <?php
+    require_once 'public/html/footer.html';
+    ?>
 </body>
+
+
 
 </html>
