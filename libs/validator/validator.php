@@ -80,15 +80,24 @@ function validateGender($gender){
 
 /////////////////////////////////////////////////////////////////
 function validateTelNum($tel){
-    return TRUE;
+    if(preg_match("/^[0-9]*$/", $tel))
+        return TRUE;
+    else
+        return FALSE;
 }
 
 function validatePositiveNumber($num){
-    return TRUE;
+    if ($num > 0) 
+        return TRUE;
+    else
+        return FALSE;
  }
 
 function validatePrice($price){           //a floating number
-    return TRUE;
+    if ($price >= 0 and is_float(($price)))
+        return TRUE;
+    else
+        return FALSE;
 }
 
 
@@ -99,17 +108,30 @@ function validateText($text){
         return FALSE;
 }
 
-function validateUpcomingDate($date){               //return TRUE if the data is in future ( today < $date )
-    return TRUE;
+function validateUpcomingDate($date){        //return TRUE       
+    $startDate = strtotime(date('Y-m-d', strtotime($date) ) );
+    $currentDate = strtotime(date('Y-m-d'));
+  
+    if($startDate > $currentDate)
+        return TRUE;
+    else
+        return FALSE;
 } 
 
 
-function validate24Time($time){            //format - HH:MM:SS    e.g. 15:04:00
-    return TRUE;
+function validate24Time($time){ 
+    //format - HH:MM:SS    e.g. 15:04:00
+    if (preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/',$time))
+        return TRUE;
+    else
+        FALSE;
 }
 
 function validate24TimeDuration($startTime,$endTime){    //return TRUE id stratTime < endTime
-    return TRUE;
+    if (strtotime($startTime) < strtotime($endTime))
+        return TRUE;
+    else
+        return FALSE;
 }
 
 }
