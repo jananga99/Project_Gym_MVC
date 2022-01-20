@@ -10,6 +10,7 @@ function __construct(){
 function index(){
     if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach")
         $this->view->render('coach/Dash');
+       
     else{
         header("Location:".BASE_DIR."Auth/login");
         die();

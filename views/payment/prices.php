@@ -1,4 +1,7 @@
 <?php
+$msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
+unset($_SESSION['msg']);
+
 $prices = array();
 if (isset($_SESSION['data']))
     $prices = $_SESSION['data'];
@@ -66,6 +69,10 @@ if (isset($_SESSION['data']))
         ";
         }
         ?>
+    </div>
+
+    <div class="d-flex justify-content-center" >
+        <p><?= $msg ?></p>
     </div>
 
     <?php

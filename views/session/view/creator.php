@@ -114,7 +114,7 @@ unset($_SESSION['msg']);
             </form>
         </div>
 
-        <div class="d-flex justify-content-center" style="color:crimson">
+        <div class="d-flex justify-content-center" >
         <p><?= $msg ?></p>
         </div>
 
@@ -124,7 +124,7 @@ unset($_SESSION['msg']);
                 if(isset($_SESSION['registered_customers_session']) && count($_SESSION['registered_customers_session'])>0){
                     echo "
                     <p>Number of Registered Customers   :    ".count($_SESSION['registered_customers_session'])."</p>
-                    <table>
+                    <table class='table table-bordered table-hover' style='color:white'>
                         <tr>
                             <th>Customer Email</th>
                             <th></th>
@@ -135,7 +135,7 @@ unset($_SESSION['msg']);
                                 <td>".$customer_email."</td>
                                 <td>
                                     <form method='post' action=".BASE_DIR."Customer/view/".$customer_email.">
-                                        <button>View Customer</button>
+                                        <button class='btn btn-outline-light btn-sm'>View Customer</button>
                                     </form>
                                 </td>
                             </tr>
@@ -147,7 +147,9 @@ unset($_SESSION['msg']);
                     
                         <form method='post' action=".BASE_DIR."Message/viewSessionSend".">
                         <input type='text' name='session_id' value='".$arr['Session_id']."' readonly style='display:none' >
-                            <button>Send a Message to Registered Customers</button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-primary'>Send a Message to Registered Customers</button>
+                            </div>
                         </form>
                     
                     
@@ -156,7 +158,7 @@ unset($_SESSION['msg']);
 
                 }else{
                     echo "
-                        <div class='d-flex justify-content-center' style='color:crimson'>
+                        <div class='d-flex justify-content-center' >
                             <p>No Customers registered yet.</p>
                         </div>
                     ";

@@ -50,6 +50,9 @@ class Payment_Controller extends Controller
             $_SESSION['payment_data']['Payment_Type'] = $_POST['payment_type'];
             if (!($_SESSION['payment_data']['Payment_Type'] == PAYMENT_SESSION_CREATE))
                 $_SESSION['payment_data']['Item_id'] = $_POST['item_id'];
+            else{
+                $_SESSION['payment_data']['Item_id'] = -1;
+            }
             $this->view->render('payment/dash');   
         }else{
             die();

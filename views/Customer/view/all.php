@@ -18,7 +18,7 @@ $customer_arr = isset($_SESSION['data']) ? $_SESSION['data'] : array();
 </head>
 <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"

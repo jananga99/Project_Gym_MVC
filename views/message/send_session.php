@@ -35,13 +35,19 @@ unset($_SESSION['msg']);
 
 
         <form class="m-3" action=<?= BASE_DIR . "Message/send" ?> method="post">
-            <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
+            <!-- <div class="d-flex justify-content-center flex-row bd-highlight mb-3"> -->
+                <div>
                 <label for="">Session Id</label>
                 <input class="form-control" type="text" name="session_id" value=<?=$_SESSION['data']['session_id'];?> readonly> <br>
+                </div>
+
+                <div>
                 <input class="form-control" placeholder="type your msg here" type="text" name="message">
                 <input type="text" name="message_type" readonly style='display:none' value=<?=MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS?>>
                 <input class='btn btn-outline-light m-2 ' type="submit" value="SEND">
-            </div>
+                </div>
+
+            <!-- </div> -->
         </form>
 
         <div>
@@ -50,7 +56,7 @@ unset($_SESSION['msg']);
                 if(isset($_SESSION['registered_customers_session']) && count($_SESSION['registered_customers_session'])>0){
                     echo "
                     <p>Number of Registered Customers   :    ".count($_SESSION['registered_customers_session'])."</p>
-                    <table>
+                    <table class='table table-bordered table-hover' style='color:white'>
                         <tr>
                             <th>Customer Email</th>
                             <th></th>
@@ -61,7 +67,7 @@ unset($_SESSION['msg']);
                                 <td>".$customer_email."</td>
                                 <td>
                                     <form method='post' action=".BASE_DIR."Customer/view/".$customer_email.">
-                                        <button>View Customer</button>
+                                        <button class='btn btn-outline-light btn-sm'>View Customer</button>
                                     </form>
                                 </td>
                             </tr>
@@ -70,7 +76,7 @@ unset($_SESSION['msg']);
                     echo "</table>";
                 }else{
                     echo "
-                        <div class='d-flex justify-content-center' style='color:crimson'>
+                        <div class='d-flex justify-content-center' >
                             <p>No Customers registered yet.</p>
                         </div>
                     ";
@@ -81,7 +87,7 @@ unset($_SESSION['msg']);
 
     </div>
    
-    <div class="d-flex justify-content-center" style="color:crimson">
+    <div class="d-flex justify-content-center" >
         <p><?= $msg ?></p>
     </div>
    

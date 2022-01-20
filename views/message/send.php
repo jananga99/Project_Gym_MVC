@@ -65,7 +65,7 @@ unset($_SESSION['msg']);
         </form>
     </div>
    
-    <div class="d-flex justify-content-center" style="color:crimson">
+    <div class="d-flex justify-content-center" >
         <p><?= $msg ?></p>
     </div>
    

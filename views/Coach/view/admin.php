@@ -21,7 +21,7 @@ unset($_SESSION['msg']);
 <body>
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "SearchCoach" => BASE_DIR . "Coach/viewAll",
@@ -86,7 +86,7 @@ unset($_SESSION['msg']);
 
 
 
-    <div class="d-flex justify-content-center" style="color:crimson">
+    <div class="d-flex justify-content-center" >
         <p><?= $msg ?></p>
     </div>
 

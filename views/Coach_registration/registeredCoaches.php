@@ -27,7 +27,7 @@ $coach_arr = $_SESSION['data'];
 
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"

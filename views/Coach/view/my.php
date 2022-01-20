@@ -24,7 +24,7 @@ $arr = $_SESSION['data'];
 
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Coach/",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"
@@ -108,7 +108,7 @@ $arr = $_SESSION['data'];
 
 
 
-    <div class="d-flex justify-content-center" style="color:crimson">
+    <div class="d-flex justify-content-center" >
         <p><?= $msg ?></p>
     </div>
 
