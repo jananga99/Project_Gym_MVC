@@ -142,6 +142,18 @@ unset($_SESSION['msg']);
                         ";
                     }
                     echo "</table>";
+
+                    echo "
+                    
+                        <form method='post' action=".BASE_DIR."Message/viewSessionSend".">
+                        <input type='text' name='session_id' value='".$arr['Session_id']."' readonly style='display:none' >
+                            <button>Send a Message to Registered Customers</button>
+                        </form>
+                    
+                    
+                    ";
+
+
                 }else{
                     echo "
                         <div class='d-flex justify-content-center' style='color:crimson'>

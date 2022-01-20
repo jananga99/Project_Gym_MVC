@@ -126,7 +126,6 @@ function registeredCustomers(){
 }
 
 
-
 //Get the latest created session by logged in coach
 function getLatestCreatedSession($coach){
     return $this->helper_factory->getHelper("Session")->getLatestCreatedSession($coach);

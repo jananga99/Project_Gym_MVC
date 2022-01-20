@@ -44,6 +44,21 @@ class Message_Controller extends Controller{
             header("Location:".BASE_DIR."Auth/login");
             die();
         } 
+    }    
+    
+    
+    //Displaying Session meassage send details
+    function viewSessionSend(){
+        if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach" ){
+            $_SESSION['registered_customers_session'] = $this->factory->getModel("Session",array("id"=>$_POST['session_id']))->registeredCustomers();
+            $_SESSION['data'] = array();
+            $_SESSION['data']['session_id'] =   $_POST['session_id'];
+            $this->view->render('message/send_session');         
+        }else{
+            $_SESSION['requested_address'] = BASE_DIR."Message/viewSessionSend";
+            header("Location:".BASE_DIR."Auth/login");
+            die();
+        } 
     }        
    
 
@@ -56,11 +71,16 @@ class Message_Controller extends Controller{
                 $data = array();
                 $data['create_data'] = array('sender_email'=>$_SESSION['logged_user']['email'],'message_type'=>$_POST['message_type'],
                     'message'=> $_POST['message']    );
+                if(isset($_POST['session_id']))
+                    $data['create_data']['session_id'] = $_POST['session_id'];
                 $data['action'] = "send";
                 $this->factory->getModel("Message",$data);
                 $_SESSION['msg'] = "Message sent successfully";
             }          
-            header("Location:".BASE_DIR."Message/viewSend");
+            if($_POST['message_type']==MESSAGE_COACH_TO_SESSION_REGISTERED_CUSTOMERS)
+                header("Location:".BASE_DIR."Session/view/".$_POST['session_id']);    
+            else
+                header("Location:".BASE_DIR."Message/viewSend");
             die();  
         }else{
             $_SESSION['requested_address'] = BASE_DIR."Message/send";
