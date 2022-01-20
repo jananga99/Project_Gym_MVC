@@ -11,7 +11,7 @@ function get_reports(){
 }
 
 function ignore_report($email){
-    $this->db->delete("report",$email); //should change
+     //should change
 }
 
 
