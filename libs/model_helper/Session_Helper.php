@@ -49,9 +49,6 @@ function getSessionData($session_id){
 }
 
 
-
-
-
 //Returns created sessions for given coach_email
 function createdSessions($email){
     $fields = array("Session_id","Coach_Email","Session_Name","Date","Start_Time","End_Time",

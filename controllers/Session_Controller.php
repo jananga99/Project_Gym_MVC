@@ -112,6 +112,7 @@ class Session_Controller extends Controller{
         if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']['type']==="Coach"){
             $_SESSION['data'] = $this->model->getData();
             if($_SESSION['logged_user']['email']===$this->model->getCreatedCoach()){   //view by creator
+                $_SESSION['registered_customers_session'] = $this->model->registeredCustomers();
                 $this->view->render("Session/view/creator");  
             }else{     //view by another coach
                 $this->view->render("Session/view/coach");

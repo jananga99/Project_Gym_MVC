@@ -112,21 +112,52 @@ unset($_SESSION['msg']);
                     </div>
                 </div>
             </form>
+        </div>
 
+        <div class="d-flex justify-content-center" style="color:crimson">
+        <p><?= $msg ?></p>
+        </div>
 
-
-
-
-
+        <div>
+            <h3>Registered Customers For The Session</h3>
+            <?php
+                if(isset($_SESSION['registered_customers_session']) && count($_SESSION['registered_customers_session'])>0){
+                    echo "
+                    <p>Number of Registered Customers   :    ".count($_SESSION['registered_customers_session'])."</p>
+                    <table>
+                        <tr>
+                            <th>Customer Email</th>
+                            <th></th>
+                        </tr>";
+                    foreach($_SESSION['registered_customers_session'] as $customer_email){
+                        echo "
+                            <tr>
+                                <td>".$customer_email."</td>
+                                <td>
+                                    <form method='post' action=".BASE_DIR."Customer/view/".$customer_email.">
+                                        <button>View Customer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        ";
+                    }
+                    echo "</table>";
+                }else{
+                    echo "
+                        <div class='d-flex justify-content-center' style='color:crimson'>
+                            <p>No Customers registered yet.</p>
+                        </div>
+                    ";
+                }
+            
+            ?>
         </div>
     </div>
 
 
 
 
-    <div class="d-flex justify-content-center" style="color:crimson">
-        <p><?= $msg ?></p>
-    </div>
+
 
     <?php
     require_once 'public/html/footer.html';
