@@ -21,7 +21,16 @@ $arr = $_SESSION['data'];
 
 <body>
 
-    <a href=<?= BASE_DIR . 'Admin/' ?>>Dashboard</a>
+<?php
+    $menu_arr = array(
+        "Dashboard" => BASE_DIR . "Admin/",
+        "Notifications" => BASE_DIR . "Notification",
+        "Messages" => BASE_DIR . "Message",
+        "Log Out" => BASE_DIR . "Auth/logout"
+    );
+    $navbar =  new Navbar($menu_arr);
+    echo $navbar->get();
+    ?>
 
     <div class="simple-login-container">
         <h2>My Details</h2>

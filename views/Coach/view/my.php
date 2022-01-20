@@ -33,7 +33,6 @@ $arr = $_SESSION['data'];
     echo $navbar->get();
     ?>
 
-    <!-- <a href=<?= BASE_DIR . 'Coach/' ?>>Dashboard</a> -->
 
     <div class="simple-login-container">
         <h2>My Details</h2>
