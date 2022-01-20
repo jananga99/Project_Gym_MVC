@@ -17,7 +17,7 @@ function __construct($data=-1){
 
 //adds payment to database
 function addPayment($data){
-    $this->db->insert("payment",$data,"sddd");
+    $this->db->insert("payment",$data,"sdds");
 }
 
 
