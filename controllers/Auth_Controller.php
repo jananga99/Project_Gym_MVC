@@ -29,7 +29,7 @@ class Auth_Controller extends Controller{
         if(($type == "Coach") && ($this->model->isSuspended($_POST['email']))){
            
 
-            $_SESSION['msg'] = "You have been banned from site due reports from customers.To further action please contact site admins".$this->model->isSuspended($_POST['email']);
+            $_SESSION['msg'] = "You have been banned from site due reports from customers.To further action please contact site admins";
             header("Location:".BASE_DIR.'Auth/login');
             die(); 
         }
