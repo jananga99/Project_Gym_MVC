@@ -2,6 +2,6 @@ CREATE TABLE Report (
     Report_id INT(10) AUTO_INCREMENT,
     Reason varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
-    Deleted int(1) NULL;
+    Deleted int(1) NULL,
     PRIMARY KEY (Report_id)
 );
