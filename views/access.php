@@ -19,14 +19,6 @@
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a href="#" class="nav-item nav-link ">Contact</a>
-                    <a href="#" class="nav-item nav-link">AboutUs</a>
-
-                    <a href="#" class="nav-item nav-link">Home</a>
-                </div>
-            </div>
         </div>
     </nav>
 

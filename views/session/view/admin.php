@@ -55,7 +55,7 @@ echo $navbar->get();
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Session Name</label>
-                    <input type="text" class="form-control" name='session_name' value=<?php echo $arr["Session_Name"] ?> readonly>
+                    <input type="text" class="form-control" name='session_name' value='<?php echo $arr["Session_Name"] ?>' readonly>
                 </div>
             </div>
             <div class="row">
@@ -104,7 +104,7 @@ echo $navbar->get();
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Details</label>
-                    <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value=".$arr["Details"]; ?> readonly>
+                    <input type="text" class="form-control" name='details' <?php if($arr["Details"]) echo "value='".$arr["Details"]."'"; ?> readonly>
                 </div>
             </div>
         

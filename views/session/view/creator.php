@@ -49,7 +49,7 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Session Name</label>
-                        <input type="text" class="form-control" name='session_name' value=<?php echo $arr["Session_Name"] ?>>
+                        <input type="text" class="form-control" name='session_name' value='<?php echo $arr["Session_Name"] ?>'>
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@ unset($_SESSION['msg']);
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label>Details</label>
-                        <input type="text" class="form-control" name='details' <?php if ($arr["Details"]) echo "value=" . $arr["Details"]; ?>>
+                        <input type="text" class="form-control" name='details' <?php if ($arr["Details"]) echo "value='" . $arr["Details"]."'"; ?>>
                     </div>
                 </div>
                 <div class="row m-2">

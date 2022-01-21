@@ -58,7 +58,7 @@ if (isset($_SESSION['data']))
             <label for='price'>Price</label>
             <input type='text' name='price' value={$row['Price']}>
             <label for='price_details'>Price Details</label>
-            <input type='text' name='price_details' value={$row['Details']}>
+            <input type='text' name='price_details' value='{$row['Details']}'>
             <input class='btn btn-primary btn-sm' type='submit' value='Edit'>
         </form>
         <form action=" . BASE_DIR . "Payment/setPrice/delete method='post'>

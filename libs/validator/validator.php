@@ -71,7 +71,7 @@ function validateDate($date){
 
 
 function validateGender($gender){
-    if($gender==="Male" || $gender==="Female")
+    if($gender==="Male" || $gender==="Female" || $gender="Both")
         return TRUE;
     else
         return FALSE;

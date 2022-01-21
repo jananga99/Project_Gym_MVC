@@ -36,7 +36,7 @@ unset($_SESSION['msg']);
 
     <div class="container">
 
-        <h2>Add a fitness tip</h2>
+        <h2>Add a Workout Plan</h2>
         <div>
             <form action=<?= BASE_DIR . "WorkoutPlan/create" ?> method="POST">
 
