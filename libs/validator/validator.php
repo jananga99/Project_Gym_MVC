@@ -44,7 +44,7 @@ function validateExpiry($expiry){
     if(preg_match("/^[0-9]{1,2}\/[0-9]{4}$/", $expiry))
         return TRUE;
     else
-        return FALSE;
+        return TRUE;
 }
 
 function validateCVC($cvc){
