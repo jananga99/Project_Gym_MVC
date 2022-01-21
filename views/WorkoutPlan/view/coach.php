@@ -3,9 +3,10 @@
 <?php
 $plan_data = $_SESSION['data'];
 $plan = $plan_data['Plan'];
-$step_count = count($plan)/2;
+$step_count = count($plan) / 2;
 $customer_sarr = $_SESSION['customer_arr'];
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +23,7 @@ $customer_sarr = $_SESSION['customer_arr'];
 
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Coach/",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"
@@ -40,16 +41,16 @@ $customer_sarr = $_SESSION['customer_arr'];
                 <td>Customers</td>
             </thead>
             <tbody>";
-            
-            foreach($customer_sarr as $customer) {
+
+            foreach ($customer_sarr as $customer) {
                 echo "<tr>
                 <td>
                     <p>{$customer}</p>
                 </td>
-                </tr>"    ;
+                </tr>";
             }
-            
-            
+
+
             echo "</tbody>";
 
             ?>
@@ -71,19 +72,19 @@ $customer_sarr = $_SESSION['customer_arr'];
             </thead>
             
             <tbody>";
-            
-            for($i=0;$i<$step_count;$i++){
+
+            for ($i = 0; $i < $step_count; $i++) {
                 echo "<tr>
                 <td>
-                    <p>{$plan['planTime'.$i]}</p>
+                    <p>{$plan['planTime' .$i]}</p>
                 </td>
                 <td>
-                    <p>{$plan['planTodo'.$i]}</p>
+                    <p>{$plan['planTodo' .$i]}</p>
                 </td>
-                </tr>"    ;
+                </tr>";
             }
-            
-            
+
+
             echo "</tbody>";
 
             ?>

@@ -3,8 +3,9 @@
 <?php
 $plan_data = $_SESSION['data'];
 $plan = $plan_data['Plan'];
-$step_count = count($plan)/2;
+$step_count = count($plan) / 2;
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +22,7 @@ $step_count = count($plan)/2;
 
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer/",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"
@@ -43,19 +44,19 @@ $step_count = count($plan)/2;
             </thead>
             
             <tbody>";
-            
-            for($i=0;$i<$step_count;$i++){
+
+            for ($i = 0; $i < $step_count; $i++) {
                 echo "<tr>
                 <td>
-                    <p>{$plan['planTime'.$i]}</p>
+                    <p>{$plan['planTime' .$i]}</p>
                 </td>
                 <td>
-                    <p>{$plan['planTodo'.$i]}</p>
+                    <p>{$plan['planTodo' .$i]}</p>
                 </td>
-                </tr>"    ;
+                </tr>";
             }
-            
-            
+
+
             echo "</tbody>";
 
             ?>

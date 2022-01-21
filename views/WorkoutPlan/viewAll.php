@@ -22,7 +22,7 @@ $plan_arr = $_SESSION['plan_arr'];
 <body>
     <?php
     $menu_arr = array(
-        "Dashboard" => BASE_DIR . "Customer/",
+        "Dashboard" => BASE_DIR . $_SESSION['logged_user']['type'],
         "Notifications" => BASE_DIR . "Notification",
         "Messages" => BASE_DIR . "Message",
         "Log Out" => BASE_DIR . "Auth/logout"

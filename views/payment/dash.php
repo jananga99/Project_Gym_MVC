@@ -1,7 +1,7 @@
 <?php
 
 $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
-unset($_SESSION['msg']);?>
+unset($_SESSION['msg']); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +37,7 @@ unset($_SESSION['msg']);?>
         <div class="card px-4">
             <p class="h8 py-3">Payment Details</p>
             <div class="row gx-3">
-                <form action=<?= BASE_DIR."Payment/pay"; ?> method="post">
+                <form action=<?= BASE_DIR . "Payment/pay"; ?> method="post">
                     <div class="col-12">
                         <div class="d-flex flex-column">
                             <p class="text mb-1">Person Name</p> <input class="form-control mb-3" name='name' type="text" placeholder="Name">
@@ -66,11 +66,11 @@ unset($_SESSION['msg']);?>
                 </form>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <p><?= $msg ?></p>
+        </div>
+    </div>
 
-    </div>
-    <div class="d-flex justify-content-center" >
-        <p><?= $msg ?></p>
-    </div>
     <?php
     require_once 'public/html/footer.html';
     ?>
