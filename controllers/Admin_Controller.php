@@ -26,6 +26,7 @@ function viewCreate(){
 
 //Creating/signing up Admins
 function create($submitted=0){
+    $Admin_code = "admin";
     if(!$this->validator->validateName($_POST['lname'])){
         $_SESSION['msg'] = "Last name is not valid";
     }elseif(!$this->validator->validateName($_POST['fname'])){
@@ -40,6 +41,10 @@ function create($submitted=0){
         $_SESSION['msg'] = "Email is not valid";
     }elseif(!$this->validator->validateCity($_POST['city'])){
         $_SESSION['msg'] = "City is not valid";    
+    }elseif(!$this->validator->validatePassword($_POST['password'])){
+        $_SESSION['msg'] = "Length of the password at least 7 characters"; 
+    }elseif(!($_POST['code']=== $Admin_code)){
+        $_SESSION['msg'] = "Admin code is incorrect";
     }else{
         $success = $this->model->isEmailUnique($_POST['email']);
         if($success){
@@ -55,6 +60,7 @@ function create($submitted=0){
             $_SESSION['msg'] = "This email is already registered.";   
         }   
     } 
+
     header("Location:".BASE_DIR."Admin/viewCreate");
     die();             
 }

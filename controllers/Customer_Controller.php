@@ -38,6 +38,8 @@ function create(){
         $_SESSION['msg'] = "Telephone number is not valid";
     }elseif(!$this->validator->validateEmail($_POST['email'])){
         $_SESSION['msg'] = "Email is not valid";
+    }elseif(!$this->validator->validatePassword($_POST['password'])){
+        $_SESSION['msg'] = "Length of the password at least 7 characters"; 
     }else{
         $success = $this->model->isEmailUnique($_POST['email']);
         if($success){

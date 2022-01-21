@@ -57,11 +57,7 @@ class WorkoutPlan_Controller extends Controller{
             $customer_count = 0;
             foreach($_POST as $ind=>$data){
                 if($ind==="planTime".$step_count){
-                    if(!$this->validator->validate24Time($data)){
-                        $_SESSION['msg'] = "Plan Time".$step_count." is not valid";
-                        $validateSuccess=0;
-                        break;
-                    }elseif(!$this->validator->validateText($_POST["planTodo".$step_count])){
+                    if(!$this->validator->validateText($_POST["planTodo".$step_count])){
                         $_SESSION['msg'] = "Plan To Do".$step_count." cannot be empty";
                         $validateSuccess=0;
                         break;

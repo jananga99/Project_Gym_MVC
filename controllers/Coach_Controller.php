@@ -40,6 +40,8 @@ function create($submitted=0){
         $_SESSION['msg'] = "Email is not valid";
     }elseif(!$this->validator->validateCity($_POST['city'])){
         $_SESSION['msg'] = "City is not valid";    
+    }elseif(!$this->validator->validatePassword($_POST['password'])){
+        $_SESSION['msg'] = "Length of the password at least 7 characters"; 
     }else{
         $success = $this->model->isEmailUnique($_POST['email']);
         if($success){

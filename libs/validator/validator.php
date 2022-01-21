@@ -6,7 +6,7 @@ class Validator{
 //Only alphabets and whitespaces are allowed.
 //Returns TRUE if validate, FALSE otherwise
 function validateName($name){    
-    if(preg_match ("/^[a-zA-z]*$/", $name))
+    if(preg_match ("/^[a-zA-Z ]*$/", $name))
         return TRUE;
     else
         return FALSE;
@@ -125,8 +125,8 @@ function validate24Time($time){
     if (preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/',$time))
         return TRUE;
     else
-        // return FALSE;
-        return TRUE;
+        return FALSE;
+        // return TRUE;
 }
 
 function validate24TimeDuration($startTime,$endTime){    //return TRUE id stratTime < endTime
@@ -135,6 +135,16 @@ function validate24TimeDuration($startTime,$endTime){    //return TRUE id stratT
     else
         return FALSE;
 }
+
+function validatePassword($password){
+    if(strlen($password)>7){
+        return TRUE;
+    }else{
+        return FALSE;
+    }
+}
+
+
 
 }
 ?>

@@ -42,10 +42,6 @@ class Session_Controller extends Controller{
                 $_SESSION['msg'] = "Number of participants is not valid";
             }elseif(!$this->validator->validatePrice($_POST['price'])){
                 $_SESSION['msg'] = "Register price is not valid";
-            }elseif(!$this->validator->validate24Time($_POST['startTime'])){
-                $_SESSION['msg'] = "Start Time is not valid";
-            }elseif(!$this->validator->validate24Time($_POST['endTime'])){
-                $_SESSION['msg'] = "End Time is not valid";
             }elseif(!$this->validator->validate24TimeDuration($_POST['startTime'],$_POST['endTime'])){
                 $_SESSION['msg'] = "End time must be after start time";
             }elseif(!$this->validator->validateUpcomingDate($_POST['date'])){
